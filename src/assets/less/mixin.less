@@ -1,0 +1,125 @@
+.display-flex(){
+  display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+  display: -moz-box; /* Firefox 17- */
+  display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+  display: -moz-flex; /* Firefox 18+ */
+  display: -ms-flexbox; /* IE 10 */
+  display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */
+}
+//.flex-display-inline(){
+//  display: -webkit-inline-box;
+//  display: -ms-inline-flexbox;
+//  display: -webkit-inline-flex;
+//  display: inline-flex;
+//}
+//主轴为垂直方向，起点在上沿
+.flex-direction-column(){
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.flex(@value: 1) {
+  -webkit-box-flex: @value;
+  -moz-box-flex: @value;
+  -webkit-flex: @value;
+  -ms-flex: @value;
+  flex: @value;
+}
+//性定义项目的放大比例默认为0
+.flex-grow(@value: 1.0){
+  -webkit-box-flex: @value;
+  -moz-flex-grow: @value;
+  -webkit-flex-grow: @value;
+  flex-grow: @value;
+}
+//性定义了项目的缩小比例，默认为1
+.flex-shrink(@value: 0){
+  -webkit-box-flex: @value;
+  -moz-flex-shrink: @value;
+  -webkit-flex-shrink: @value;
+  flex-shrink: @value;
+}
+/*水平换行*/
+.flex-wrap(){
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -webkit-box-lines:multiple;
+  flex-wrap:wrap;
+}
+/*主轴对齐居中*/
+.flex-justify-content-center(){
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.flex-justify-content-space-between(){
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.flex-justify-content-end(){
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+//定义项目在交叉轴居中
+.flex-align-items-center (){
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.flex-align-items-baseline(){
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  -webkit-align-items: baseline;
+  align-items: baseline;
+}
+.flex-align-items-end(){
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+}
+.scroll-x(){
+  position: relative;
+  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: -webkit-box;
+}
+.scroll-x::-webkit-scrollbar {
+  display: none;
+}
+.no-wrap {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.shadow(@v1,@v2,@v3,@color){
+  -moz-box-shadow:@v1 @v2 @v3 @color;
+  -webkit-box-shadow:@v1 @v2 @v3 @color;
+  box-shadow:@v1 @v2 @v3 @color;
+}
+.opacity(@value: 0.5){
+  -moz-opacity: @value; /* 老版Mozilla */
+  -khtml-opacity: @value; /* 老版Safari */
+  opacity: @value; /* 支持opacity的浏览器*/
+}
+.border-radius(@value: 50%){
+  -webkit-border-radius: @value;
+  -moz-border-radius: @value;
+  border-radius: @value;
+}
+.linear-gradient(@begin, @end){
+  background: -webkit-linear-gradient(left,@begin, @end); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right,@begin, @end); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right,@begin, @end); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right,@begin, @end); /* 标准的语法 */
+}
+
