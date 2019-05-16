@@ -22,8 +22,10 @@
 <script>
 import { request } from 'js/utils'
 import { url } from 'js/const'
+import { baseMixin } from 'js/mixins'
 export default {
   name: 'LoadProduct',
+  mixins: [baseMixin],
   data () {
     return {
       isQuotas: true,
@@ -75,11 +77,39 @@ export default {
       }
     },
     loanClick () {
-      this.$router.push({
-        path: 'create-order',
-        query: {
-          quotaId: this.quotas[this.quotasIndex].id,
-          termId: this.terms[this.termsIndex].id
+      this.getIsAuthBaseInfo((data) => {
+        if (data.verifyStatus) {
+          this.$router.push({
+            name: 'create-order',
+            query: {
+              quotaId: this.quotas[this.quotasIndex].id,
+              termId: this.terms[this.termsIndex].id
+            }
+          })
+        } else {
+          this.$router.push({
+            name: 'bankCardVerify',
+            query: {
+              quotaName: this.quotas[this.quotasIndex].name,
+              termName: this.terms[this.termsIndex].name,
+              quotaId: this.quotas[this.quotasIndex].id,
+              termId: this.terms[this.termsIndex].id
+            }
+          })
+        }
+      })
+    },
+    getIsAuthBaseInfo (_callBack) {
+      this.loadingT()
+      request({
+        type: 'post',
+        path: url.UserVerify.IsAuthBaseInfo,
+        fn: data => {
+          this.hideT()
+          _callBack(data.result)
+        },
+        errFn: () => {
+          this.hideT()
         }
       })
     },
@@ -118,17 +148,18 @@ export default {
 @import "~less/variable";
 @import "~less/mixin";
 .container {
+  background: white;
   img{ width: 100%; }
   .loan-select{
     padding: 20px 0;
-    .display-flex();
-    .flex-justify-content-center();
+    display: flex;
+    justify-content: center;
     .selectInput{
       position: relative;
       width: 38%;
       height: 36px;
       line-height: 36px;
-      .border-radius(18px);
+      border-radius: 18px;
       padding-left: 10px;
       font-size: @font_size_4;
       border:1px solid @light_gray3;

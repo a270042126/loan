@@ -200,6 +200,42 @@ const routes = [
         path: '/favorite',
         name: 'favorite',
         component: Favorite
+      },
+      {
+        path: '/bank-card-verify',
+        name: 'bankCardVerify',
+        component: (resolve) => {
+          import('../views/bank-card-verify/BankCardVerify').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/id-card-verify',
+        name: 'idCardVerify',
+        component: (resolve) => {
+          import('../views/id-card-verify/IdCardVerify').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/zhima-credit',
+        name: 'zhimeCredit',
+        component: (resolve) => {
+          import('../views/zhima-credit/ZhimeCredit').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/link-user-contacts',
+        name: 'linkUserContacts',
+        component: (resolve) => {
+          import('../views/link-user-contacts/LinkUserContacts').then((module) => {
+            resolve(module)
+          })
+        }
       }
     ]
   }

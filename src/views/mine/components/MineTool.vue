@@ -43,8 +43,8 @@ export default {
   }
   ul{
     padding: 25px 2%;
-    .display-flex();
-    .flex-wrap();
+    display: flex;
+    flex-wrap:wrap;
     li{
       width: 24%;
       text-align: center;

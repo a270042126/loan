@@ -40,11 +40,11 @@ export default {
     height: 44px;
     font-size: @font_size_2;
     border-bottom: 1px solid @light_gray;
-    .display-flex();
-    .flex-justify-content-space-between();
-    .flex-align-items-center();
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .text{
-      .flex();
+      flex: 1;
       text-align: right;
     }
     .icon{

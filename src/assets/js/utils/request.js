@@ -4,8 +4,7 @@ import store from '@/store'
 import router from '@/router'
 import VueAxios from 'vue-axios'
 import { url } from 'js/const'
-import { apid } from 'js/utils'
-import common from './common'
+import { apid, common } from 'js/utils'
 import moment from 'moment'
 
 Vue.use(VueAxios, axios)
@@ -23,7 +22,6 @@ axios.interceptors.request.use(
     const userKeys = store.getters.userKeys
     if (userKeys) {
       config.headers.Authorization = `Bearer ${userKeys.accessToken}`
-
       // token 刷新
       const loginTime = userKeys.loginTime ? moment(userKeys.loginTime).add(userKeys.expireInSeconds, 's') : ''
       // 日期是否过期
@@ -44,6 +42,9 @@ axios.interceptors.request.use(
           }
         })
       }
+    } else {
+      const RefereeId = common.getQueryFromUrl(config.url, 'RefereeId')
+      config.headers.RefereeId = RefereeId
     }
     return config
   },
@@ -142,7 +143,11 @@ const request = function ({
         common.errorT(error.error.details)
       } else if (error.error.message) {
         common.errorT(error.error.message)
+      } else {
+        common.errorT('网络出错')
       }
+    } else {
+      common.errorT('网络出错')
     }
     if (errFn) {
       errFn(error)

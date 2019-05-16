@@ -65,15 +65,15 @@ export default {
   background: white;
   ul{
     li{
-      .display-flex();
-      .flex-align-items-center();
-      .flex-justify-content-space-between();
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       .arrow{ color: @light_gray2 }
       .product_item{
         .title{
           font-size: @font_size_3;
-          .display-flex();
-          .flex-align-items-center();
+          display: flex;
+          align-items: center;
           img{
             width: 25px;
             height: 25px;
@@ -83,8 +83,8 @@ export default {
       }
       .mess{
         padding-top:8px;
-        .display-flex();
-        .flex-align-items-end();
+        display: flex;
+        align-items: flex-end;
         .subtitle{
           color: @light_gray2;
         }

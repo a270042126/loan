@@ -35,12 +35,12 @@ export default {
   background: white;
   font-size: @font_size_3;
   padding: 0 @space1;
-  .display-flex();
-  .flex-align-items-center();
-  .flex-justify-content-space-between();
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   .right{
-    .display-flex();
-    .flex-align-items-center();
+    display: flex;
+    align-items: center;
     .icon{
       margin-left: 0.4rem;
       color: @theme_color2;

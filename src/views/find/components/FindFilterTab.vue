@@ -123,7 +123,7 @@ export default {
 .filter{
   .menu{
     background: white;
-    .display-flex();
+    display: flex;
     .shadow(0, 1px, 2px, @light_gray3);
     .down-menu{
       font-size: @font_size_2;

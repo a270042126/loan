@@ -32,8 +32,8 @@ button{
   background: @theme_primary;
   color: @nav_bar_color;
   & > div {
-    .display-flex();
-    .flex-justify-content-space-between();
+    display: flex;
+    justify-content: space-between;
     height: @nav_bar_height;
     line-height: @nav_bar_height;
     .arrow{
@@ -48,7 +48,7 @@ button{
       text-align: center;
     }
     .title{
-      .flex();
+      flex: 1;
       font-size: @font_size_3;
       text-align: center;
     }
@@ -72,10 +72,10 @@ button{
   height: @tabbar_height;
   ul{
     height: @tabbar_height;
-    .display-flex();
-    .flex-align-items-center();
+    display: flex;
+    align-items: center;
     li{
-      .flex();
+      flex: 1;
       text-align: center;
       color: @light_gray2;
       .material-icons{
@@ -96,15 +96,11 @@ button{
   overflow: hidden;
   background: @light_gray;
   z-index: 2;
-  .display-flex();
-  .flex-direction-column();
+  display: flex;
+  flex-direction: column;
   .main-body{
-    //-webkit-box-sizing: border-box; // for ios-safari, android
-    ////-moz-box-sizing: border-box; //for ff
-    //box-sizing: border-box;
-    //overflow-y:auto;
     overflow: hidden;
-    .flex();
+    flex: 1;
   }
  }
 .material-icons{
@@ -115,8 +111,9 @@ button{
   width: 100%;
   height: 40px;
   line-height: 40px;
-  font-size: @font_size_1;
+  font-size: @font_size_3;
   background: @theme_primary;
+  color: white;
 }
 .bg-cover{
   position: fixed;
@@ -146,5 +143,19 @@ button{
   width: 90%;
   height: 40px;
   line-height: 40px;
-  .border-radius(2rem);
+  border-radius: 2rem;
+}
+.scroll-y{
+  box-sizing: border-box;
+  overflow-y:auto;
+}
+.scroll-x {
+  position: relative;
+  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: -webkit-box;
+}
+.scroll-x::-webkit-scrollbar {
+  display: none;
 }

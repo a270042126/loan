@@ -1,4 +1,4 @@
-import md5 from 'md5'
+
 import { storage, request, common } from '../index'
 import { url, isApp } from '../../const/index'
 class Apid {
@@ -13,7 +13,7 @@ class Apid {
     // .处理用户数据
     setTimeout(() => {
       this.handAppAndPhoneInfo()
-    }, 5000)
+    }, 10000)
   }
 
   // .处理用户数据

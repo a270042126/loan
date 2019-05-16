@@ -15,7 +15,7 @@
             {{timerCount + 's'}}
           </div>
         </li>
-        <li><input type="password" placeholder="登录密码默认123456" v-model.trim="user.password"/></li>
+        <li><input type="password" placeholder="请输入密码" v-model.trim="user.password"/></li>
         <li><cube-button class="submit" @click="loginClick">立即登录</cube-button></li>
       </ul>
       <div class="register" @click="registerClick">
@@ -131,7 +131,7 @@ export default {
         phoneNumber: this.user.username,
         captchaResponse: captchaResponse
       }
-
+      this.loadingT()
       request({
         type: 'post',
         path: url.AuthenticateBySms,
@@ -140,7 +140,9 @@ export default {
           this.successT('验证码已经发送')
           this.loginShowTime()
         },
-        errFn: () => {}
+        errFn: () => {
+          this.hideT()
+        }
       })
     },
 
@@ -204,13 +206,6 @@ export default {
           this.errorT('请输入短信验证码')
           return false
         }
-
-        if (user.password) {
-          if (!validate.password(user.password)) {
-            this.errorT('请设置至少 8 位密码，且包含大小写字母')
-            return false
-          }
-        }
       }
       if (!captchaClient.getValidate()) {
         // 弹出验证框
@@ -236,23 +231,23 @@ export default {
     height: 100%;
     img{width: 100%}
     background: @login_bg;
-    .display-flex();
-    .flex-direction-column();
+    display: flex;
+    flex-direction: column;
     .from{
-      .display-flex();
-      .flex-direction-column();
-      .flex-align-items-center();
-      .flex();
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
       li{
         width: 80%;
         margin-bottom: 14px;
         background: @login_input_bg;
-        .border-radius(1.8rem);
+        border-radius: 1.8rem;
         border:1px solid @login_input_border_color;
         overflow: hidden;
-        .display-flex();
+        display: flex;
         input{
-          .flex();
+          flex: 1;
           margin: 0 24px;
           display: block;
           height: 44px;
@@ -278,7 +273,7 @@ export default {
           text-align: center;
           line-height: 36px;
           font-size: @font_size_1;
-          .border-radius(18px);
+          border-radius: 18px;
         }
         input {
           margin: 0 120px 0 24px;
@@ -292,7 +287,7 @@ export default {
         .submit{
           width: 100%;
           height: 48px;
-          .border-radius(24px);
+          border-radius: 24px;
           background: @login_button_bg;
           font-size: @font_size_2;
           color: @login_button_color;

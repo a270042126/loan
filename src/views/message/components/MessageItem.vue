@@ -23,7 +23,7 @@ export default {
 .message-item{
   padding: 8px 1rem 10px @space1;
   background: white;
-  .display-flex();
+  display: flex;
   .material-icons{
     background: @theme_primary;
     color:white;
@@ -37,10 +37,10 @@ export default {
     width: 0;
     padding-bottom: 15px;
     border-bottom: 1px solid @light_gray;
-    .display-flex();
-    .flex-direction-column();
-    .flex-justify-content-center();
-    .flex-grow();
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
     div:first-child{
       font-size: @font_size_3;
       margin-bottom: 10px;

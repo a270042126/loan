@@ -4,6 +4,7 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
 import VueLazyload from 'vue-lazyload'
+import './icons' // icon
 // 通过components下的index.js文件导入组件
 import components from './components'
 import { isApp } from 'js/const/'

@@ -19,6 +19,17 @@ module.exports = {
       .set('less', resolve('src/assets/less'))
       .set('images', resolve('src/assets/images'))
       .set('assets', resolve('src/assets'))
+    // svg rule loader
+    const svgRule = config.module.rule('svg') // 找到svg-loader
+    svgRule.uses.clear() // 清除已有的loader, 如果不这样做会添加在此loader之后
+    svgRule.exclude.add(/node_modules/) // 正则匹配排除node_modules目录
+    svgRule // 添加svg新的loader处理
+      .test(/\.svg$/)
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
     // 压缩图片
     config.module
       .rule('images')
@@ -36,12 +47,12 @@ module.exports = {
     port: 3000
   },
   css: {
-    // 是否使用css分离插件 ExtractTextPlugin
-    extract: true,
-    // 开启 CSS source maps?
-    sourceMap: false,
-    // 启用 CSS modules for all css / pre-processor files.
-    modules: false,
+    // // 是否使用css分离插件 ExtractTextPlugin
+    // extract: true,
+    // // 开启 CSS source maps?
+    sourceMap: true,
+    // // 启用 CSS modules for all css / pre-processor files.
+    // modules: false,
     // css预设器配置项
     loaderOptions: {
       stylus: {

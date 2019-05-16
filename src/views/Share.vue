@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     copyClick () {
-      const shareUrl = url.baseUrl + url.register + this.userKeys.spreadId
+      const shareUrl = this.shareUrl
       let clipboard = new Clipboard('.copy-btn', { text: () => shareUrl })
       clipboard.on('success', e => {
         this.successT('复制成功')
@@ -50,7 +50,7 @@ export default {
       })
     },
     shareClick () {
-      const shareUrl = url.baseUrl + url.register + this.userKeys.spreadId
+      const shareUrl = 'https://m.jxstudio.cn' + url.register + this.userKeys.spreadId
       this.shareUrl = shareUrl
       if (this.userKeys.hasOwnProperty('spreadId')) {
         if (isApp) {
@@ -70,6 +70,7 @@ export default {
 @import "~less/variable";
 @import "~less/mixin";
 .content{
+  background: white;
   position: relative;
   height: 100%;
   & > div:last-child{
@@ -80,23 +81,25 @@ export default {
     z-index: 99;
     text-align: center;
     .share-btn{
+      color: white;
       font-size: @font_size_2;
       background: @theme_primary;
       width: 140px;
       height: 40px;
       line-height: 40px;
-      .border-radius(20px);
+      border-radius: 20px;
       .shadow(1px, 1px, 2px, @light_gray3);
     }
   }
   p{
     font-size: @font_size_3;
     word-wrap:break-word;
+    line-height: 20px;
   }
   .copy-btn{
     padding: 0;
     height: 40px;
-    margin-top: 40px;
+    margin-top: 20px;
   }
 }
 </style>

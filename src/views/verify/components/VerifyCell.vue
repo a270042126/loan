@@ -1,5 +1,5 @@
 <template>
-  <div class="verify-cell">
+  <div class="verify-cell" @click="_gotoOther">
     <div class="top">
       <div class="material-icons icon">{{item.icon}}</div>
       <div class="title">{{item.title}}</div>
@@ -16,6 +16,11 @@ export default {
   name: 'VerifyCell',
   props: {
     item: {}
+  },
+  methods: {
+    _gotoOther () {
+      this.$emit('gotoOther')
+    }
   }
 }
 </script>
@@ -28,29 +33,30 @@ export default {
   padding: 10px @space1;
   margin-bottom: 20px;
   .shadow(1px, 1px, 10px, @light_gray3);
-  .border-radius(6px);
+  border-radius: 6px;
   .top{
     padding-bottom: 10px;
     border-bottom: 1px solid @light_gray;
-    .display-flex();
-    .flex-justify-content-space-between();
-    .flex-align-items-center();
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .icon{
       color: @theme_primary;
     }
     .title{
       font-size: @font_size_3;
       padding-left: 4px;
-      .flex();
+      flex: 1;
     }
     .go-verify{
+      color: white;
       font-size: @font_size_2;
       background: @theme_primary;
       width: 68px;
       height: 30px;
       line-height: 30px;
       text-align: center;
-      .border-radius(15px)
+      border-radius: 15px;
     }
   }
   .bottom{

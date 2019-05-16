@@ -346,9 +346,9 @@ export default {
     position: absolute;
     width: 100%;
     left: 0;
-    .display-flex();
-    .flex-justify-content-center();
-    .flex-align-items-center();
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: all;
     .after-trigger{
       margin-top: 10px;
@@ -356,9 +356,9 @@ export default {
   }
   .pullup-wrapper{
     width: 100%;
-    .display-flex();
-    .flex-justify-content-center();
-    .flex-align-items-center();
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 16px 0;
   }
 

@@ -50,22 +50,27 @@ export default {
   ul{
     li{
       .product_item{
-        .display-flex();
+        display: flex;
         padding: 12px @space1;
         background: white;
         .img{
+          display: flex;
+          justify-items: center;
+          align-items: center;
+          overflow: hidden;
           width: 60px;
+          height: 60px;
         }
         .inner{
-          .display-flex();
-          .flex();
-          .flex-direction-column();
-          .flex-justify-content-space-between();
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          justify-content: space-between;
           padding: 8px 0;
           margin-left: 10px;
           .top{
-            .display-flex();
-            .flex-justify-content-space-between();
+            display: flex;
+            justify-content: space-between;
             .title{
               font-size: @font_size_4;
             }
@@ -77,8 +82,8 @@ export default {
             }
           }
           .bottom{
-            .display-flex();
-            .flex-justify-content-space-between();
+            display: flex;
+            justify-content: space-between;
             .subtitle{
               font-size: @font_size_1;
             }

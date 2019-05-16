@@ -63,8 +63,8 @@ export default {
   .banner{
     height: 42vw;
     overflow: hidden;
-    .flex();
-    .flex-align-items-center();
+    flex: 1;
+    align-items: center;
     img{
       width: 100%;
     }
@@ -72,8 +72,8 @@ export default {
   .menus{
     background: white;
     padding: 15px 0;
-    .display-flex();
-    .flex-justify-content-center();
+    display: flex;
+    justify-content: center;
     li{
       text-align: center;
       width: 22%;
@@ -83,7 +83,7 @@ export default {
         height: 50px;
         line-height: 50px;
         margin: 0 auto;
-        .border-radius(50%);
+        border-radius: 50%;
         color: white;
         font-size: @font_size_8;
       }

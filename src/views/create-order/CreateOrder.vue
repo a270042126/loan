@@ -28,7 +28,7 @@
         </div>
       </div>
     </better-scroll>
-    <r-dialog ref="dialog" title="协议合同">
+    <r-dialog ref="dialog" title="协议合同" height="60vh">
       <better-scroll :scrollbar="{fade: false}">
         借款协议
 
@@ -289,9 +289,9 @@ export default {
   .order{
     .title-div{
       padding: 20px 0;
-      .display-flex();
-      .flex-justify-content-center();
-      .flex-align-items-center();
+      display: flex;
+      justify-content: center;
+      align-items: center;
       .title{
         font-size: @font_size_3;
         margin: 0 10px;
@@ -312,8 +312,8 @@ export default {
         height: 20px;
         line-height: 20px;
         font-size: @font_size_2;
-        .display-flex();
-        .flex-align-items-center();
+        display: flex;
+        align-items: center;
       }
       .pact{
         color: @theme_color2;

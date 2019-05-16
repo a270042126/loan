@@ -1,7 +1,7 @@
 import Vue from 'vue'
 const vm = new Vue()
 class Common {
-  platform () {
+  static platform () {
     let ua = navigator.userAgent.toLowerCase()
     if (/micromessenger/.test(ua)) {
       return 0
@@ -14,7 +14,7 @@ class Common {
     }
   }
 
-  getFileToken () {
+  static getFileToken () {
     function s4 () {
       return Math.floor((1 + Math.random()) * 0x10000)
         .toString(16)
@@ -23,25 +23,25 @@ class Common {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
   }
   // 正则表达式获取文件名，不带后缀
-  getFileName (fileName) {
+  static getFileName (fileName) {
     return fileName.replace(/(.*\/)*([^.]+).*/ig, '$2')
   }
 
-  toast (text) {
+  static toast (text) {
     vm.$createToast({
       txt: text,
       type: 'text'
     }).show()
   }
 
-  successT (text) {
+  static successT (text) {
     vm.$createToast({
       txt: text,
       type: 'error'
     }).show()
   }
 
-  errorT (text) {
+  static errorT (text) {
     vm.$createToast({
       txt: text,
       type: 'error'
@@ -53,7 +53,7 @@ class Common {
    * @param dataURI
    * @returns {Blob}
    */
-  dataURItoBlob (dataURI) {
+  static dataURItoBlob (dataURI) {
     let byteString = atob(dataURI.split(',')[1])
     let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
     let ab = new ArrayBuffer(byteString.length)
@@ -63,5 +63,21 @@ class Common {
     }
     return new Blob([ab], { type: mimeString })
   }
+  static getQueryFromUrl (url, paraName) {
+    const arrObj = url.split('?')
+    if (arrObj.length > 1) {
+      const arrPara = arrObj[1].split('&')
+      let arr
+      for (const i in arrPara) {
+        arr = arrPara[i].split('=')
+        if (arr != null && arr[0] === paraName) {
+          return arr[1]
+        }
+      }
+      return ''
+    } else {
+      return ''
+    }
+  }
 }
-export default new Common()
+export default Common

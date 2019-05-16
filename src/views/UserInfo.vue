@@ -196,8 +196,8 @@ export default {
     position: relative;
     background: white;
     font-size: @font_size_2;
-    .display-flex();
-    .flex-align-items-center();
+    display: flex;
+    align-items: center;
     margin-bottom: 6px;
     padding: 10px 20px;
     .icon {

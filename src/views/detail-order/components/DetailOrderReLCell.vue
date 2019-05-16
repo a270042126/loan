@@ -77,15 +77,15 @@ export default {
   padding: 10px 0;
   ._flex{
     line-height: 20px;
-    .display-flex();
-    .flex-justify-content-space-between();
+    display: flex;
+    justify-content: space-between;
   }
   .cancel{
     background: @theme_primary;
-    height: 24px;
-    width: 40px;
     font-size: @font_size_1;
     margin-top: 10px;
+    color: white;
+    padding: 8px 15px;
   }
   .status{
     color: @light_gray2;

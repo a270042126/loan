@@ -6,6 +6,7 @@ import dom from './dom'
 import apid from './nashell/apid'
 import push from './nashell/push'
 import event from './event'
+import FormValidate from './form-validate'
 export {
   common,
   request,
@@ -14,5 +15,6 @@ export {
   dom,
   apid,
   event,
-  push
+  push,
+  FormValidate
 }

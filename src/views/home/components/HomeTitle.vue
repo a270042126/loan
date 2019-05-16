@@ -20,8 +20,8 @@ export default {
 @import "~less/mixin";
 .title{
   padding: 3% @space1;
-  .display-flex();
-  .flex-align-items-center();
+  display: flex;
+  align-items: center;
   .title_bg{
     background: url("../../../assets/images/home_title_bg01.png") left center repeat-x;
     background-size: 2px 20px;

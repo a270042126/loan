@@ -30,7 +30,7 @@ export default {
 @import "~less/mixin";
 ul {
   background: white;
-  .display-flex();
+  display: flex;
   li{
     width: 25%;
     text-align: center;

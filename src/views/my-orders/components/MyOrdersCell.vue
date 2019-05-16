@@ -51,14 +51,14 @@ export default {
 .cell {
   padding: 10px;
   margin-bottom: 12px;
-  .border-radius(2px);
+  border-radius: 2px;
   background: white;
   .top{
     .icon{
       color: @theme_primary;
     }
-    .display-flex();
-    .flex-align-items-center();
+    display: flex;
+    align-items: center;
     .title{
       font-size: @font_size_3;
       margin: 0 6px;
@@ -73,14 +73,14 @@ export default {
       text-align: center;
     }
     .time{
-      .flex();
+      flex: 1;
       text-align: right;
     }
   }
   .bottom{
     padding-top: 15px;
-    .display-flex();
-    .flex-align-items-center();
+    display: flex;
+    align-items: center;
     .quota{
       padding-right: 12px;
       & > div:first-child{

@@ -26,10 +26,10 @@ export default {
   background: white;
   margin: 15px 10px;
   padding: 20px;
-  .display-flex();
-  .flex-justify-content-space-between();
-  .flex-align-items-center();
-  .border-radius(5px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
   & > div:first-child{
     .title{
       color: @light_gray2;
@@ -48,7 +48,7 @@ export default {
     .cube-btn{
       background: #E65100;
       padding: 10px;
-      .border-radius(4px);
+      border-radius: 4px;
     }
   }
 }

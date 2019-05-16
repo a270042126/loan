@@ -5,7 +5,7 @@
     </div>
     <better-scroll v-else :bounce="false">
       <div class="order">
-        <detail-order-pro-cell :current="getStatusNum"/>
+        <DetailOrderHeader :current="getStatusNum"/>
         <div class="space"></div>
         <div class="remind">
           <div class="title">{{`${order.applyGross}`}}元</div>
@@ -43,12 +43,12 @@
         <button class="simple-btn remark_btn" @click="remarkClick">提交</button>
       </div>
     </r-dialog>
-    <r-dialog ref="renewalDialog" title="选择续期" height="300px">
+    <r-dialog ref="renewalDialog" title="选择续期" height="200px">
       <div class="renewal">
         <better-scroll class="scroll" :crollbar="{fade: false}">
-          <template v-for="(item, index) in renewals">
-            <detail-order-re-cell :key="index" :item="item" :check="selectRenewal === DetailOrder"
-                                  @onChange="selectRenewalClick(DetailOrder)"/>
+          <template v-for="(item, key) in renewals">
+            <detail-order-re-cell :key="key" :item="item" :check="selectRenewal === key"
+                                  @onChange="selectRenewalClick(key)"/>
           </template>
         </better-scroll>
         <div class="btns">
@@ -79,7 +79,7 @@ import moment from 'moment'
 import { request } from 'js/utils'
 import { url } from 'js/const'
 import { baseMixin } from 'js/mixins'
-import DetailOrderProCell from './components/DetailOrderProCell'
+import DetailOrderHeader from './components/DetailOrderHeader'
 import DetailOrderCell from './components/DetailOrderCell'
 import DetailOrderReCell from './components/DetailOrderReCell'
 import DetailOrderReLCell from './components/DetailOrderReLCell'
@@ -182,6 +182,7 @@ export default {
             this.hideT()
           }
         })
+        this.selectRenewal = ''
       }
     },
     // 续期取消
@@ -189,8 +190,8 @@ export default {
       this.$refs.renewalDialog.close()
     },
     // 选择续期
-    selectRenewalClick (index) {
-      this.selectRenewal = index
+    selectRenewalClick (key) {
+      this.selectRenewal = key
     },
     // 续期
     renewalClick () {
@@ -264,7 +265,7 @@ export default {
   },
   components: {
     DetailOrderCell,
-    DetailOrderProCell,
+    DetailOrderHeader,
     DetailOrderReCell,
     DetailOrderReLCell,
     DetialOrderRecordCell
@@ -306,7 +307,7 @@ export default {
         font-size: @font_size_2;
         width: 80px;
         height: 34px;
-        .border-radius(4px);
+        border-radius: 4px;
       }
       .cancel-btn{
         margin-left: 15px;

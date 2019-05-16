@@ -3,6 +3,7 @@ const isApp = false
 
 const url = {
   baseUrl: 'https://p-huohuodai.jxstudio.cn',
+  upload: '/File/Upload',
   ChangePassword: '/api/services/app/Profile/ChangePassword',
   // .修改用户资料
   UpdateUserinfo: '/api/services/client/Customer/UpdateCurrentCustomerProfile',
@@ -58,7 +59,15 @@ const url = {
   // 常见问题
   GetProjectContentByTag: '/api/services/client/ProjectContent/GetProjectContentByTag',
   // .采集
-  HandAppAndPhoneInfo: '/api/services/client/CustomerInfoAuthentication/HandAppAndPhoneInfo'
+  HandAppAndPhoneInfo: '/api/services/client/CustomerInfoAuthentication/HandAppAndPhoneInfo',
+  UserVerify: {
+    // 借款
+    IsAuthBaseInfo: '/api/services/client/UserVerify/IsAuthBaseInfo',
+    // 设置收款银行卡
+    AuthBaseInfo: '/api/services/client/UserVerify/AuthBaseInfo',
+    AuthIdCard: '/api/services/client/UserVerify/AuthIdCard',
+    AuthZhiMa: '/api/services/client/UserVerify/AuthZhiMa'
+  }
 }
 export {
   url,

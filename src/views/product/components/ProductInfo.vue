@@ -80,8 +80,8 @@ export default {
       .desc{
         width: 85%;
         margin: 0 auto;
-        .display-flex();
-        .flex-justify-content-space-between();
+        display: flex;
+        justify-content: space-between;
         font-size: @font_size_1;
         margin-top: 24%;
         div > div:first-child{

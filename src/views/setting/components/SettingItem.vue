@@ -52,15 +52,15 @@ export default {
 @import "~less/variable";
 @import "~less/mixin";
 .setting_item{
-  .display-flex();
-  .flex-align-items-center();
+  display: flex;
+  align-items: center;
   padding: 0 @space1;
   height: 44px;
   background: white;
   margin-bottom: 10px;
   .icon{width: 30px; color: @light_gray2}
   .title{
-    .flex();
+    flex: 1;
     font-size: @font_size_1;
   }
 }

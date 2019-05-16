@@ -83,10 +83,10 @@ export default {
   .item{
     font-size: @font_size_4;
     padding: 0 25px;
-    .display-flex();
-    .flex-align-items-center();
+    display: flex;
+    align-items: center;
     .info{
-      .flex();
+      flex: 1;
       padding-left: 15px;
       .desc{
         margin-top: 8px;
@@ -99,7 +99,7 @@ export default {
     .icon{
       width: 60px;
       height: 60px;
-      .border-radius(50%);
+      border-radius: 50%;
       overflow: hidden;
       img{
         width: 100%;

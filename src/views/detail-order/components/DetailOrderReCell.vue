@@ -32,14 +32,14 @@ export default {
 @import "~less/mixin";
 .renewal{
   font-size: @font_size_2;
-  .display-flex();
-  .flex-align-items-center();
+  display: flex;
+  align-items: center;
   & > div:first-child{
     width: 17px;
     height: 17px;
     line-height: 17px;
     border: 1px solid @light_gray2;
-    .border-radius();
+    border-radius: 50%;
     .check {
       font-size: @font_size_4;
     }
@@ -47,9 +47,9 @@ export default {
   &> div:last-child{
     margin-left: 10px;
     border-bottom: 1px solid @light_gray;
-    .flex();
-    .display-flex();
-    .flex-justify-content-space-between();
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
     .term, .rate, .fee{
       line-height: 32px;
       height: 32px;

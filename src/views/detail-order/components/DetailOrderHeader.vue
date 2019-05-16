@@ -5,14 +5,17 @@
         <div class="num">{{item.num}}</div>
         <div class="title">{{item.title}}</div>
       </div>
-      <div v-if="index < proList.length - 1" :key="index + 10000" class="line"></div>
+      <div
+        v-if="index < proList.length - 1"
+        :key="index + 10000"
+        :class="`${current >= item.statusNum ? 'active' : ''} line`"></div>
     </template>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'DetailOrderProCell',
+  name: 'DetailOrderHeader',
   props: {
     current: {
       type: Number,
@@ -58,13 +61,13 @@ export default {
       height: 30px;
       line-height: 30px;
       text-align: center;
-      .border-radius();
+      border-radius: 50%;
     }
     .title{
       color: #fff;
     }
   }
-  .tag.active {
+  .tag.active, .line.active{
     opacity: 0.6;
   }
 }

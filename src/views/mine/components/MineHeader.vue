@@ -65,9 +65,9 @@ export default {
   .top {
     padding:10px 15px 30px 15px;
     color: white;
-    .display-flex();
-    .flex-align-items-center();
-    .flex-justify-content-space-between();
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     h1{
       font-size: @font_size_3;
     }
@@ -91,9 +91,9 @@ export default {
       background: white;
       padding: 10px 10px;
       z-index: 10;
-      .border-radius(10px);
-      .display-flex();
-      .flex-justify-content-space-between();
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
       li{
         width: 60px;
         text-align: center;

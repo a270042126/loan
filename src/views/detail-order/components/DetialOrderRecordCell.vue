@@ -56,8 +56,8 @@ export default {
   padding: 10px 0;
   ._flex{
     line-height: 20px;
-    .display-flex();
-    .flex-justify-content-space-between();
+    display: flex;
+    justify-content: space-between;
     .remark{
       width: 140px;
       text-align: right;
