@@ -5,7 +5,13 @@
            :placeholder="placeholder"
            v-bind:value="value"
            :name="name"
-           @input="handleInput"/>
+           :readonly="readonly"
+           @input="handleInput"
+           @click="_inputClick"
+          />
+    <div v-if="pickerData" class="icon">
+      <svg-icon iconClass="arrow-right"/>
+    </div>
     <slot></slot>
   </div>
 </template>
@@ -25,9 +31,28 @@ export default {
     },
     value: {
       default: ''
-    }
+    },
+    readonly: {
+      default: false
+    },
+    pickerData: null
   },
   methods: {
+    _inputClick () {
+      if (this.pickerData) {
+        if (!this.picker) {
+          this.picker = this.$createPicker({
+            title: this.title,
+            data: [this.pickerData],
+            onSelect: this._selectHandle
+          })
+        }
+        this.picker.show()
+      }
+    },
+    _selectHandle (selectedVal, selectedIndex, selectedText) {
+      this.$emit('input', selectedVal.length ? selectedVal[0] : '')
+    },
     handleInput (event) {
       const value = event.target.value
       // 触发 input 事件，并传入新值
@@ -56,6 +81,10 @@ export default {
     width: 0;
     flex: 1;
     font-size: @font_size_3;
+  }
+  .icon{
+    font-size: @font_size_5;
+    color: @light_gray2;
   }
 }
 </style>

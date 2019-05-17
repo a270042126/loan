@@ -66,7 +66,8 @@ const url = {
     // 设置收款银行卡
     AuthBaseInfo: '/api/services/client/UserVerify/AuthBaseInfo',
     AuthIdCard: '/api/services/client/UserVerify/AuthIdCard',
-    AuthZhiMa: '/api/services/client/UserVerify/AuthZhiMa'
+    AuthZhiMa: '/api/services/client/UserVerify/AuthZhiMa',
+    createOrUpdateContact: '/api/services/client/UserVerify/CreateOrUpdateContact'
   }
 }
 export {

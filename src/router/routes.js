@@ -229,10 +229,19 @@ const routes = [
         }
       },
       {
+        path: '/add-or-update-user-contacts',
+        name: 'addOrUpdateUserContacts',
+        component: (resolve) => {
+          import('../views/link-user-contacts/add-or-update-contacts/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
         path: '/link-user-contacts',
         name: 'linkUserContacts',
         component: (resolve) => {
-          import('../views/link-user-contacts/LinkUserContacts').then((module) => {
+          import('../views/link-user-contacts/contacts/Index').then((module) => {
             resolve(module)
           })
         }

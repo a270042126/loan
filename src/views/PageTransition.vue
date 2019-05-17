@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-transition">
     <div class="nav-bar" ref="navBar">
       <div></div>
     </div>
@@ -57,7 +57,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+@import "~less/variable";
 .child-view {
   position: absolute;
   width:100%;
