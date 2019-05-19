@@ -4,7 +4,7 @@
       <img src="../assets/images/bg-login.png">
       <ul class="from">
         <li>
-          <input type="text" placeholder="用户名" v-model.trim="user.username" />
+          <input type="text" placeholder="手机号码" v-model.trim="user.username" />
         </li>
         <li class="code" v-show="isRegister">
           <input type="text" placeholder="验证码" v-model.trim="user.code"/>
@@ -227,10 +227,11 @@ export default {
 @import "~less/mixin";
 .container{
   height: 100%;
+  background: @login_bg;
   .login{
     height: 100%;
     img{width: 100%}
-    background: @login_bg;
+    background: none;
     display: flex;
     flex-direction: column;
     .from{
@@ -251,7 +252,7 @@ export default {
           margin: 0 24px;
           display: block;
           height: 44px;
-          line-height: 3.6rem;
+          width: 0;
           font-size: @font_size_1;
           background: @login_input_bg;
           color: @login_color;

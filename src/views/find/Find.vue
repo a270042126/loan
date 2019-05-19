@@ -6,12 +6,14 @@
                  :pullDownRefresh="true"
                  @pulling-down="onPullingDown"
                  @pulling-up="onPullingUp">
-      <div class="loading" v-if="isLoading">
-        <loading />
-      </div>
-      <product-list v-else :list="list"/>
-      <div v-if="!isLoading && list.length === 0" class="empty">
-        <img src="../../assets/images/error-article.png">
+      <div class="content">
+        <div class="loading" v-if="isLoading">
+          <loading />
+        </div>
+        <product-list v-else :list="list"/>
+        <div v-if="!isLoading && list.length === 0" class="empty">
+          <img src="@/assets/images/error-article.png">
+        </div>
       </div>
     </better-scroll>
   </base-page>
@@ -147,6 +149,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+.content{
+  padding-bottom: 40px;
+}
 </style>

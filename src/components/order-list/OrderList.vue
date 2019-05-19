@@ -1,24 +1,26 @@
 <template>
-  <div class="cell" @click="gotoDetailOrder">
-    <div class="top">
-      <div class="material-icons icon">assignment</div>
-      <div class="title">简单贷</div>
-      <div class="status">{{item.statusName}}</div>
-      <div class="time">{{getTime}}</div>
-    </div>
-    <div class="bottom">
-      <div class="quota">
-        <div>{{item.applyGross}}<span>元</span></div>
-        <div class="subtitle">借款金额</div>
+  <div>
+    <div class="cell" @click="gotoDetailOrder"  v-for="(item, index) in list" :key="index">
+      <div class="top">
+        <div class="material-icons icon">assignment</div>
+        <div class="title">简单贷</div>
+        <div class="status">{{item.statusName}}</div>
+        <div class="time">{{getTime(item.creationTime)}}</div>
       </div>
-      <div class="line"></div>
-      <div class="term">
-        <div>{{item.applyTerm}}<span>天</span></div>
-        <div class="subtitle">借款期限</div>
-      </div>
-      <div class="line"></div>
-      <div class="need-verify">
-        {{item.statusName}}
+      <div class="bottom">
+        <div class="quota">
+          <div>{{item.applyGross}}<span>元</span></div>
+          <div class="subtitle">借款金额</div>
+        </div>
+        <div class="line"></div>
+        <div class="term">
+          <div>{{item.applyTerm}}<span>天</span></div>
+          <div class="subtitle">借款期限</div>
+        </div>
+        <div class="line"></div>
+        <div class="need-verify">
+          {{item.statusName}}
+        </div>
       </div>
     </div>
   </div>
@@ -27,17 +29,14 @@
 <script>
 import moment from 'moment'
 export default {
-  name: 'MyOrdersCell',
+  name: 'OrderList',
   props: {
-    item: {}
-  },
-  computed: {
-    getTime () {
-      let time = this.item.creationTime
-      return moment(time).format('YYYY-MM-DD')
-    }
+    list: Array
   },
   methods: {
+    getTime (time) {
+      return moment(time).format('YYYY-MM-DD')
+    },
     gotoDetailOrder () {
       this.$router.push({ name: 'detail-order', query: { id: this.item.id } })
     }

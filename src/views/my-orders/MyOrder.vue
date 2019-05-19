@@ -10,9 +10,7 @@
         <loading />
       </div>
       <div v-else class="content">
-        <template v-for="(item, index) in orderList">
-          <my-orders-cell :key="index" :item="item"/>
-        </template>
+        <order-list :list="orderList"/>
         <div v-if="!isLoading && orderList.length === 0" class="empty">
           <img src="../../assets/images/error-order.png">
           <router-link :to="{path:'loan-product'}">
@@ -25,24 +23,14 @@
 </template>
 
 <script>
-import MyOrdersCell from './components/MyOrdersCell'
 import MyOrderFilter from './components/MyOrderFilter'
-import { request } from 'js/utils'
-import { url } from 'js/const'
-import { baseMixin } from 'js/mixins'
-const MAXRESULTCOUNT = 25
+import { baseMixin, orderMixin } from 'js/mixins'
+import OrderList from '../../components/order-list/OrderList'
 export default {
   name: 'MyOrders',
-  mixins: [baseMixin],
-  data () {
-    return {
-      isShowMore: false,
-      orderList: [],
-      skipCount: 0
-    }
-  },
+  mixins: [baseMixin, orderMixin],
   mounted () {
-    this.getOrders()
+    this.onPullingDown()
     this.accapceNotification()
   },
   destroyed () {
@@ -55,52 +43,10 @@ export default {
         console.log('myOrdersRefresh')
         that.onPullingDown()
       })
-    },
-    onPullingUp () {
-      if (this.orderList.length < MAXRESULTCOUNT) {
-        this.foreceUpdate()
-        return
-      }
-      this.skipCount = this.skipCount + MAXRESULTCOUNT
-      this.getOrders(this.skipCount)
-    },
-    onPullingDown () {
-      this.skipCount = 0
-      this.getOrders(this.skipCount)
-    },
-    // 取消刷新
-    foreceUpdate () {
-      if (this.$refs.scroll) {
-        this.$refs.scroll.forceUpdate()
-      }
-    },
-    getOrders (skipCount) {
-      const params = {
-        skipCount: skipCount,
-        maxResultCount: MAXRESULTCOUNT
-      }
-      request({
-        type: 'post',
-        path: url.GetOrders,
-        data: params,
-        fn: data => {
-          this.isLoading = false
-          if (skipCount > 0) {
-            this.orderList = this.orderList.concat(data.result.items)
-          } else {
-            this.orderList = data.result.items
-          }
-          this.isShowMore = this.orderList.length < data.result.totalCount
-        },
-        errFn: () => {
-          this.isLoading = false
-          this.foreceUpdate()
-        }
-      })
     }
   },
   components: {
-    MyOrdersCell,
+    OrderList,
     MyOrderFilter
   }
 }

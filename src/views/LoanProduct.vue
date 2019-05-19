@@ -1,42 +1,58 @@
 <template>
   <base-page :navOptions="{ title: '借款', isBack: true, isFixed: true}">
-    <div>
-      <img src="../assets/images/n-banner.png">
-    </div>
-    <div class="loan-select">
-      <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick">
-        {{quotas.length > 0 ? quotas[quotasIndex].name : '0元'}}
-        <div class="material-icons icon">expand_more</div>
+    <better-scroll :data="orderList" ref="scroll"
+                   :pullUpLoad="isShowMore"
+                   :pullDownRefresh="true"
+                   @pulling-down="onPullingDown"
+                   @pulling-up="onPullingUp">
+      <div class="loan">
+        <div>
+          <img src="../assets/images/n-banner.png">
+        </div>
+        <div class="loan-select">
+          <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick">
+            {{quotas.length > 0 ? quotas[quotasIndex].name : '0元'}}
+            <div class="material-icons icon">expand_more</div>
+          </div>
+          <div :class="`selectInput ${!isQuotas ? 'active' : '' }`" @click="termsClick">
+            {{terms.length > 0 ? terms[termsIndex].name : '0天'}}
+            <div class="material-icons icon">expand_more</div>
+          </div>
+        </div>
+        <div class="loanBtn">
+          <button v-if="quotas.length > 0" class="ra-Btn" @click="loanClick">
+            {{goOnLoan ? '继续借款' : '立即借款'}}
+          </button>
+        </div>
       </div>
-      <div :class="`selectInput ${!isQuotas ? 'active' : '' }`" @click="termsClick">
-        {{terms.length > 0 ? terms[termsIndex].name : '0天'}}
-        <div class="material-icons icon">expand_more</div>
-      </div>
-    </div>
-    <div class="loanBtn">
-      <button v-if="quotas.length > 0" class="ra-Btn" @click="loanClick">立即借款</button>
-    </div>
+      <order-list :list="orderList"/>
+    </better-scroll>
   </base-page>
 </template>
 
 <script>
 import { request } from 'js/utils'
 import { url } from 'js/const'
-import { baseMixin } from 'js/mixins'
+import { baseMixin, orderMixin } from 'js/mixins'
+import OrderList from '../components/order-list/OrderList'
 export default {
   name: 'LoadProduct',
-  mixins: [baseMixin],
+  components: { OrderList },
+  mixins: [baseMixin, orderMixin],
   data () {
     return {
       isQuotas: true,
       quotas: [],
       terms: [],
       quotasIndex: 0,
-      termsIndex: 0
+      termsIndex: 0,
+      goOnLoan: false
     }
   },
   mounted () {
     this.getLoanProduct()
+    this.accapceNotification()
+    this.onPullingDown()
   },
   computed: {
     quotaItems () {
@@ -55,6 +71,25 @@ export default {
     }
   },
   methods: {
+    accapceNotification () {
+      // const that = this
+      this.bus.$on('goOnLoan', (quotaName, termName) => {
+        this.goOnLoan = true
+        this.quotas.some((item, key) => {
+          if (item.name === quotaName) {
+            this.quotasIndex = key
+            return true
+          }
+        })
+
+        this.terms.some((item, key) => {
+          if (item.name === termName) {
+            this.termsIndex = key
+            return true
+          }
+        })
+      })
+    },
     showPicker () {
       if (this.isQuotas) {
         if (!this.picker) {
@@ -134,7 +169,6 @@ export default {
         type: 'post',
         path: url.LoanProduct,
         fn: data => {
-          console.log(data)
           this.quotas = data.result.quotas
           this.terms = data.result.terms
         }
@@ -148,38 +182,42 @@ export default {
 @import "~less/variable";
 @import "~less/mixin";
 .container {
-  background: white;
   img{ width: 100%; }
-  .loan-select{
-    padding: 20px 0;
-    display: flex;
-    justify-content: center;
-    .selectInput{
-      position: relative;
-      width: 38%;
-      height: 36px;
-      line-height: 36px;
-      border-radius: 18px;
-      padding-left: 10px;
-      font-size: @font_size_4;
-      border:1px solid @light_gray3;
-      .icon{
-        position: absolute;
-        right: 8px;
-        top: 0;
+  .loan{
+    background: white;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+    .loan-select{
+      padding: 20px 0;
+      display: flex;
+      justify-content: center;
+      .selectInput{
+        position: relative;
+        width: 38%;
+        height: 36px;
+        line-height: 36px;
+        border-radius: 18px;
+        padding-left: 10px;
+        font-size: @font_size_4;
+        border:1px solid @light_gray3;
+        .icon{
+          position: absolute;
+          right: 8px;
+          top: 0;
+        }
+      }
+      .selectInput:last-child{
+        margin-left: 4%;
+      }
+      .selectInput.active {
+        border: 1px solid @theme_color2;
       }
     }
-    .selectInput:last-child{
-      margin-left: 4%;
+    .loanBtn{
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
     }
-    .selectInput.active {
-      border: 1px solid @theme_color2;
-    }
-  }
-  .loanBtn{
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
   }
 }
 

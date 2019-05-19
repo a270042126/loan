@@ -15,8 +15,7 @@
           <div></div>
         </div>
         <div>
-          <text-input title="姓氏" placeholder="请输入姓氏" v-model="form.surname"/>
-          <text-input title="名字" placeholder="请输入名字" v-model="form.name"/>
+          <text-input title="姓名" placeholder="请输入姓名" v-model="form.name"/>
           <text-input title="身份证" placeholder="请输入身份证" v-model="form.identityCardNumber"/>
           <text-input title="银行卡" placeholder="请输入银行卡" v-model="form.bankCardNumber"/>
         </div>
@@ -43,15 +42,11 @@ export default {
       quotaName: this.$route.query.quotaName || '',
       termName: this.$route.query.termName || '',
       form: {
-        surname: '',
         name: '',
         bankCardNumber: '',
         identityCardNumber: ''
       },
       rules: {
-        surname: [
-          { require: true, message: '姓氏不能为空' }
-        ],
         name: [
           { require: true, message: '名字不能为空' }
         ],
@@ -83,16 +78,9 @@ export default {
           fn: data => {
             if (data.success) {
               this.successT('提交成功')
-              if (this.$route.quotaId) {
-                this.$router.replace({
-                  name: 'create-order',
-                  query: {
-                    quotaId: this.$route.quotaId,
-                    termId: this.$route.termId
-                  }
-                })
-              } else {
-                this.$router.goBack()
+              this.$router.goBack()
+              if (this.$route.query.quotaName) {
+                this.bus.$emit('goOnLoan', this.$route.query.quotaName, this.$route.query.termName)
               }
             }
             this.hideT()

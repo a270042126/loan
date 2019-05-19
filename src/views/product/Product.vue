@@ -88,14 +88,17 @@ export default {
       })
     },
     getIsProductFavorite (id) {
-      request({
-        type: 'post',
-        path: url.IsProductFavorite,
-        data: { id: id },
-        fn: data => {
-          this.isProductFavorite = data.result
-        }
-      })
+      const userKeys = this.userKeys
+      if (userKeys && userKeys.hasOwnProperty('userId')) {
+        request({
+          type: 'post',
+          path: url.IsProductFavorite,
+          data: { id: id },
+          fn: data => {
+            this.isProductFavorite = data.result
+          }
+        })
+      }
     },
     getProductInfo () {
       this.isLoading = true
@@ -115,15 +118,22 @@ export default {
       })
     },
     gotoApply () {
-      if (isApp) {
-        this.$router.push({
-          name: 'browser',
-          query: {
-            url: this.info.product.referralLink
-          }
-        })
+      const userKeys = this.userKeys
+      if (userKeys && userKeys.hasOwnProperty('userId')) {
+        if (isApp) {
+          this.$router.push({
+            name: 'browser',
+            query: {
+              url: this.info.product.referralLink
+            }
+          })
+        } else {
+          window.location.href = this.info.product.referralLink
+        }
       } else {
-        window.location.href = this.info.product.referralLink
+        this.$router.push({
+          name: 'login'
+        })
       }
     }
   },
