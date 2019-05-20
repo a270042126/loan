@@ -4,10 +4,7 @@
       <i class="mdui-icon material-icons" v-if="!isProductFavorite" @click="favoriteClick">favorite_border</i>
       <i class="mdui-icon material-icons" v-else @click="cancelFavoriteClick">favorite</i>
     </div>
-    <div class="loading" v-if="isLoading">
-      <loading />
-    </div>
-    <better-scroll v-else :bounce="false">
+    <better-scroll :bounce="false">
       <product-list :info="info"/>
       <div class="sumbit">
         <cube-button :light="true" @click="gotoApply">立即申请</cube-button>
@@ -101,19 +98,16 @@ export default {
       }
     },
     getProductInfo () {
-      this.isLoading = true
       let params = this.$route.query
       request({
         type: 'post',
         path: url.GetProduct,
         data: { id: params.id },
         fn: data => {
-          this.isLoading = false
           this.info = data.result
           this.getIsProductFavorite(this.info.product.id)
         },
         errFn: () => {
-          this.isLoading = false
         }
       })
     },

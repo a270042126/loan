@@ -1,8 +1,10 @@
 <template>
-  <base-page :navOptions="{ title: '借款', isBack: true, isFixed: true}">
+  <base-page :navOptions="{ title: '借款', isBack: true, isFixed: isFixed}">
     <better-scroll :data="orderList" ref="scroll"
                    :pullUpLoad="isShowMore"
                    :pullDownRefresh="true"
+                   :listenScroll="true"
+                   @scroll="onScroll"
                    @pulling-down="onPullingDown"
                    @pulling-up="onPullingUp">
       <div class="loan">
@@ -41,6 +43,7 @@ export default {
   mixins: [baseMixin, orderMixin],
   data () {
     return {
+      isFixed: true,
       isQuotas: true,
       quotas: [],
       terms: [],
@@ -51,7 +54,6 @@ export default {
   },
   mounted () {
     this.getLoanProduct()
-    this.accapceNotification()
     this.onPullingDown()
   },
   computed: {
@@ -71,24 +73,12 @@ export default {
     }
   },
   methods: {
-    accapceNotification () {
-      // const that = this
-      this.bus.$on('goOnLoan', (quotaName, termName) => {
-        this.goOnLoan = true
-        this.quotas.some((item, key) => {
-          if (item.name === quotaName) {
-            this.quotasIndex = key
-            return true
-          }
-        })
-
-        this.terms.some((item, key) => {
-          if (item.name === termName) {
-            this.termsIndex = key
-            return true
-          }
-        })
-      })
+    onScroll (pos) {
+      if (pos.y < -120) {
+        this.isFixed = false
+      } else {
+        this.isFixed = true
+      }
     },
     showPicker () {
       if (this.isQuotas) {

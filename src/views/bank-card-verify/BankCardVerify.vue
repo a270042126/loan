@@ -66,6 +66,10 @@ export default {
   },
   methods: {
     sumbitClick () {
+      this.$router.replace({
+        name: 'create-order',
+        query: this.$route.query
+      })
       const result = FormValidate.checkForm(this.form, this.rules)
       if (result.length > 0) {
         this.errorT(result[0].message)
@@ -80,7 +84,10 @@ export default {
               this.successT('提交成功')
               this.$router.goBack()
               if (this.$route.query.quotaName) {
-                this.bus.$emit('goOnLoan', this.$route.query.quotaName, this.$route.query.termName)
+                this.$router.replace({
+                  name: 'create-order',
+                  query: this.$route.query
+                })
               }
             }
             this.hideT()

@@ -1,20 +1,16 @@
 <template>
   <base-page :navOptions="{ title: '我的订单', isBack: true}">
-    <my-order-filter />
+    <my-order-filter @filterChange="filterChange"/>
     <better-scroll :data="orderList" ref="scroll"
                     :pullUpLoad="isShowMore"
                     :pullDownRefresh="true"
                  @pulling-down="onPullingDown"
                  @pulling-up="onPullingUp">
-      <div class="loading" v-if="isLoading">
-        <loading />
-      </div>
-      <div v-else class="content">
+      <div class="content">
         <order-list :list="orderList"/>
         <div v-if="!isLoading && orderList.length === 0" class="empty">
-          <img src="../../assets/images/error-order.png">
           <router-link :to="{path:'loan-product'}">
-            <cube-button>前往借款</cube-button>
+            <button class="simple-btn">前往借款</button>
           </router-link>
         </div>
       </div>
@@ -25,7 +21,7 @@
 <script>
 import MyOrderFilter from './components/MyOrderFilter'
 import { baseMixin, orderMixin } from 'js/mixins'
-import OrderList from '../../components/order-list/OrderList'
+import OrderList from '@/components/order-list/OrderList'
 export default {
   name: 'MyOrders',
   mixins: [baseMixin, orderMixin],
@@ -37,6 +33,11 @@ export default {
     this.bus.$off('myOrdersRefresh')
   },
   methods: {
+    filterChange (value) {
+      console.log(value)
+      this.params.searchFlag = value
+      this.onPullingDown()
+    },
     accapceNotification () {
       const that = this
       this.bus.$on('myOrdersRefresh', () => {

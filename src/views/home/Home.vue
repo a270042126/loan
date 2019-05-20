@@ -6,8 +6,8 @@
       <div class="content">
         <home-header/>
         <home-apply />
-        <home-ys-product :list="ysList" :isLoading="isLoading"/>
-        <home-recommend :list="recommendList" :isLoading="isLoading"/>
+        <home-ys-product :list="ysList"/>
+        <home-recommend :list="recommendList"/>
         <home-footer/>
       </div>
     </better-scroll>
@@ -51,7 +51,6 @@ export default {
       const list = storage.get('ys-products')
       if (list && !refresh) {
         this.ysList = list
-        this.isLoading = false
       } else {
         const platform = common.platform()
         let params = {
@@ -73,12 +72,10 @@ export default {
           path: url.productsUrl,
           data: params,
           fn: data => {
-            this.isLoading = false
             this.ysList = data.result.items
             storage.sessionSet('ys-products', this.ysList)
           },
           errFn: () => {
-            this.isLoading = false
             this.foreceUpdate()
           }
         })
@@ -88,7 +85,6 @@ export default {
     getRecommendProducts (refresh = false) {
       const list = storage.get('recommend-products')
       if (list && !refresh) {
-        this.isLoading = false
         this.recommendList = list
       } else {
         const platform = common.platform()
@@ -109,12 +105,10 @@ export default {
           path: url.productsUrl,
           data: params,
           fn: data => {
-            this.isLoading = false
             this.recommendList = data.result.items
             storage.sessionSet('recommend-products', this.recommendList)
           },
           errFn: () => {
-            this.isLoading = false
             this.foreceUpdate()
           }
         })

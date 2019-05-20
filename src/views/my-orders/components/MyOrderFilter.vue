@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="(item, key) in list" :key="key" :class="filterIndex === key ? 'active' : ''" @click="filterClick(key)">
-      <span>{{item}}</span>
+      <span>{{item.text}}</span>
     </li>
   </ul>
 </template>
@@ -13,13 +13,17 @@ export default {
     return {
       filterIndex: 0,
       list: [
-        '待放款', '待还款', '已结清', '审核失败'
+        { text: '待放款', value: '4' },
+        { text: '待还款', value: '8' },
+        { text: '已结清', value: '32' },
+        { text: '审核失败', value: '256' }
       ]
     }
   },
   methods: {
     filterClick (key) {
       this.filterIndex = key
+      this.$emit('filterChange', this.list[key].value)
     }
   }
 }

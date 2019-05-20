@@ -1,10 +1,7 @@
 <template>
   <div class="recommend">
     <home-title title="热门推荐" :icon="require('images/sy_30.png')"/>
-    <div class="loading" v-if="isLoading">
-      <loading />
-    </div>
-    <div v-else class="recommend">
+    <div class="recommend">
       <ul>
         <li v-for="(item, index) in list" :key="index">
           <router-link :to="{name:'product', query: {name: item.name, id: item.id}}">
@@ -41,10 +38,6 @@ import { url } from 'js/const'
 export default {
   name: 'HomeRecommend',
   props: {
-    isLoading: {
-      type: Boolean,
-      default: true
-    },
     list: Array
   },
   data () {

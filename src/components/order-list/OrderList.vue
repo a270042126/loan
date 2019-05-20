@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="cell" @click="gotoDetailOrder"  v-for="(item, index) in list" :key="index">
+    <div class="cell" @click="gotoDetailOrder(key)"  v-for="(item, key) in list" :key="key">
       <div class="top">
         <div class="material-icons icon">assignment</div>
         <div class="title">简单贷</div>
@@ -37,8 +37,8 @@ export default {
     getTime (time) {
       return moment(time).format('YYYY-MM-DD')
     },
-    gotoDetailOrder () {
-      this.$router.push({ name: 'detail-order', query: { id: this.item.id } })
+    gotoDetailOrder (key) {
+      this.$router.push({ name: 'detail-order', query: { id: this.list[key].id } })
     }
   }
 }

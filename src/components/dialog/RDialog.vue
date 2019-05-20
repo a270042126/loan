@@ -23,7 +23,7 @@ export default {
   name: 'OrderPact',
   props: {
     title: String,
-    height: String
+    height: String,
   },
   data () {
     return {

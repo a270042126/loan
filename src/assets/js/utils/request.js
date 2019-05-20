@@ -19,8 +19,10 @@ axios.defaults.baseURL = url.baseUrl
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
+    store.dispatch('setIsLoading', true)
     const userKeys = store.getters.userKeys
-    if (userKeys) {
+    console.log(userKeys)
+    if (userKeys && userKeys.accessToken) {
       config.headers.Authorization = `Bearer ${userKeys.accessToken}`
       // token 刷新
       const loginTime = userKeys.loginTime ? moment(userKeys.loginTime).add(userKeys.expireInSeconds, 's') : ''
@@ -43,12 +45,15 @@ axios.interceptors.request.use(
         })
       }
     } else {
-      const RefereeId = common.getQueryFromUrl(config.url, 'RefereeId')
-      config.headers.RefereeId = RefereeId
+      const refereeId = store.getters.refereeId
+      if (refereeId) {
+        config.headers.RefereeId = refereeId
+      }
     }
     return config
   },
   err => {
+    store.dispatch('setIsLoading', false)
     return Promise.reject(err)
   }
 )
@@ -56,9 +61,11 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    store.dispatch('setIsLoading', false)
     return response
   },
   error => {
+    store.dispatch('setIsLoading', false)
     if (error.response) {
       switch (error.response.status) {
         case 401:
@@ -143,11 +150,7 @@ const request = function ({
         common.errorT(error.error.details)
       } else if (error.error.message) {
         common.errorT(error.error.message)
-      } else {
-        common.errorT('网络出错')
       }
-    } else {
-      common.errorT('网络出错')
     }
     if (errFn) {
       errFn(error)

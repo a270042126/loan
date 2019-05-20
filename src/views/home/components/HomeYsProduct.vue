@@ -1,10 +1,7 @@
 <template>
   <div class="ys_product">
     <home-title title="优势产品" :icon="require('images/youshi.gif')"/>
-    <div class="loading" v-if="isLoading">
-      <loading />
-    </div>
-    <better-scroll v-else  class="wrapper" :data="list" :scrollX="true">
+    <better-scroll class="wrapper" :data="list" :scrollX="true">
       <ul class="content" ref="ysUl">
         <li v-for="(item,index) in list" :key="index" @click="gotoProductInfo(item)">
           <img v-lazy="baseUrl + item.logo">
@@ -22,10 +19,6 @@ import { url } from 'js/const'
 export default {
   name: 'HomeYsProduct',
   props: {
-    isLoading: {
-      type: Boolean,
-      default: true
-    },
     list: Array
   },
   data () {

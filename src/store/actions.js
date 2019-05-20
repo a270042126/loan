@@ -12,3 +12,9 @@ export const setToken = ({ commit }, userKeys) => {
   storage.set('userKeys', userKeys)
   commit(types.SET_USER_KEYS, userKeys)
 }
+export const setIsLoading = ({ commit }, isLoading) => {
+  commit(types.SET_IS_LOADING, isLoading)
+}
+export const setRefereeId = ({ commit }, refereeId) => {
+  commit(types.SET_REFEREE_ID, refereeId)
+}

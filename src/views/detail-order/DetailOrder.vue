@@ -1,9 +1,6 @@
 <template>
   <base-page :navOptions="navOptions">
-    <div class="loading" v-if="isLoading">
-      <loading />
-    </div>
-    <better-scroll v-else :bounce="false">
+    <better-scroll :bounce="false">
       <div class="order">
         <DetailOrderHeader :current="getStatusNum"/>
         <div class="space"></div>
@@ -246,19 +243,15 @@ export default {
     },
     // 获取订单
     getDetailOrder () {
-      this.isLoading = true
       const id = this.$route.query.id
       request({
         type: 'post',
         path: url.GetOrderDetail,
         data: { id: id },
         fn: data => {
-          console.log(data)
-          this.isLoading = false
           this.order = data.result
         },
         errFn: () => {
-          this.isLoading = false
         }
       })
     }

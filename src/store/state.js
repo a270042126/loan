@@ -1,6 +1,8 @@
 const state = {
   isWelcome: false,
   filterParams: '',
-  userKeys: {}
+  userKeys: {},
+  isLoading: false,
+  refereeId: ''
 }
 export default state

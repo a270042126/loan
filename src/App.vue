@@ -6,6 +6,7 @@
     <template v-else>
       <router-view/>
     </template>
+    <loading class="my-loading" v-if="isLoading"/>
   </div>
 </template>
 <script>
@@ -21,7 +22,8 @@ export default {
   computed: {
     ...mapGetters([
       'isWelcome',
-      'userKeys'
+      'userKeys',
+      'isLoading'
     ])
   },
   methods: {

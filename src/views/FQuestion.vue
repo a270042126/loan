@@ -1,10 +1,7 @@
 <template>
   <base-page :navOptions="{ title: '常见问题', isBack: true}">
     <better-scroll>
-      <div class="loading" v-if="isLoading">
-        <loading />
-      </div>
-      <div v-else>
+      <div>
         <div class="title">{{question.displayName}}</div>
         <div class="content" v-html="question.content"></div>
       </div>
@@ -40,11 +37,9 @@ export default {
         path: url.GetProjectContentByTag,
         data: params,
         fn: data => {
-          this.isLoading = false
           this.question = data.result
         },
         errFn: () => {
-          this.isLoading = false
         }
       })
     }

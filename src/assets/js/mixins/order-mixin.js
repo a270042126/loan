@@ -6,7 +6,11 @@ const OrderMixin = {
     return {
       isShowMore: false,
       orderList: [],
-      skipCount: 0
+      params: {
+        sorting: '',
+        maxResultCount: MAXRESULTCOUNT,
+        skipCount: 0
+      }
     }
   },
   methods: {
@@ -15,12 +19,12 @@ const OrderMixin = {
         this.foreceUpdate()
         return
       }
-      this.skipCount = this.skipCount + MAXRESULTCOUNT
-      this.getOrders(this.skipCount)
+      this.params.skipCount = this.params.skipCount + MAXRESULTCOUNT
+      this.getOrders()
     },
     onPullingDown () {
-      this.skipCount = 0
-      this.getOrders(this.skipCount)
+      this.params.skipCount = 0
+      this.getOrders()
     },
     // 取消刷新
     foreceUpdate () {
@@ -28,18 +32,14 @@ const OrderMixin = {
         this.$refs.scroll.forceUpdate()
       }
     },
-    getOrders (skipCount) {
-      const params = {
-        skipCount: skipCount,
-        maxResultCount: MAXRESULTCOUNT
-      }
+    getOrders () {
+      const params = this.params
       request({
         type: 'post',
         path: url.GetOrders,
         data: params,
         fn: data => {
-          this.isLoading = false
-          if (skipCount > 0) {
+          if (this.params.skipCount > 0) {
             this.orderList = this.orderList.concat(data.result.items)
           } else {
             this.orderList = data.result.items
@@ -47,7 +47,6 @@ const OrderMixin = {
           this.isShowMore = this.orderList.length < data.result.totalCount
         },
         errFn: () => {
-          this.isLoading = false
           this.foreceUpdate()
         }
       })

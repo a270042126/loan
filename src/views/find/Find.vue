@@ -7,10 +7,7 @@
                  @pulling-down="onPullingDown"
                  @pulling-up="onPullingUp">
       <div class="content">
-        <div class="loading" v-if="isLoading">
-          <loading />
-        </div>
-        <product-list v-else :list="list"/>
+        <product-list :list="list"/>
         <div v-if="!isLoading && list.length === 0" class="empty">
           <img src="@/assets/images/error-article.png">
         </div>
@@ -57,7 +54,6 @@ export default {
   },
   methods: {
     filter2Click (key) {
-      this.isLoading = true
       for (let index in filterParams) {
         delete filterParams[index]
       }
@@ -67,7 +63,6 @@ export default {
     },
 
     filterClick (key, value) {
-      this.isLoading = true
       for (let index in filterParams) {
         delete filterParams[index]
       }
@@ -120,7 +115,6 @@ export default {
         path: url.productsUrl,
         data: newParams,
         fn: data => {
-          this.isLoading = false
           let items = data.result.items
           if (newParams.skipCount === 0) {
             this.list = items
@@ -128,10 +122,8 @@ export default {
             this.list = this.list.concat(items)
           }
           this.isShowMore = this.list.length < data.result.totalCount
-          console.log(this.isShowMore)
         },
         errFn: () => {
-          this.isLoading = false
           if (typeof params.errback === 'function') {
             this.foreceUpdate()
           }

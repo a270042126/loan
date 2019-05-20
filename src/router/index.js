@@ -11,7 +11,7 @@ Router.prototype.goBack = function () {
 
 Vue.use(Router)
 
-let userKeys = storage.get('userKeys')
+const userKeys = storage.get('userKeys')
 if (userKeys) {
   store.commit('SET_USER_KEYS', userKeys)
 }
@@ -20,4 +20,12 @@ const newRouter = new Router({
   base: process.env.BASE_URL,
   routes
 })
+
+newRouter.beforeEach((to, from, next) => {
+  const query = to.query
+  store.dispatch('setRefereeId', query.RefereeId || query.refereeId)
+  store.dispatch('setIsLoading', false)
+  next()
+})
+
 export default newRouter
