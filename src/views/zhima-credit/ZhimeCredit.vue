@@ -6,7 +6,7 @@
           <a class="help" @click.stop="openZhimaHelp">芝麻分认证帮助</a>
         </text-input>
         <div class="photo">
-          <p>请上传你的芝麻分照片</p>
+          <p style="margin-left: 15px">请上传你的芝麻分照片</p>
           <div>
             <svg-icon v-if="!form.zhimaImage" iconClass="upload"/>
             <img v-else :src="getZhimaImageUrl">
@@ -86,7 +86,6 @@ export default {
 <style lang="less" scoped>
 @import "~less/variable";
 .input-div{
-  padding: 0 15px;
   background: white;
 }
 .help{

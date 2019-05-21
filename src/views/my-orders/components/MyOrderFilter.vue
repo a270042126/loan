@@ -9,6 +9,11 @@
 <script>
 export default {
   name: 'MyOrderFilter',
+  props: {
+    searchFlag: {
+      default: 4
+    }
+  },
   data () {
     return {
       filterIndex: 0,
@@ -24,6 +29,24 @@ export default {
     filterClick (key) {
       this.filterIndex = key
       this.$emit('filterChange', this.list[key].value)
+    }
+  },
+  watch: {
+    searchFlag (newValue) {
+      switch (newValue) {
+        case 4:
+          this.filterIndex = 0
+          break
+        case 8:
+          this.filterIndex = 1
+          break
+        case 32:
+          this.filterIndex = 2
+          break
+        case 256:
+          this.filterIndex = 3
+          break
+      }
     }
   }
 }

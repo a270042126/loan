@@ -2,8 +2,9 @@
   <div class="verify-cell" @click="_gotoOther">
     <div class="top">
       <div class="material-icons icon">{{item.icon}}</div>
-      <div class="title">{{item.title}}</div>
-      <div class="go-verify">去认证</div>
+      <div class="title">{{item.title}}
+        <span v-if="item.verifyNames" :class="`status ${item.status ? 'green' : 'red'}`">({{item.status ? '已认证' : '未认证'}})</span></div>
+      <div class="go-verify">{{item.status ? '重新认证' : '去认证'}}</div>
     </div>
     <div class="bottom">
       {{item.desc}}
@@ -47,16 +48,26 @@ export default {
       font-size: @font_size_3;
       padding-left: 4px;
       flex: 1;
+      .status{
+        font-size: @font_size_2;
+        margin-left: 10px;
+      }
+      .red{
+        color: red;
+      }
+      .green{
+        color: green;
+      }
     }
     .go-verify{
       color: white;
       font-size: @font_size_2;
       background: @theme_primary;
-      width: 68px;
       height: 30px;
       line-height: 30px;
       text-align: center;
       border-radius: 15px;
+      padding: 0 15px;
     }
   }
   .bottom{

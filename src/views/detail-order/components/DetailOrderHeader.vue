@@ -1,7 +1,7 @@
 <template>
   <div class="progress">
     <template v-for="(item, index) in proList">
-      <div :key="index" :class="`tag ${current >= item.statusNum ? 'active' : ''}`">
+      <div :key="index" :class="`tag ${current > item.statusNum ? 'active' : ''}`">
         <div class="num">{{item.num}}</div>
         <div class="title">{{item.title}}</div>
       </div>
@@ -25,9 +25,9 @@ export default {
   data () {
     return {
       proList: [
-        { title: '签约', num: 1, statusNum: -1 },
-        { title: '审核', num: 1, statusNum: 1 },
-        { title: '放款', num: 1, statusNum: 3 }
+        { title: '审核', num: 1, statusNum: 2 },
+        { title: '还款', num: 1, statusNum: 3 },
+        { title: '完成', num: 1, statusNum: 4 }
       ]
     }
   }

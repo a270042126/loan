@@ -27,6 +27,10 @@ button{
   height: 100vh;
   font-size: @font_size_1;
 }
+.nav-bar-right-item{
+  color: white;
+  font-size: 30px;
+}
 .nav-bar{
   z-index: 2;
   background: @theme_primary;
@@ -36,9 +40,9 @@ button{
     justify-content: space-between;
     height: @nav_bar_height;
     line-height: @nav_bar_height;
-    .arrow{
+    .left-item{
+      padding-left: @nav_bar_item_space;
       width: @nav_bar_item_width;
-      text-align: center;
     }
     .right-item{
       margin-right: @nav_bar_item_space;

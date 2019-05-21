@@ -67,7 +67,15 @@ const url = {
     AuthBaseInfo: '/api/services/client/UserVerify/AuthBaseInfo',
     AuthIdCard: '/api/services/client/UserVerify/AuthIdCard',
     AuthZhiMa: '/api/services/client/UserVerify/AuthZhiMa',
-    createOrUpdateContact: '/api/services/client/UserVerify/CreateOrUpdateContact'
+    createOrUpdateContact: '/api/services/client/UserVerify/CreateOrUpdateContact',
+    GetAuthList: '/api/services/client/UserVerify/GetAuthList',
+    AuthOperatorRequest: '/api/services/client/UserVerify/AuthOperatorRequest',
+    AuthOperatorSubmit: '/api/services/client/UserVerify/AuthOperatorSubmit',
+    GetUserContactList: '/api/services/client/UserVerify/GetUserContactList',
+    DeleteContact: '/api/services/client/UserVerify/DeleteContact'
+  },
+  ProjectContent: {
+    GetContentList: '/api/services/client/ProjectContent/GetContentList'
   }
 }
 export {

@@ -13,7 +13,7 @@
     <div class="menus">
       <ul>
         <li v-for="(item, key) in list" :key="key">
-          <router-link :to="{name: item.path, query: {index: key}}">
+          <router-link :to="{name: item.path, query: {index: key, searchFlag: item.searchFlag}}">
             <img :src="item.icon">
             <p>{{item.title}}</p>
           </router-link>
@@ -31,10 +31,10 @@ export default {
   data () {
     return {
       list: [
-        { icon: require('../../../assets/images/mine01.png'), title: '待放款', path: 'my-orders' },
-        { icon: require('../../../assets/images/mine02.png'), title: '待还款', path: 'my-orders' },
-        { icon: require('../../../assets/images/mine03.png'), title: '已结清', path: 'my-orders' },
-        { icon: require('../../../assets/images/mine04.png'), title: '审核失败', path: 'my-orders' }
+        { icon: require('@/assets/images/mine01.png'), title: '待放款', path: 'my-orders', searchFlag: 4 },
+        { icon: require('@/assets/images/mine02.png'), title: '待还款', path: 'my-orders', searchFlag: 8 },
+        { icon: require('@/assets/images/mine03.png'), title: '已结清', path: 'my-orders', searchFlag: 32 },
+        { icon: require('@/assets/images/mine04.png'), title: '审核失败', path: 'my-orders', searchFlag: 256 }
       ]
     }
   },

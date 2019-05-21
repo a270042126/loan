@@ -19,7 +19,7 @@ export default {
     return {
       list: [
         { icon: 'description', title: '我的资料', path: 'verify' },
-        { icon: 'assignment', title: '交易记录', path: 'my-orders' },
+        { icon: 'assignment', title: '记录', path: 'my-orders' },
         { icon: 'favorite', title: '我的收藏', path: 'favorite' },
         { icon: 'face', title: '邀请好友', path: 'share' },
         { icon: 'question_answer', title: '常见问题', path: 'fquestion' }

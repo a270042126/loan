@@ -79,18 +79,15 @@ export default {
           type: 'post',
           data: this.form,
           path: url.UserVerify.AuthBaseInfo,
-          fn: data => {
-            if (data.success) {
-              this.successT('提交成功')
-              this.$router.goBack()
-              if (this.$route.query.quotaName) {
-                this.$router.replace({
-                  name: 'create-order',
-                  query: this.$route.query
-                })
-              }
+          fn: () => {
+            this.successT('提交成功')
+            this.$router.goBack()
+            if (this.$route.query.quotaName) {
+              this.$router.replace({
+                name: 'create-order',
+                query: this.$route.query
+              })
             }
-            this.hideT()
           },
           errFn: () => {
             this.hideT()
@@ -127,7 +124,7 @@ export default {
 }
 .bank-card{
   background: white;
-  padding: 20px 15px;
+  padding: 20px 0;
   .title{
     display: flex;
     align-items: center;

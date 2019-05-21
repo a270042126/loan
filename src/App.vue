@@ -6,7 +6,9 @@
     <template v-else>
       <router-view/>
     </template>
-    <loading class="my-loading" v-if="isLoading"/>
+    <div class="bg-cover loading-bg" v-if="isLoading">
+      <loading class="my-loading"/>
+    </div>
   </div>
 </template>
 <script>
@@ -58,5 +60,8 @@ export default {
 #app{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.loading-bg{
+  background-color: rgba(255,255,255,.1) !important;
 }
 </style>

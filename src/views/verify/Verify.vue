@@ -12,23 +12,60 @@
 
 <script>
 import VerifyCell from './components/VerifyCell'
+import { request } from 'js/utils'
+import { url } from 'js/const'
 export default {
   name: 'Verify',
   data () {
     return {
+      verifyNames: [],
       list: [
-        { icon: 'featured_play_list', title: '身份证认证', desc: '身份证认证可以提高你的额度', pathName: 'idCardVerify' },
-        { icon: 'featured_play_list', title: '银行卡认证', desc: '银行卡认证可以提高你的额度', pathName: 'bankCardVerify' },
-        { icon: 'featured_play_list', title: '芝麻分认证', desc: '芝麻分认证可以提高你的额度', pathName: 'zhimeCredit' },
-        { icon: 'featured_play_list', title: '紧急联系人', desc: '紧急联系人可以提高你的额度', pathName: 'addOrUpdateUserContacts' },
-        { icon: 'featured_play_list', title: '手机运营商', desc: '手机运营商可以提高你的额度' }
+        { icon: 'featured_play_list', title: '身份证认证', desc: '身份证认证可以提高你的额度', pathName: 'idCardVerify', status: false, verifyNames: true },
+        { icon: 'featured_play_list', title: '银行卡认证', desc: '银行卡认证可以提高你的额度', pathName: 'bankCardVerify', status: false, verifyNames: true },
+        { icon: 'featured_play_list', title: '芝麻分认证', desc: '芝麻分认证可以提高你的额度', pathName: 'zhimeCredit', status: false, verifyNames: false },
+        { icon: 'featured_play_list', title: '紧急联系人', desc: '紧急联系人可以提高你的额度', pathName: 'linkUserContacts', status: false, verifyNames: true },
+        { icon: 'featured_play_list', title: '手机运营商', desc: '手机运营商可以提高你的额度', pathName: 'phoneVerify', status: false, verifyNames: true }
       ]
     }
   },
   components: {
     VerifyCell
   },
+  mounted () {
+    this.getAuthList()
+  },
   methods: {
+    getAuthList () {
+      request({
+        type: 'post',
+        path: url.UserVerify.GetAuthList,
+        fn: (res) => {
+          const verifyNames = res.result.verifyNames
+          this.setStatus(verifyNames)
+        },
+        errFn: () => {
+        }
+      })
+    },
+    setStatus (verifyNames) {
+      const list = this.list
+      verifyNames.some((name) => {
+        switch (name) {
+          case '身份证':
+            list[0].status = true
+            break
+          case '姓名三要素':
+            list[1].status = true
+            break
+          case '芝麻分':
+            list[2].status = true
+            break
+          case '手机运营商':
+            list[4].status = true
+            break
+        }
+      })
+    },
     gotoOther (pathName) {
       if (pathName) {
         this.$router.push({

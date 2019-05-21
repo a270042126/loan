@@ -35,7 +35,7 @@ const CreateOrder = (resolve) => {
   })
 }
 const Message = (resolve) => {
-  import('../views/message/Message.vue').then((module) => {
+  import('../views/message/list/Message').then((module) => {
     resolve(module)
   })
 }
@@ -232,7 +232,7 @@ const routes = [
         path: '/add-or-update-user-contacts',
         name: 'addOrUpdateUserContacts',
         component: (resolve) => {
-          import('../views/link-user-contacts/add-or-update-contacts/Index').then((module) => {
+          import('../views/link-user-contacts/add-or-update/Index').then((module) => {
             resolve(module)
           })
         }
@@ -241,7 +241,16 @@ const routes = [
         path: '/link-user-contacts',
         name: 'linkUserContacts',
         component: (resolve) => {
-          import('../views/link-user-contacts/contacts/Index').then((module) => {
+          import('../views/link-user-contacts/list/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/phone-verify',
+        name: 'phoneVerify',
+        component: (resolve) => {
+          import('../views/phone-verify/Index').then((module) => {
             resolve(module)
           })
         }

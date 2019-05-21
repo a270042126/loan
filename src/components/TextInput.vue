@@ -1,18 +1,20 @@
 <template>
   <div class="text-input">
-    <label>{{title}}</label>
-    <input type="text"
-           :placeholder="placeholder"
-           v-bind:value="value"
-           :name="name"
-           :readonly="readonly"
-           @input="handleInput"
-           @click="_inputClick"
-          />
-    <div v-if="pickerData" class="icon">
-      <svg-icon iconClass="arrow-right"/>
+    <div>
+      <label>{{title}}</label>
+      <input type="text"
+             :placeholder="placeholder"
+             v-bind:value="value"
+             :name="name"
+             :readonly="readonly"
+             @input="handleInput"
+             @click="_inputClick"
+      />
+      <div v-if="pickerData" class="icon">
+        <svg-icon iconClass="arrow-right"/>
+      </div>
+      <slot></slot>
     </div>
-    <slot></slot>
   </div>
 </template>
 
@@ -67,24 +69,27 @@ export default {
 .text-input{
   @height: 44px;
   background: white;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid @light_gray;
-  height: @height;
-  label{
-    width: 80px;
-    font-size: @font_size_3;
-  }
-  input{
+  padding: 0 15px;
+  & > div{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid @light_gray;
     height: @height;
-    text-align: right;
-    width: 0;
-    flex: 1;
-    font-size: @font_size_3;
-  }
-  .icon{
-    font-size: @font_size_5;
-    color: @light_gray2;
+    label{
+      width: 80px;
+      font-size: @font_size_3;
+    }
+    input{
+      height: @height;
+      text-align: right;
+      width: 0;
+      flex: 1;
+      font-size: @font_size_3;
+    }
+    .icon{
+      font-size: @font_size_5;
+      color: @light_gray2;
+    }
   }
 }
 </style>

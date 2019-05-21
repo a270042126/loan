@@ -1,5 +1,5 @@
 <template>
-  <base-page :navOptions="navOptions" @navBackClick="backClick" @eventGetHeight="getNavBarHeight">
+  <base-page :navOptions="{ title: '网页浏览',isBack: true }" @navBackClick="backClick" @eventGetHeight="getNavBarHeight">
   </base-page>
 </template>
 
@@ -7,14 +7,6 @@
 import { apid } from 'js/utils'
 export default {
   name: 'Browser',
-  data () {
-    return {
-      navOptions: {
-        title: '网页浏览',
-        isBack: true
-      }
-    }
-  },
   mounted () {
     const that = this
     apid.setListenKeyBack(() => {

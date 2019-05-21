@@ -14,6 +14,8 @@
 
 <script>
 import MessageItem from './components/MessageItem'
+import { request } from 'js/utils'
+import { url } from 'js/const'
 export default {
   name: 'Message',
   data () {
@@ -21,15 +23,29 @@ export default {
       navOptions: {
         title: '消息'
       },
-      list: [
-        { icon: 'notifications_active', title: '公告消息', message: '请勿向他人汇款请勿向他人汇款请勿向他人汇款他人汇款他人汇款他人汇款他人汇款他人汇款' },
-        { icon: 'notifications_active', title: '公告消息', message: '请勿向他人汇款请勿向他人汇款请勿向他人汇款' }
-      ]
+      params: {
+        type: 2,
+        maxResultCount: 20,
+        skipCount: 0
+      },
+      list: []
     }
+  },
+  mounted () {
+    this.onPullingDown()
   },
   methods: {
     onPullingDown () {
-      console.log(123)
+      request({
+        type: 'post',
+        data: this.params,
+        path: url.ProjectContent.GetContentList,
+        fn: (res) => {
+          this.list = res.result.items
+        },
+        errFn: () => {
+        }
+      })
     }
   },
   components: {

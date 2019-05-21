@@ -27,6 +27,31 @@ const baseMixin = {
     },
     hideT () {
       this.toast.hide()
+    },
+    alertT (text, okCallBack) {
+      this.$createDialog({
+        type: 'confirm',
+        title: '提示',
+        content: text,
+        confirmBtn: {
+          text: '确定',
+          active: true,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        cancelBtn: {
+          text: '取消',
+          active: false,
+          disabled: false,
+          href: 'javascript:;'
+        },
+        onConfirm: () => {
+          if (okCallBack && typeof okCallBack === 'function') {
+            okCallBack()
+          }
+        },
+        onCancel: () => {}
+      }).show()
     }
   }
 }

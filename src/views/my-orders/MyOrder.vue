@@ -1,6 +1,6 @@
 <template>
   <base-page :navOptions="{ title: '我的订单', isBack: true}">
-    <my-order-filter @filterChange="filterChange"/>
+    <my-order-filter @filterChange="filterChange" :searchFlag="params.searchFlag"/>
     <better-scroll :data="orderList" ref="scroll"
                     :pullUpLoad="isShowMore"
                     :pullDownRefresh="true"
@@ -26,6 +26,8 @@ export default {
   name: 'MyOrders',
   mixins: [baseMixin, orderMixin],
   mounted () {
+    const searchFlag = this.$route.query.searchFlag
+    this.params.searchFlag = searchFlag || 4
     this.onPullingDown()
     this.accapceNotification()
   },
@@ -34,14 +36,12 @@ export default {
   },
   methods: {
     filterChange (value) {
-      console.log(value)
       this.params.searchFlag = value
       this.onPullingDown()
     },
     accapceNotification () {
       const that = this
       this.bus.$on('myOrdersRefresh', () => {
-        console.log('myOrdersRefresh')
         that.onPullingDown()
       })
     }

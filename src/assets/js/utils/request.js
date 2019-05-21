@@ -46,7 +46,6 @@ axios.interceptors.request.use(
       }
     } else {
       const refereeId = storage.get('refereeId')
-      console.log(refereeId)
       if (refereeId) {
         config.headers.RefereeId = refereeId
       }

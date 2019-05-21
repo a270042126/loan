@@ -4,7 +4,9 @@
       <header v-if="navOptions"  ref="navBar"
               :class="`nav-bar ${navOptions.isShadow ? 'shadow': ''} ${navOptions.isFixed ? 'fixed' : ''}`">
         <div>
-          <div v-if="navOptions.isBack" class="arrow material-icons" @click="_navBackClick">&#xe5c4;</div>
+          <div class="left-item">
+            <div v-if="navOptions.isBack" class="arrow material-icons" @click="_navBackClick">&#xe5c4;</div>
+          </div>
           <div v-if="navOptions.title" class="title">{{navOptions.title}}</div>
           <div class="right-item">
             <slot name="navRightItem"></slot>

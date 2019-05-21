@@ -9,7 +9,7 @@
           <div class="status">{{order.statusName}}</div>
           <!--<div class="desc">原因：尊敬的客户，由于您本次提交的某些信息不符合我们的审核标准，您的借款已被取消</div>-->
           <div>
-            <button v-if="getStatusNum === -1 || getStatusNum >= 4" @click="reapplyClick">重新借款</button>
+            <button v-if=" getStatusNum >= 4" @click="reapplyClick">重新借款</button>
             <button class="verify-btn" v-if="getStatusNum === 0"  @click="gotoVerifyClick">前往认证</button>
             <button class="cancel-btn" v-if="getStatusNum >= 0 && getStatusNum <= 2" @click="cancelClick">取消订单</button>
             <button v-if="getStatusNum === 3"  @click="repayClick">我要还款</button>
@@ -19,7 +19,6 @@
         <div class="space"></div>
         <div class="detail-list">
           <detail-order-cell title="单号" :text="order.id"/>
-          <detail-order-cell title="借款人" :text="order.alreadyVerifyName"/>
           <detail-order-cell title="借款金额" :text="`${order.applyGross}元`"/>
           <detail-order-cell title="借款天数" :text="`${order.applyTerm}`"/>
           <detail-order-cell title="续期记录" text="查看续期" :arrow="true" @onClick="openRenewallist"/>
@@ -116,9 +115,9 @@ export default {
     getStatusNum () {
       switch (this.order.statusName) {
         case '已拒绝':
-          return -1
+          return 5
         case '已取消':
-          return -1
+          return 5
         case '待认证':
           return 0
         case '待审核':
@@ -132,7 +131,7 @@ export default {
         case '已完成':
           return 5
         default:
-          return -1
+          return 5
       }
     },
     getCreationTime () {
