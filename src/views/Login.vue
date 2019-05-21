@@ -27,7 +27,7 @@
 
 <script>
 import { baseMixin } from 'js/mixins'
-import { request, validate, apid } from 'js/utils'
+import { request, validate, apid, storage } from 'js/utils'
 import { url } from 'js/const'
 import 'assets/lib/gt'
 import { mapActions } from 'vuex'
@@ -42,13 +42,14 @@ export default {
       isRegister: false,
       timerCount: 0,
       user: {
-        username: '17157721142',
+        username: '',
         password: '',
         code: ''
       }
     }
   },
   mounted () {
+    this.user.username = storage.get('loginName')
     this.initGeetest()
   },
 
@@ -169,6 +170,7 @@ export default {
         path: (this.isRegister) ? url.AuthenticateBySms : url.Authenticate,
         data: params,
         fn: data => {
+          storage.set('loginName', this.user.username)
           const userKeys = data.result
           this.setToken(userKeys)
           this.hideT()

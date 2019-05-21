@@ -14,7 +14,7 @@ const url = {
   // .获取用户资料
   getUserinfo: '/api/services/app/Profile/GetCurrentUserProfileForEdit',
   // .推广页面
-  register: '/h5/register.html?spreadId=',
+  register: '/h5/register.html?RefereeId=',
   // .账号登录
   Authenticate: '/api/TokenAuth/Authenticate',
   // .快速认证

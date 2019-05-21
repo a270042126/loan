@@ -50,9 +50,9 @@ export default {
       })
     },
     shareClick () {
-      const shareUrl = 'https://m.jxstudio.cn' + url.register + this.userKeys.spreadId
+      const shareUrl = 'https://m.jxstudio.cn/?RefereeId=' + this.userKeys.refereeId
       this.shareUrl = shareUrl
-      if (this.userKeys.hasOwnProperty('spreadId')) {
+      if (this.userKeys.hasOwnProperty('refereeId')) {
         if (isApp) {
           apid.systemShare(shareUrl)
         } else {
