@@ -4,7 +4,7 @@ import store from '@/store'
 import router from '@/router'
 import VueAxios from 'vue-axios'
 import { url } from 'js/const'
-import { apid, common } from 'js/utils'
+import { apid, common, storage } from 'js/utils'
 import moment from 'moment'
 
 Vue.use(VueAxios, axios)
@@ -45,7 +45,8 @@ axios.interceptors.request.use(
         })
       }
     } else {
-      const refereeId = store.getters.refereeId
+      const refereeId = storage.get('refereeId')
+      console.log(refereeId)
       if (refereeId) {
         config.headers.RefereeId = refereeId
       }

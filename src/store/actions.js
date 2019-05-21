@@ -15,6 +15,3 @@ export const setToken = ({ commit }, userKeys) => {
 export const setIsLoading = ({ commit }, isLoading) => {
   commit(types.SET_IS_LOADING, isLoading)
 }
-export const setRefereeId = ({ commit }, refereeId) => {
-  commit(types.SET_REFEREE_ID, refereeId)
-}

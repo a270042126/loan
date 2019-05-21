@@ -2,7 +2,6 @@ const state = {
   isWelcome: false,
   filterParams: '',
   userKeys: {},
-  isLoading: false,
-  refereeId: ''
+  isLoading: false
 }
 export default state

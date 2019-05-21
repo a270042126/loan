@@ -11,9 +11,6 @@ const mutations = {
   },
   [types.SET_IS_LOADING] (state, isLoading) {
     state.isLoading = isLoading
-  },
-  [types.SET_REFEREE_ID] (state, refereeId) {
-    state.refereeId = refereeId
   }
 }
 export default mutations
