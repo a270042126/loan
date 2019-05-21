@@ -19,7 +19,7 @@
                     v-model="form1.phoneNumber"/>
       </div>
       <div class="sumbit">
-        <button class="simple-btn" @click="deleteClick">删除</button>
+        <button class="simple-btn delete-btn" @click="deleteClick">删除</button>
       </div>
     </better-scroll>
   </base-page>
@@ -124,5 +124,8 @@ export default {
 }
 .sumbit{
   padding: 40px 20px;
+  .delete-btn{
+    background: @light_gray2;
+  }
 }
 </style>
