@@ -29,7 +29,7 @@ class Mystorage {
     // 读取
     const mydataJson = this.storage.getItem(key)
     if (!mydataJson) {
-      return false
+      return ''
     }
     const mydata = JSON.parse(mydataJson)
 
@@ -38,7 +38,7 @@ class Mystorage {
       if (date - mydata.start > mydata.expires) {
         // 缓存过期，清除缓存，返回false
         this.remove(key)
-        return false
+        return ''
       } else {
         return mydata.value
       }
