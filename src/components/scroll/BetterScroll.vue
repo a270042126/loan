@@ -231,6 +231,16 @@ export default {
       console.log(e)
       this.$emit('click', item)
     },
+    finishPullUp () {
+      this.scroll && this.scroll.finishPullUp()
+      this.scroll && this.scroll.refresh()
+    },
+    closePullUp () {
+      this.scroll && this.scroll.closePullUp()
+    },
+    openPullUp () {
+      this.scroll && this.scroll.openPullUp()
+    },
     destroy () {
       this.scroll && this.scroll.destroy()
     },

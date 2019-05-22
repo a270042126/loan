@@ -42,6 +42,10 @@ export default {
     this.form.phone = this.userKeys.userName
   },
   methods: {
+    // 跨页刷新
+    sendNotification () {
+      this.bus.$emit('verifyRefresh')
+    },
     startTime () {
       this.codeNum = 60
       if (!this.timer) {
@@ -80,6 +84,8 @@ export default {
           data: { code: this.form.code },
           fn: () => {
             this.successT('认证成功')
+            this.sendNotification()
+            this.$router.goBack()
           },
           errFn: () => {}
         })

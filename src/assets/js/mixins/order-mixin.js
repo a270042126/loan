@@ -15,10 +15,6 @@ const OrderMixin = {
   },
   methods: {
     onPullingUp () {
-      if (this.orderList.length < MAXRESULTCOUNT) {
-        this.foreceUpdate()
-        return
-      }
       this.params.skipCount = this.params.skipCount + MAXRESULTCOUNT
       this.getOrders()
     },
@@ -44,7 +40,11 @@ const OrderMixin = {
           } else {
             this.orderList = data.result.items
           }
-          this.isShowMore = this.orderList.length < data.result.totalCount
+          // if (this.orderList.length < data.result.totalCount) {
+          //   this.$refs.scroll.openPullUp()
+          // } else {
+          //   this.$refs.scroll.closePullUp()
+          // }
         },
         errFn: () => {
           this.foreceUpdate()

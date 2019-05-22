@@ -2,7 +2,7 @@
   <base-page :navOptions="{ title: '我的订单', isBack: true}">
     <my-order-filter @filterChange="filterChange" :searchFlag="params.searchFlag"/>
     <better-scroll :data="orderList" ref="scroll"
-                    :pullUpLoad="isShowMore"
+                    :pullUpLoad="true"
                     :pullDownRefresh="true"
                  @pulling-down="onPullingDown"
                  @pulling-up="onPullingUp">

@@ -19,7 +19,7 @@
                     v-model="form1.phoneNumber"/>
       </div>
       <div class="sumbit">
-        <button class="simple-btn delete-btn" @click="deleteClick">删除</button>
+        <button v-if="form1.id" class="simple-btn delete-btn" @click="deleteClick">删除</button>
       </div>
     </better-scroll>
   </base-page>
@@ -86,6 +86,7 @@ export default {
     // 跨页刷新
     sendNotification () {
       this.bus.$emit('linkUserContactsRefresh')
+      this.bus.$emit('verifyRefresh')
     },
     saveClick () {
       const result = FormValidate.checkForm(this.form1, this.rules)

@@ -26,8 +26,8 @@ export default {
     return {
       proList: [
         { title: '审核', num: 1, statusNum: 2 },
-        { title: '还款', num: 1, statusNum: 3 },
-        { title: '完成', num: 1, statusNum: 4 }
+        { title: '还款', num: 2, statusNum: 3 },
+        { title: '完成', num: 3, statusNum: 4 }
       ]
     }
   }

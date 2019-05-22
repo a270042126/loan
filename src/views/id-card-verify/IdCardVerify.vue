@@ -63,6 +63,10 @@ export default {
     }
   },
   methods: {
+    // 跨页刷新
+    sendNotification () {
+      this.bus.$emit('verifyRefresh')
+    },
     frontUploadCallBack (result) {
       this.form.identityCardFront = result[0]
     },
@@ -79,6 +83,7 @@ export default {
           if (data.success) {
             this.successT('提交成功')
           }
+          this.sendNotification()
           setTimeout(() => {
             this.$router.goBack()
           }, 2000)

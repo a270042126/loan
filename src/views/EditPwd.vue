@@ -34,30 +34,23 @@ export default {
       const user = this.user
       if (!user.currentPassword) {
         this.errorT('请输入旧密码')
-        return
-      }
-      if (!validate.password(user.newPassword)) {
-        this.errorT('请设置至少 8 位新密码，且包含大小写字母')
-        return
-      }
-      if (user.newPassword !== user.rePassword) {
+      } else if (user.newPassword !== user.rePassword) {
         this.errorT('两次设置的新密码不一致')
-        return
+      } else {
+        this.loadingT()
+        request({
+          type: 'post',
+          path: url.ChangePassword,
+          data: user,
+          fn: () => {
+            this.hideT()
+            this.successT('修改成功')
+          },
+          errFn: () => {
+            this.hideT()
+          }
+        })
       }
-
-      this.loadingT()
-      request({
-        type: 'post',
-        path: url.ChangePassword,
-        data: user,
-        fn: () => {
-          this.hideT()
-          this.successT('修改成功')
-        },
-        errFn: () => {
-          this.hideT()
-        }
-      })
     }
   }
 }

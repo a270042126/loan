@@ -2,7 +2,7 @@
   <base-page :tabBarIndex="navOptions.isBack ? '-1' : '1'" :navOptions="navOptions">
     <find-filter-tab v-if="!navOptions.isBack" ref="filter" @filter="filterClick" @filter2="filter2Click"/>
     <better-scroll :data="list" ref="scroll"
-                 :pullUpLoad="isShowMore"
+                 :pullUpLoad="true"
                  :pullDownRefresh="true"
                  @pulling-down="onPullingDown"
                  @pulling-up="onPullingUp">
@@ -24,7 +24,7 @@ import { url } from 'js/const'
 import { mapGetters, mapMutations } from 'vuex'
 import { baseMixin } from 'js/mixins'
 
-const MAXCOUNT = 25
+const MAXCOUNT = 20
 let filterParams = {
   skipCount: 0
 }
@@ -33,12 +33,12 @@ export default {
   mixins: [baseMixin],
   data () {
     return {
-      isShowMore: true,
       navOptions: {
         title: '发现',
         isBack: !!this.$route.query.from
       },
-      list: []
+      list: [],
+      totalCount: 0
     }
   },
   mounted () {
@@ -121,7 +121,7 @@ export default {
           } else {
             this.list = this.list.concat(items)
           }
-          this.isShowMore = this.list.length < data.result.totalCount
+          this.totalCount = data.result.totalCount
         },
         errFn: () => {
           if (typeof params.errback === 'function') {

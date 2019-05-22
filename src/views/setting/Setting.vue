@@ -22,8 +22,8 @@ export default {
   data () {
     return {
       list: [
-        { icon: 'fingerprint', title: '指纹验证', switch: true, onSwitch: true, isShow: true },
-        { icon: 'bluetooth', title: '设备绑定', switch: true, onSwitch: true, isShow: true },
+        { icon: 'fingerprint', title: '指纹验证', switch: true, onSwitch: true, isShow: isApp },
+        { icon: 'bluetooth', title: '设备绑定', switch: true, onSwitch: true, isShow: isApp },
         { icon: 'edit', title: '修改资料', path: 'user-info', isShow: true },
         { icon: 'security', title: '修改密码', path: 'edit-pwd', isShow: true },
         { icon: 'send', title: '推送设置', switch: true, onSwitch: true, isShow: isApp },

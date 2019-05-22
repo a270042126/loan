@@ -65,11 +65,11 @@ export default {
     }
   },
   methods: {
+    // 跨页刷新
+    sendNotification () {
+      this.bus.$emit('verifyRefresh')
+    },
     sumbitClick () {
-      this.$router.replace({
-        name: 'create-order',
-        query: this.$route.query
-      })
       const result = FormValidate.checkForm(this.form, this.rules)
       if (result.length > 0) {
         this.errorT(result[0].message)
@@ -81,12 +81,14 @@ export default {
           path: url.UserVerify.AuthBaseInfo,
           fn: () => {
             this.successT('提交成功')
-            this.$router.goBack()
-            if (this.$route.query.quotaName) {
+            this.sendNotification()
+            if (this.$route.query.quotaId) {
               this.$router.replace({
                 name: 'create-order',
                 query: this.$route.query
               })
+            } else {
+              this.$router.goBack()
             }
           },
           errFn: () => {

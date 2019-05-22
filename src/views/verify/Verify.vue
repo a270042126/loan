@@ -20,9 +20,9 @@ export default {
     return {
       verifyNames: [],
       list: [
-        { icon: 'featured_play_list', title: '身份证认证', desc: '身份证认证可以提高你的额度', pathName: 'idCardVerify', status: false, verifyNames: true },
         { icon: 'featured_play_list', title: '银行卡认证', desc: '银行卡认证可以提高你的额度', pathName: 'bankCardVerify', status: false, verifyNames: true },
-        { icon: 'featured_play_list', title: '芝麻分认证', desc: '芝麻分认证可以提高你的额度', pathName: 'zhimeCredit', status: false, verifyNames: false },
+        { icon: 'featured_play_list', title: '身份证认证', desc: '身份证认证可以提高你的额度', pathName: 'idCardVerify', status: false, verifyNames: true },
+        { icon: 'featured_play_list', title: '芝麻分认证', desc: '芝麻分认证可以提高你的额度', pathName: 'zhimeCredit', status: false, verifyNames: true },
         { icon: 'featured_play_list', title: '紧急联系人', desc: '紧急联系人可以提高你的额度', pathName: 'linkUserContacts', status: false, verifyNames: true },
         { icon: 'featured_play_list', title: '手机运营商', desc: '手机运营商可以提高你的额度', pathName: 'phoneVerify', status: false, verifyNames: true }
       ]
@@ -33,8 +33,15 @@ export default {
   },
   mounted () {
     this.getAuthList()
+    this.accapceNotification()
   },
   methods: {
+    accapceNotification () {
+      // const that = this
+      this.bus.$on('verifyRefresh', () => {
+        this.getAuthList()
+      })
+    },
     getAuthList () {
       request({
         type: 'post',
@@ -59,6 +66,9 @@ export default {
             break
           case '芝麻分':
             list[2].status = true
+            break
+          case '联系人':
+            list[3].status = true
             break
           case '手机运营商':
             list[4].status = true
