@@ -58,10 +58,10 @@ export default {
       const list = this.list
       verifyNames.some((name) => {
         switch (name) {
-          case '身份证':
+          case '姓名三要素':
             list[0].status = true
             break
-          case '姓名三要素':
+          case '身份证':
             list[1].status = true
             break
           case '芝麻分':
