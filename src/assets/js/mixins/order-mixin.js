@@ -13,7 +13,19 @@ const OrderMixin = {
       }
     }
   },
+  mounted () {
+    this.accapceNotification()
+  },
+  destroyed () {
+    this.bus.$off('myOrdersRefresh')
+  },
   methods: {
+    accapceNotification () {
+      const that = this
+      this.bus.$on('myOrdersRefresh', () => {
+        that.onPullingDown()
+      })
+    },
     onPullingUp () {
       this.params.skipCount = this.params.skipCount + MAXRESULTCOUNT
       this.getOrders()
@@ -28,7 +40,7 @@ const OrderMixin = {
         this.$refs.scroll.forceUpdate()
       }
     },
-    getOrders () {
+    getOrders (callBack) {
       const params = this.params
       request({
         type: 'post',
@@ -40,11 +52,9 @@ const OrderMixin = {
           } else {
             this.orderList = data.result.items
           }
-          // if (this.orderList.length < data.result.totalCount) {
-          //   this.$refs.scroll.openPullUp()
-          // } else {
-          //   this.$refs.scroll.closePullUp()
-          // }
+          if (callBack && typeof callBack === 'function') {
+            callBack()
+          }
         },
         errFn: () => {
           this.foreceUpdate()

@@ -29,21 +29,11 @@ export default {
     const searchFlag = this.$route.query.searchFlag
     this.params.searchFlag = searchFlag || 4
     this.onPullingDown()
-    this.accapceNotification()
-  },
-  destroyed () {
-    this.bus.$off('myOrdersRefresh')
   },
   methods: {
     filterChange (value) {
       this.params.searchFlag = value
       this.onPullingDown()
-    },
-    accapceNotification () {
-      const that = this
-      this.bus.$on('myOrdersRefresh', () => {
-        that.onPullingDown()
-      })
     }
   },
   components: {

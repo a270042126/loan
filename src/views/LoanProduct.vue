@@ -21,7 +21,7 @@
             <div class="material-icons icon">expand_more</div>
           </div>
         </div>
-        <div class="loanBtn">
+        <div v-if="isLoan" class="loanBtn">
           <button v-if="quotas.length > 0" class="ra-Btn" @click="loanClick">
             {{goOnLoan ? '继续借款' : '立即借款'}}
           </button>
@@ -49,7 +49,8 @@ export default {
       terms: [],
       quotasIndex: 0,
       termsIndex: 0,
-      goOnLoan: false
+      goOnLoan: false,
+      isLoan: true
     }
   },
   mounted () {
@@ -73,6 +74,32 @@ export default {
     }
   },
   methods: {
+    onPullingDown () {
+      this.params.skipCount = 0
+      this.getOrders(() => {
+        this.orderList.some((item) => {
+          switch (item.statusName) {
+            case '待认证':
+              this.isLoan = false
+              return true
+            case '待审核':
+              this.isLoan = false
+              return true
+            case '待放款':
+              this.isLoan = false
+              return true
+            case '待还款':
+              this.isLoan = false
+              return true
+            case '已还款':
+              this.isLoan = false
+              return true
+            default:
+              this.isLoan = true
+          }
+        })
+      })
+    },
     onScroll (pos) {
       if (pos.y < -120) {
         this.isFixed = false

@@ -32,7 +32,7 @@
         </div>
       </div>
     </better-scroll>
-    <r-dialog ref="cancelOrderDialog" title="取消订单" height="220px">
+    <r-dialog ref="cancelOrderDialog" title="取消订单">
       <div class="cancel-order">
         <textarea v-model="remark" placeholder="备注...." class="remark">
         </textarea>

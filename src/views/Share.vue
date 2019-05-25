@@ -5,7 +5,7 @@
         <img :src="getFaceImg" class="face">
         <img class="share" :src="getShareUrl" v-loadimg="loadImgChange"/>
       </div>
-      <img v-else :src="shareUrl">
+      <img v-else :src="shareUrl" style="width: 100%">
     </div>
   </base-page>
 </template>
@@ -45,11 +45,6 @@ export default {
       setTimeout(() => {
         html2canvas(this.$refs.content, { useCORS: true }).then(canvas => {
           this.shareUrl = canvas.toDataURL()
-          if (isApp) {
-            this.toastT('请长按保存识别')
-          } else {
-            this.toastT('请识别图片加载')
-          }
         })
       }, 300)
     },
