@@ -15,7 +15,7 @@
 
 <script>
 import HomeTitle from './HomeTitle'
-import { url } from 'js/const'
+import { url } from '@/const'
 export default {
   name: 'HomeYsProduct',
   props: {

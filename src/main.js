@@ -7,8 +7,8 @@ import VueLazyload from 'vue-lazyload'
 import './icons' // icon
 // 通过components下的index.js文件导入组件
 import components from './components'
-import { isApp } from 'js/const/'
-import { event, apid, push } from 'js/utils/'
+import { isApp } from '@/const/'
+import { event, apid, push } from '@/utils/'
 import 'amfe-flexible'
 import Navigation from './components/navigation'
 import './directive'

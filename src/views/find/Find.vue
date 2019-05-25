@@ -19,10 +19,10 @@
 <script>
 import FindFilterTab from './components/FindFilterTab'
 import ProductList from '../../components/product-list/ProductList'
-import { request, common } from 'js/utils'
-import { url } from 'js/const'
+import { request, common } from '@/utils'
+import { url } from '@/const'
 import { mapGetters, mapMutations } from 'vuex'
-import { baseMixin } from 'js/mixins'
+import { baseMixin } from '@/mixins'
 
 const MAXCOUNT = 20
 let filterParams = {

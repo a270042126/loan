@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import { baseMixin } from 'js/mixins'
-import { validate, request } from 'js/utils'
-import { url } from 'js/const'
+import { baseMixin } from '@/mixins'
+import { validate, request } from '@/utils'
+import { url } from '@/const'
 export default {
   name: 'EditPwd',
   mixins: [baseMixin],

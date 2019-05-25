@@ -17,9 +17,9 @@
 <script>
 import TextInput from '@/components/TextInput'
 import { mapGetters } from 'vuex'
-import { request } from 'js/utils'
-import { url } from 'js/const'
-import { baseMixin } from 'js/mixins'
+import { request } from '@/utils'
+import { url } from '@/const'
+import { baseMixin } from '@/mixins'
 export default {
   name: 'PhoneVerify',
   components: { TextInput },

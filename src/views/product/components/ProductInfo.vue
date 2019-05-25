@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { url } from 'js/const'
+import { url } from '@/const'
 export default {
   name: 'ProductInfo',
   props: {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routes'
 import store from '@/store'
-import storage from 'js/utils/storage'
+import storage from '@/utils/storage'
 
 Router.prototype.goBack = function () {
   this.isBack = true

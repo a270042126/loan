@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { apid } from 'js/utils'
+import { apid } from '@/utils'
 export default {
   data () {
     return {

@@ -12,8 +12,8 @@
   </div>
 </template>
 <script>
-import { storage, apid } from 'assets/js/utils'
-import { isApp } from 'js/const'
+import { storage, apid } from '@/utils'
+import { isApp } from '@/const'
 import { mapMutations, mapGetters, mapActions } from 'vuex'
 import Welcome from '@/views/Welcome'
 export default {

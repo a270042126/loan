@@ -25,7 +25,7 @@
 
 <script>
 import MineUserItem from './MineUserItem'
-import { apid } from 'js/utils'
+import { apid } from '@/utils'
 export default {
   name: 'MineHeader',
   data () {

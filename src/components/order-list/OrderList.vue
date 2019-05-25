@@ -21,6 +21,9 @@
         <div class="need-verify">
           {{item.statusName}}
         </div>
+        <div class="operate-btn">
+          <button>操作</button>
+        </div>
       </div>
     </div>
   </div>
@@ -28,12 +31,16 @@
 
 <script>
 import moment from 'moment'
+import {common} from '@/utils'
 export default {
   name: 'OrderList',
   props: {
     list: Array
   },
   methods: {
+    // getStatusNum (order) {
+    //   common.getStatusNum(order.statusName)
+    // },
     getTime (time) {
       return moment(time).format('YYYY-MM-DD')
     },
@@ -111,6 +118,16 @@ export default {
       color: @theme_color2;
       font-size: @font_size_2;
       padding-left: 12px;
+    }
+    .operate-btn{
+      flex: 1;
+      text-align: right;
+      button {
+        background: @theme_primary;
+        padding: 8px 20px;
+        border-radius: 4px;
+        font-size: @font_size_3;
+      }
     }
   }
 }

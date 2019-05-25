@@ -20,7 +20,7 @@
 
 <script>
 import MyOrderFilter from './components/MyOrderFilter'
-import { baseMixin, orderMixin } from 'js/mixins'
+import { baseMixin, orderMixin } from '@/mixins'
 import OrderList from '@/components/order-list/OrderList'
 export default {
   name: 'MyOrders',

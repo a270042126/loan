@@ -1,5 +1,5 @@
 import * as types from './mutation-types'
-import { storage } from 'js/utils'
+import { storage } from '@/utils'
 
 // 登出
 export const logout = ({ commit }) => {

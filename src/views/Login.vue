@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import { baseMixin } from 'js/mixins'
-import { request, validate, apid, storage } from 'js/utils'
-import { url } from 'js/const'
+import { baseMixin } from '@/mixins'
+import { request, validate, apid, storage } from '@/utils'
+import { url } from '@/const'
 import 'assets/lib/gt'
 import { mapActions } from 'vuex'
 const TIME_COUNT = 30

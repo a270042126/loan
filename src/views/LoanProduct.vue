@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import { request } from 'js/utils'
-import { url } from 'js/const'
-import { baseMixin, orderMixin } from 'js/mixins'
+import { request } from '@/utils'
+import { url } from '@/const'
+import { baseMixin, orderMixin } from '@/mixins'
 import OrderList from '../components/order-list/OrderList'
 export default {
   name: 'LoadProduct',

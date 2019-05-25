@@ -23,9 +23,9 @@
 
 <script>
 import md5 from 'md5'
-import { baseMixin } from 'js/mixins'
-import { url, isApp } from 'js/const'
-import { apid, request, common, validate } from 'js/utils'
+import { baseMixin } from '@/mixins'
+import { url, isApp } from '@/const'
+import { apid, request, common, validate } from '@/utils'
 import { mapGetters } from 'vuex'
 export default {
   name: 'UserInfo',

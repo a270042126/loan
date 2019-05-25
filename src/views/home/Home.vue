@@ -21,9 +21,9 @@ import HomeApply from './components/HomeApply'
 import HomeHeader from './components/HomeHeader'
 import HomeYsProduct from './components/HomeYsProduct'
 import HomeRecommend from './components/HomeRecommend'
-import { request, common, storage } from 'js/utils'
-import { url } from 'js/const'
-import { baseMixin } from 'js/mixins'
+import { request, common, storage } from '@/utils'
+import { url } from '@/const'
+import { baseMixin } from '@/mixins'
 export default {
   name: 'home',
   mixins: [ baseMixin ],

@@ -15,9 +15,9 @@
 
 <script>
 import ProductList from './components/ProductInfo'
-import { request } from 'js/utils'
-import { url, isApp } from 'js/const'
-import { baseMixin } from 'js/mixins'
+import { request } from '@/utils'
+import { url, isApp } from '@/const'
+import { baseMixin } from '@/mixins'
 import { mapGetters } from 'vuex'
 export default {
   name: 'Product',

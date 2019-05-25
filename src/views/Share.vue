@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import { baseMixin } from 'js/mixins'
-import { isApp, url } from 'js/const'
-import { apid } from 'js/utils'
+import { baseMixin } from '@/mixins'
+import { isApp, url } from '@/const'
+import { apid } from '@/utils'
 import { mapGetters } from 'vuex'
 import html2canvas from 'html2canvas'
 export default {

@@ -11,11 +11,11 @@
   </base-page>
 </template>
 <script>
-import { baseMixin } from 'js/mixins'
+import { baseMixin } from '@/mixins'
 import SettingItem from './components/SettingItem'
 import { mapActions, mapGetters } from 'vuex'
-import { isApp } from 'js/const'
-import { storage, apid, push } from 'js/utils'
+import { isApp } from '@/const'
+import { storage, apid, push } from '@/utils'
 export default {
   name: 'Setting',
   mixins: [baseMixin],

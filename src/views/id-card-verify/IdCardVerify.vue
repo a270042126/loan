@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import { baseMixin } from 'js/mixins'
+import { baseMixin } from '@/mixins'
 import UploadImage from '@/components/UploadImage'
-import { url } from 'js/const'
-import { request } from 'js/utils'
+import { url } from '@/const'
+import { request } from '@/utils'
 export default {
   name: 'IdCardVerify',
   components: { UploadImage },

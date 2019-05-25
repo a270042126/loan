@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import { baseMixin } from 'js/mixins'
-import { request } from 'js/utils'
-import { url } from 'js/const'
+import { baseMixin } from '@/mixins'
+import { request } from '@/utils'
+import { url } from '@/const'
 export default {
   name: 'UploadImage',
   mixins: [baseMixin],

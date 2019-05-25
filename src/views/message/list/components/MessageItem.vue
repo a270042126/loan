@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import VerticalToggle from 'js/vertical-toggle'
+import VerticalToggle from '@/components/vertical-toggle'
 export default {
   name: 'MessageItem',
   props: {

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { url } from 'js/const'
+import { url } from '@/const'
 import { mapGetters } from 'vuex'
 export default {
   name: 'MineUserCell',

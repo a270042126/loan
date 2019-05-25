@@ -12,8 +12,8 @@
 
 <script>
 import VerifyCell from './components/VerifyCell'
-import { request } from 'js/utils'
-import { url } from 'js/const'
+import { request } from '@/utils'
+import { url } from '@/const'
 export default {
   name: 'Verify',
   data () {

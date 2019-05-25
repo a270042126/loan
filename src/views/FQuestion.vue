@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { url } from 'js/const'
-import { request } from 'js/utils'
+import { url } from '@/const'
+import { request } from '@/utils'
 import { mapGetters } from 'vuex'
-import { baseMixin } from 'js/mixins'
+import { baseMixin } from '@/mixins'
 export default {
   name: 'FQuestion',
   mixins: [baseMixin],

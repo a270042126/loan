@@ -27,9 +27,9 @@
 
 <script>
 import TextInput from '@/components/TextInput'
-import { request, FormValidate } from 'js/utils'
-import { url } from 'js/const'
-import { baseMixin } from 'js/mixins'
+import { request, FormValidate } from '@/utils'
+import { url } from '@/const'
+import { baseMixin } from '@/mixins'
 export default {
   name: 'LinkUserContacts',
   components: { TextInput },

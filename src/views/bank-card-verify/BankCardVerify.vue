@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import { request, FormValidate } from 'js/utils'
-import { url } from 'js/const'
+import { request, FormValidate } from '@/utils'
+import { url } from '@/const'
 import moment from 'moment'
 import TextInput from '@/components/TextInput'
-import { baseMixin } from 'js/mixins'
+import { baseMixin } from '@/mixins'
 export default {
   name: 'BankCardVerify',
   components: { TextInput },

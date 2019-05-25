@@ -3,8 +3,8 @@ import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
 import VueAxios from 'vue-axios'
-import { url } from 'js/const'
-import { apid, common, storage } from 'js/utils'
+import { url } from '@/const'
+import { apid, common, storage } from '@/utils'
 import moment from 'moment'
 
 Vue.use(VueAxios, axios)

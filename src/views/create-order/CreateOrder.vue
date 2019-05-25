@@ -37,9 +37,9 @@
 </template>
 
 <script>
-import { baseMixin } from 'js/mixins'
-import { url } from 'js/const'
-import { request } from 'js/utils'
+import { baseMixin } from '@/mixins'
+import { url } from '@/const'
+import { request } from '@/utils'
 import CreateOrderCell from './components/CreateOrderCell'
 import moment from 'moment'
 export default {

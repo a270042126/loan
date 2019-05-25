@@ -32,27 +32,6 @@
         </div>
       </div>
     </better-scroll>
-    <r-dialog ref="cancelOrderDialog" title="取消订单">
-      <div class="cancel-order">
-        <textarea v-model="remark" placeholder="备注...." class="remark">
-        </textarea>
-        <button class="simple-btn remark_btn" @click="remarkClick">提交</button>
-      </div>
-    </r-dialog>
-    <r-dialog ref="renewalDialog" title="选择续期" height="200px">
-      <div class="renewal">
-        <better-scroll class="scroll" :crollbar="{fade: false}">
-          <template v-for="(item, key) in renewals">
-            <detail-order-re-cell :key="key" :item="item" :check="selectRenewal === key"
-                                  @onChange="selectRenewalClick(key)"/>
-          </template>
-        </better-scroll>
-        <div class="btns">
-          <button @click="renewalCancelClick">取消</button>
-          <button @click="renewalOkClick">确定</button>
-        </div>
-      </div>
-    </r-dialog>
     <r-dialog ref="renewalListDialog" title="续期记录" height="400px">
       <better-scroll :crollbar="{fade: false}">
         <template v-for="(item, index) in order.renewals">
@@ -67,19 +46,20 @@
         </template>
       </better-scroll>
     </r-dialog>
+    <order-operate :id="order.id" ref="orderOperate" @onRefresh="onRefresh"/>
   </base-page>
 </template>
 
 <script>
 import moment from 'moment'
-import { request } from 'js/utils'
-import { url } from 'js/const'
-import { baseMixin } from 'js/mixins'
+import { request, common } from '@/utils'
+import { url } from '@/const'
+import { baseMixin } from '@/mixins'
 import DetailOrderHeader from './components/DetailOrderHeader'
 import DetailOrderCell from './components/DetailOrderCell'
-import DetailOrderReCell from './components/DetailOrderReCell'
 import DetailOrderReLCell from './components/DetailOrderReLCell'
 import DetialOrderRecordCell from './components/DetialOrderRecordCell'
+import OrderOperate from '@/components/order/OrderOperate'
 export default {
   name: 'OrderDetail',
   mixins: [baseMixin],
@@ -89,7 +69,6 @@ export default {
         title: '详细订单',
         isBack: true
       },
-      selectRenewal: -1,
       renewals: [],
       remark: '',
       order: {
@@ -108,31 +87,11 @@ export default {
     }
   },
   mounted () {
-    console.log('this.onRefresh()')
     this.getDetailOrder()
   },
   computed: {
     getStatusNum () {
-      switch (this.order.statusName) {
-        case '已拒绝':
-          return 5
-        case '已取消':
-          return 5
-        case '待认证':
-          return 0
-        case '待审核':
-          return 1
-        case '待放款':
-          return 2
-        case '待还款':
-          return 3
-        case '已还款':
-          return 4
-        case '已完成':
-          return 5
-        default:
-          return 5
-      }
+      return common.getStatusNum(this.order.statusName)
     },
     getCreationTime () {
       let time = this.order.creationTime
@@ -148,57 +107,22 @@ export default {
       this.getDetailOrder()
       this.sendNotification()
     },
+    // 跳转认证
+    gotoVerifyClick () {
+      this.$router.replace({ name: 'verify' })
+    },
+    // 取消订单点击
+    cancelClick () {
+      this.$refs.orderOperate.cancelClick()
+    },
+    renewalClick () {
+      this.$refs.orderOperate.renewalClick()
+    },
     openRecordllist () {
       this.$refs.recordListDialog.open()
     },
     openRenewallist () {
       this.$refs.renewalListDialog.open()
-    },
-    // 续期确认提交
-    renewalOkClick () {
-      if (this.selectRenewal < 0) {
-        this.errorT('请选择续期')
-      } else {
-        this.$refs.renewalDialog.close()
-        this.loadingT()
-        const params = {
-          renewalId: this.renewals[this.selectRenewal].id,
-          orderId: this.order.id
-        }
-        request({
-          type: 'post',
-          path: url.RenewalOrder,
-          data: params,
-          fn: data => {
-            this.hideT()
-            this.successT('续期成功')
-            this.onRefresh()
-          },
-          errFn: () => {
-            this.hideT()
-          }
-        })
-        this.selectRenewal = ''
-      }
-    },
-    // 续期取消
-    renewalCancelClick () {
-      this.$refs.renewalDialog.close()
-    },
-    // 选择续期
-    selectRenewalClick (key) {
-      this.selectRenewal = key
-    },
-    // 续期
-    renewalClick () {
-      this.$refs.renewalDialog.open()
-      request({
-        type: 'post',
-        path: url.GetProductRenewals,
-        fn: data => {
-          this.renewals = data.result.items
-        }
-      })
     },
     // 跨页刷新
     sendNotification () {
@@ -206,39 +130,9 @@ export default {
     },
     // 还款
     repayClick () {},
-    // 取消订单
-    remarkClick () {
-      this.loadingT()
-      const params = {
-        remark: this.remark,
-        id: this.order.id
-      }
-      request({
-        type: 'post',
-        path: url.CancelOrder,
-        data: params,
-        fn: data => {
-          this.hideT()
-          this.successT('取消成功')
-          this.$refs.cancelOrderDialog.close()
-          this.onRefresh()
-        },
-        errFn: () => {
-          this.hideT()
-        }
-      })
-    },
-    // 跳转认证
-    gotoVerifyClick () {
-      this.$router.replace({ name: 'verify' })
-    },
     // 跳转重新借款
     reapplyClick () {
       this.$router.replace({ name: 'loan-product' })
-    },
-    // 取消订单点击
-    cancelClick () {
-      this.$refs.cancelOrderDialog.open()
     },
     // 获取订单
     getDetailOrder () {
@@ -256,9 +150,9 @@ export default {
     }
   },
   components: {
+    OrderOperate,
     DetailOrderCell,
     DetailOrderHeader,
-    DetailOrderReCell,
     DetailOrderReLCell,
     DetialOrderRecordCell
   }
@@ -297,12 +191,12 @@ export default {
         background: #ff8303;
         color: #fff;
         font-size: @font_size_2;
-        width: 80px;
+        width: 90px;
         height: 34px;
         border-radius: 4px;
       }
       .cancel-btn{
-        margin-left: 15px;
+        padding: 0 15px;
         background: none;
         color: @light_gray2;
       }
@@ -314,38 +208,6 @@ export default {
   }
   .detail-list{
     padding: 10px 0 40px 0;
-  }
-}
-.cancel-order{
-  .remark{
-    border: 1px solid @light_gray2;
-    width: 95%;
-    height: 80px;
-    padding: 4px;
-    font-size: @font_size_2;
-  }
-  .remark_btn{
-    display: block;
-    font-size: @font_size_2 !important;
-    margin: 20px auto 0 auto;
-  }
-}
-.renewal{
-  .scroll{
-    height: 180px;
-  }
-  .btns{
-    text-align: center;
-    margin-top: 10px;
-    button{
-      width: 40%;
-      height: 34px;
-      line-height: 34px;
-      background: @theme_primary;
-    }
-    button:last-child{
-      margin-left: 10px;
-    }
   }
 }
 </style>
