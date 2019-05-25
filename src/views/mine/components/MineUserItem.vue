@@ -48,6 +48,9 @@ export default {
       'userKeys'
     ])
   },
+  destroyed () {
+    this.bus.$off('mineRefresh')
+  },
   methods: {
     accapceNotification () {
       // const that = this

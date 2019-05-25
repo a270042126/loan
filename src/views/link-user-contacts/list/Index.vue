@@ -31,6 +31,9 @@ export default {
     this.getUserContactList()
     this.accapceNotification()
   },
+  destroyed () {
+    this.bus.$off('linkUserContactsRefresh')
+  },
   methods: {
     accapceNotification () {
       // const that = this

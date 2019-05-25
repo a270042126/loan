@@ -2,14 +2,14 @@
 import { storage, request, common } from '../index'
 import { url, isApp } from '../../const/index'
 class Apid {
-  ready () {
+  static ready () {
     this.setStatusBarStyle()
     if (common.platform() === 2) {
       this.initService()
     }
   }
 
-  initService () {
+  static initService () {
     // .处理用户数据
     setTimeout(() => {
       this.handAppAndPhoneInfo()
@@ -17,7 +17,7 @@ class Apid {
   }
 
   // .处理用户数据
-  handAppAndPhoneInfo (callback) {
+  static handAppAndPhoneInfo (callback) {
     // .定义设备信息
     const userKeys = storage.get('userKeys')
     const devinfo = storage.get('devinfo-' + userKeys.userId) || {
@@ -97,7 +97,7 @@ class Apid {
   }
 
   // 上传数据
-  update (data, _callback) {
+  static update (data, _callback) {
     const params = {
       phoneAndCommInfo: data
     }
@@ -114,7 +114,7 @@ class Apid {
   }
 
   /*****************************************/
-  setListenKeyBack (callback) {
+  static setListenKeyBack (callback) {
     const that = this
     this.addEventListener('keyback', (ret) => {
       that.browserModel.historyBack((ret, err) => {
@@ -128,7 +128,7 @@ class Apid {
     })
   }
   // 打开浏览器
-  openBrowser (url, headerHeight, _callBack) {
+  static openBrowser (url, headerHeight, _callBack) {
     this.browserModel = api.require('webBrowser')
     this.browserModel.openView({
       url: url,
@@ -154,7 +154,7 @@ class Apid {
     })
   }
   // 关闭浏览器
-  closeBrowser () {
+  static closeBrowser () {
     const that = this
     this.browserModel.historyBack((ret, err) => {
       if (!ret.status) {
@@ -163,14 +163,14 @@ class Apid {
     })
   }
   // 获取缓存
-  getCacheSize () {
+  static getCacheSize () {
     if (!isApp) {
       return 0
     }
     return api.getCacheSize({ sync: true })
   }
   // 清理缓存
-  clearCache (_callback) {
+  static clearCache (_callback) {
     if (!isApp) {
       return false
     }
@@ -186,7 +186,7 @@ class Apid {
     })
   }
   // .分享
-  systemShare (text) {
+  static systemShare (text) {
     const system = api.require('shareAction')
     system.share({
       text: text,
@@ -194,14 +194,32 @@ class Apid {
       thumbnail: 'widget://res/images/icon-item-003.png'
     })
   }
-  setStatusBarStyle () {
+  static setStatusBarStyle () {
     api.setStatusBarStyle({
       style: 'linght',
       color: 'rgba(0,0,0,0.3)'
     })
   }
+  static savePicture (url) {
+    const timestamp = new Date().getTime()
+    api.download({
+      url: url,
+      savePath: 'fs://test' + timestamp + '.jpeg',
+      report: true,
+      cache: true,
+      allowResume: true
+    }, function (ret, err) {
+      if (ret) {
+        common.successT('图片已保存到本地')
+      }
+      api.saveMediaToAlbum({
+        path: 'fs://test' + timestamp + '.jpeg'
+      }, (ret, err) => {
+      })
+    })
+  }
   // .操作相册·相机
-  getPicture (type, _callback) {
+  static getPicture (type, _callback) {
     api.getPicture({
       sourceType: type,
       encodingType: 'jpg',
@@ -218,17 +236,17 @@ class Apid {
       }
     })
   }
-  getAppVersion () {
+  static getAppVersion () {
     return api.appVersion
   }
-  getSafeAreaTop () {
+  static getSafeAreaTop () {
     if (isApp) {
       return api.safeArea.top
     } else {
       return 0
     }
   }
-  getSafeAreaBottom () {
+  static getSafeAreaBottom () {
     if (isApp) {
       return api.safeArea.bottom
     } else {
@@ -236,7 +254,7 @@ class Apid {
     }
   }
   // .监听事件
-  addEventListener (eventName, _callback, extra) {
+  static addEventListener (eventName, _callback, extra) {
     api.addEventListener({
       name: eventName,
       extra: extra || {}
@@ -247,7 +265,7 @@ class Apid {
     })
   }
   // .移除监听事件
-  rmEventListener (eventName) {
+  static rmEventListener (eventName) {
     if (!isApp) {
       return false
     }
@@ -256,7 +274,7 @@ class Apid {
     })
   }
   // .广播事件
-  sendEvent (eventName, extra) {
+  static sendEvent (eventName, extra) {
     if (!isApp) {
       return false
     }
@@ -266,4 +284,4 @@ class Apid {
     })
   }
 }
-export default new Apid()
+export default Apid

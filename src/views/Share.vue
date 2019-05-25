@@ -7,57 +7,60 @@
       </div>
     </div>
     <r-dialog ref="shareDialog">
-      <p class="tag-read">{{shareUrl}}</p>
-      <cube-button class="copy-btn" @click="copyClick">复制链接</cube-button>
+      <img :src="getShareUrl" />
+      <button v-if="isApp" class="simple-btn" @click="saveClick">保存二维码</button>
     </r-dialog>
   </base-page>
 </template>
 
 <script>
 import { baseMixin } from 'js/mixins'
-import { url, isApp } from 'js/const'
+import { isApp } from 'js/const'
 import { apid } from 'js/utils'
 import { mapGetters } from 'vuex'
-import Clipboard from 'clipboard'
+// import Clipboard from 'clipboard'
 export default {
   name: 'Share',
   mixins: [baseMixin],
   data () {
     return {
-      shareUrl: ''
+      shareUrl: '',
+      isApp: isApp
     }
   },
   computed: {
+    getShareUrl () {
+      return `http://p-huohuodai.jxstudio.cn/Affiliate/Page?refereeId=${this.userKeys.refereeId}&type=index`
+    },
     ...mapGetters([
       'userKeys'
     ])
   },
   methods: {
-    copyClick () {
-      const shareUrl = this.shareUrl
-      let clipboard = new Clipboard('.copy-btn', { text: () => shareUrl })
-      clipboard.on('success', e => {
-        this.successT('复制成功')
-        this.$refs.shareDialog.close()
-        // 释放内存
-        clipboard.destroy()
-      })
-      clipboard.on('error', e => {
-        // 不支持复制
-        this.errorT('复制出错，请手动复制')
-        // 释放内存
-        clipboard.destroy()
-      })
+    // copyClick () {
+    //   const shareUrl = this.shareUrl
+    //   let clipboard = new Clipboard('.copy-btn', { text: () => shareUrl })
+    //   clipboard.on('success', e => {
+    //     this.successT('复制成功')
+    //     this.$refs.shareDialog.close()
+    //     // 释放内存
+    //     clipboard.destroy()
+    //   })
+    //   clipboard.on('error', e => {
+    //     // 不支持复制
+    //     this.errorT('复制出错，请手动复制')
+    //     // 释放内存
+    //     clipboard.destroy()
+    //   })
+    // },
+    saveClick () {
+      apid.savePicture(this.getShareUrl)
     },
     shareClick () {
-      const shareUrl = 'https://m.jxstudio.cn/?RefereeId=' + this.userKeys.refereeId
+      const shareUrl = `http://p-huohuodai.jxstudio.cn/Affiliate/Page?refereeId=${this.userKeys.refereeId}&type=index`
       this.shareUrl = shareUrl
       if (this.userKeys.hasOwnProperty('refereeId')) {
-        if (isApp) {
-          apid.systemShare(shareUrl)
-        } else {
-          this.$refs.shareDialog.open()
-        }
+        this.$refs.shareDialog.open()
       } else {
         this.errorT('请登录')
       }
@@ -90,16 +93,6 @@ export default {
       border-radius: 20px;
       .shadow(1px, 1px, 2px, @light_gray3);
     }
-  }
-  p{
-    font-size: @font_size_3;
-    word-wrap:break-word;
-    line-height: 20px;
-  }
-  .copy-btn{
-    padding: 0;
-    height: 40px;
-    margin-top: 20px;
   }
 }
 </style>

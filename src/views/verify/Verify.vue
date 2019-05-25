@@ -35,6 +35,9 @@ export default {
     this.getAuthList()
     this.accapceNotification()
   },
+  destroyed () {
+    this.bus.$off('verifyRefresh')
+  },
   methods: {
     accapceNotification () {
       // const that = this
