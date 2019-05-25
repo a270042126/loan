@@ -5,6 +5,12 @@ const baseMixin = {
     }
   },
   methods: {
+    toastT (text) {
+      this.toast = this.$createToast({
+        txt: text,
+        type: 'none'
+      }).show()
+    },
     successT (text) {
       this.toast = this.$createToast({
         txt: text,
