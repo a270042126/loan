@@ -42,14 +42,16 @@ export default {
   },
   methods: {
     loadImgChange () {
-      html2canvas(this.$refs.content, { useCORS: true }).then(canvas => {
-        this.shareUrl = canvas.toDataURL()
-        if (isApp) {
-          this.toastT('请长按保存识别')
-        } else {
-          this.toastT('请识别图片加载')
-        }
-      })
+      setTimeout(() => {
+        html2canvas(this.$refs.content, { useCORS: true }).then(canvas => {
+          this.shareUrl = canvas.toDataURL()
+          if (isApp) {
+            this.toastT('请长按保存识别')
+          } else {
+            this.toastT('请识别图片加载')
+          }
+        })
+      }, 300)
     },
     saveClick () {
       apid.savePicture(this.getShareUrl)
