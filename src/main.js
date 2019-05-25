@@ -11,6 +11,7 @@ import { isApp } from 'js/const/'
 import { event, apid, push } from 'js/utils/'
 import 'amfe-flexible'
 import Navigation from './components/navigation'
+import './directive'
 // 页面App导航
 Vue.use(Navigation, { router, store })
 // fastclick 坑点 点击高亮不起作用

@@ -25,21 +25,6 @@ export default {
       isApp: isApp
     }
   },
-  directives: {
-    loadimg (el, binding, vnode) {
-      // el就是img
-      let src = el.src
-      let newImg = new Image()
-      newImg.src = src
-      newImg.onload = () => {
-        // doSomething
-        const callBack = binding.value
-        if (callBack && typeof callBack === 'function') {
-          callBack()
-        }
-      }
-    }
-  },
   computed: {
     getShareUrl () {
       return `http://p-huohuodai.jxstudio.cn/Affiliate/Page?refereeId=${this.userKeys.refereeId}&type=index`
