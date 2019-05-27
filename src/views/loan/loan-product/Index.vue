@@ -1,7 +1,7 @@
 <template>
   <base-page :navOptions="{ title: '借款', isBack: true, isFixed: true, isScrollShow: isScrollShow}">
     <better-scroll :data="orderList" ref="scroll"
-                   :pullUpLoad="isShowMore"
+                   :pullUpLoad="true"
                    :pullDownRefresh="true"
                    :listenScroll="true"
                    @scroll="onScroll"
@@ -11,7 +11,7 @@
         <div>
           <img src="@/assets/images/n-banner.png">
         </div>
-        <div v-if="isLoan" class="loan-select">
+        <div v-if="!order" class="loan-select">
           <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick">
             {{quotas.length > 0 ? quotas[quotasIndex].name : '0元'}}
             <div class="material-icons icon">expand_more</div>
@@ -21,10 +21,27 @@
             <div class="material-icons icon">expand_more</div>
           </div>
         </div>
-        <div v-if="isLoan" class="loanBtn">
+        <div v-if="!order" class="loanBtn">
           <button v-if="quotas.length > 0" class="ra-Btn" @click="loanClick">
             {{goOnLoan ? '继续借款' : '立即借款'}}
           </button>
+        </div>
+        <div v-else class="order">
+          <div class="status" v-if="currentNum === 0">
+            待认证
+          </div>
+          <div class="detail" @click="gotoDetailClick">
+            <div class="icon">
+              <svg-icon iconClass="find"/>
+            </div>
+            <p>查看详情</p>
+          </div>
+          <p>借款金额(元)</p>
+          <p class="apply-gross">{{order.applyGross}}元</p>
+          <p>期限：{{order.applyTerm}}天</p>
+          <p class="mess" v-if="currentNum === 0">您的资料不完善，需要补充后，方可放款</p>
+          <button class="simple-btn" v-if="currentNum === 0" @click="gotoVerify">点击补充资料</button>
+          <button class="simple-btn" v-if="currentNum === 3" @click="repayClick">我要还款</button>
         </div>
       </div>
       <order-list :list="orderList"/>
@@ -50,7 +67,8 @@ export default {
       quotasIndex: 0,
       termsIndex: 0,
       goOnLoan: false,
-      isLoan: true
+      order: '',
+      currentNum: 5
     }
   },
   mounted () {
@@ -74,16 +92,24 @@ export default {
     }
   },
   methods: {
+    repayClick () {},
+    gotoDetailClick () {
+      this.$router.push({ name: 'detail-order', query: { id: this.order.id } })
+    },
+    gotoVerify () {
+      this.$router.push({ name: 'verify' })
+    },
     onPullingDown () {
       this.params.skipCount = 0
       this.getOrders(() => {
         this.orderList.some((item) => {
           const num = common.getStatusNum(item.statusName)
+          this.currentNum = num
           if (num !== 5) {
-            this.isLoan = false
+            this.order = item
             return true
           } else {
-            this.isLoan = true
+            this.order = ''
           }
         })
       })
@@ -222,6 +248,54 @@ export default {
       width: 100%;
       text-align: center;
       padding: 10px 0;
+    }
+  }
+  .order{
+    position: relative;
+    padding-top: 20px;
+    p{
+      font-size: @font_size_2;
+      padding: 4px 0;
+      text-align: center;
+    }
+    .apply-gross{
+      color: @theme_color2;
+      font-size: @font_size_6;
+      font-weight: bold;
+    }
+    .mess{
+      color: @theme_color4;
+    }
+    button{
+      width: 80%;
+      border-radius: 4px;
+      margin: 20px auto 0 auto;
+    }
+    .status{
+      position: absolute;
+      left: 0;
+      top: 25px;
+      height: 27px;
+      width: 90px;
+      background: url("../../../assets/images/qizi.png") no-repeat;
+      background-size: 100% auto;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .detail{
+      position: absolute;
+      right: 0;
+      top:21px;
+      display: flex;
+      align-items: center;
+      color: @theme_color4;
+      padding: 0 10px;
+      .icon{
+        font-size: @font_size_5;
+        margin-right: 5px;
+      }
     }
   }
 }

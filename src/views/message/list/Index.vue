@@ -2,7 +2,7 @@
   <base-page tabBarIndex="2" :navOptions="navOptions">
     <better-scroll :data="list" ref="scroll"
                  :pullDownRefresh="true"
-                 :pullUpLoad="false"
+                 :pullUpLoad="true"
                  @pulling-down="onPullingDown"
                  @pulling-up="onPullingUp"
                  class="main-body">
@@ -26,7 +26,6 @@ export default {
       navOptions: {
         title: '消息'
       },
-      totalCount: 0,
       params: {
         // type: 2,
         maxResultCount: 20,
@@ -65,7 +64,12 @@ export default {
           } else {
             this.list.concat(items)
           }
-          this.totalCount = res.result.totalCount
+          const totalCount = res.result.totalCount
+          if (this.list.length >= totalCount) {
+            this.$refs.scroll.closePullUp()
+          } else {
+            this.$refs.scroll.openPullUp()
+          }
         },
         errFn: () => {
           this.foreceUpdate()

@@ -37,8 +37,7 @@ export default {
         title: '发现',
         isBack: !!this.$route.query.from
       },
-      list: [],
-      totalCount: 0
+      list: []
     }
   },
   mounted () {
@@ -121,7 +120,12 @@ export default {
           } else {
             this.list = this.list.concat(items)
           }
-          this.totalCount = data.result.totalCount
+          const totalCount = data.result.totalCount
+          if (this.list.length >= totalCount) {
+            this.$refs.scroll.closePullUp()
+          } else {
+            this.$refs.scroll.openPullUp()
+          }
         },
         errFn: () => {
           if (typeof params.errback === 'function') {

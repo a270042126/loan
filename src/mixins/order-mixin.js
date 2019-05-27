@@ -4,7 +4,6 @@ const MAXRESULTCOUNT = 25
 const OrderMixin = {
   data () {
     return {
-      isShowMore: false,
       orderList: [],
       params: {
         sorting: '',
@@ -54,6 +53,12 @@ const OrderMixin = {
           }
           if (callBack && typeof callBack === 'function') {
             callBack()
+          }
+          const totalCount = data.result.totalCount
+          if (this.orderList.length >= totalCount) {
+            this.$refs.scroll.closePullUp()
+          } else {
+            this.$refs.scroll.openPullUp()
           }
         },
         errFn: () => {
