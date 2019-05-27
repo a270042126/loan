@@ -23,7 +23,6 @@
         </div>
         <div class="operate-btn" @click.stop>
           <button class="verify-btn" v-if="getStatusNum(item) === 0"  @click="gotoVerifyClick">前往认证</button>
-          <button class="cancel-btn" v-if="getStatusNum(item) >= 0 && getStatusNum(item) <= 2"  @click="cancelClick(item.id)">取消订单</button>
           <button v-if="getStatusNum === 3"  @click="repayClick">我要还款</button>
           <button class="renewal_btn" v-if="getStatusNum(item) === 3 && item.isRenewalAllowed"  @click="renewalClick(item.id)">我要续期</button>
         </div>
@@ -64,11 +63,6 @@ export default {
     },
     gotoDetailOrder (key) {
       this.$router.push({ name: 'detail-order', query: { id: this.list[key].id } })
-    },
-    // 取消订单点击
-    cancelClick (id) {
-      this.currentId = id
-      this.$refs.orderOperate.cancelClick()
     },
     renewalClick (id) {
       this.currentId = id

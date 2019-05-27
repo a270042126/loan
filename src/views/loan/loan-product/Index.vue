@@ -11,7 +11,7 @@
         <div>
           <img src="@/assets/images/n-banner.png">
         </div>
-        <div class="loan-select">
+        <div v-if="isLoan" class="loan-select">
           <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick">
             {{quotas.length > 0 ? quotas[quotasIndex].name : '0元'}}
             <div class="material-icons icon">expand_more</div>
