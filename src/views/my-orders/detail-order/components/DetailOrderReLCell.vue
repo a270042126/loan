@@ -32,8 +32,10 @@
 import moment from 'moment'
 import { request } from '@/utils'
 import { url } from '@/const'
+import { baseMixin } from '@/mixins'
 export default {
   name: 'DetailOrderReLCell',
+  mixins: [baseMixin],
   props: {
     item: {}
   },

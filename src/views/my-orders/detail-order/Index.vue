@@ -1,5 +1,5 @@
 <template>
-  <base-page :navOptions="navOptions">
+  <base-page :navOptions="{title: '详细订单',isBack: true}">
     <better-scroll :bounce="false">
       <div class="order">
         <DetailOrderHeader :current="getStatusNum"/>
@@ -13,7 +13,7 @@
             <button class="verify-btn" v-if="getStatusNum === 0"  @click="gotoVerifyClick">前往认证</button>
             <button class="cancel-btn" v-if="getStatusNum >= 0 && getStatusNum <= 2" @click="cancelClick">取消订单</button>
             <button v-if="getStatusNum === 3"  @click="repayClick">我要还款</button>
-            <button class="renewal_btn" v-if="getStatusNum === 3 && order.isRenewalAllowed"  @click="renewalClick">我要续期</button>
+            <button class="renewal_btn" v-if="getStatusNum === 3 && isRenewalEnable"  @click="renewalClick">我要续期</button>
           </div>
         </div>
         <div class="space"></div>
@@ -65,10 +65,7 @@ export default {
   mixins: [baseMixin],
   data () {
     return {
-      navOptions: {
-        title: '详细订单',
-        isBack: true
-      },
+      isRenewalEnable: false,
       renewals: [],
       remark: '',
       order: {
@@ -142,7 +139,20 @@ export default {
         path: url.GetOrderDetail,
         data: { id: id },
         fn: data => {
-          this.order = data.result
+          const order = data.result
+          this.isRenewalEnable = order.isRenewalAllowed
+          const renewals = order.renewals
+          if (renewals) {
+            renewals.some((item) => {
+              if (!item.isCancelled && !item.isCompleted) {
+                this.isRenewalEnable = false
+                return true
+              } else {
+                this.isRenewalEnable = true
+              }
+            })
+          }
+          this.order = order
         },
         errFn: () => {
         }
