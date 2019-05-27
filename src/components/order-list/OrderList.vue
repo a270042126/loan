@@ -22,9 +22,7 @@
           {{item.statusName}}
         </div>
         <div class="operate-btn" @click.stop>
-          <button class="verify-btn" v-if="getStatusNum(item) === 0"  @click="gotoVerifyClick">前往认证</button>
-          <button v-if="getStatusNum === 3"  @click="repayClick">我要还款</button>
-          <button class="renewal_btn" v-if="getStatusNum(item) === 3 && item.isRenewalAllowed"  @click="renewalClick(item.id)">我要续期</button>
+          <button v-if="getStatusNum(item) === 3"  @click="repayClick">我要还款</button>
         </div>
       </div>
     </div>
@@ -48,6 +46,7 @@ export default {
     }
   },
   methods: {
+    repayClick () {},
     onRefresh () {
       this.bus.$emit('myOrdersRefresh')
     },
@@ -148,10 +147,11 @@ export default {
       justify-content: flex-end;
       button {
         background: @theme_primary;
-        padding: 8px 2px;
+        padding: 8px 5px;
         border-radius: 4px;
-        font-size: @font_size_3;
+        font-size: @font_size_2;
         margin-left: 8px;
+        color: white;
       }
       .cancel-btn{
         background: @light_gray3
