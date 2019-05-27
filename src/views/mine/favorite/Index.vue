@@ -14,7 +14,7 @@
 <script>
 import { request } from '@/utils'
 import { url } from '@/const'
-import ProductList from '../components/product-list/ProductList'
+import ProductList from '@/components/product-list/ProductList'
 const MAXCOUNT = 25
 export default {
   name: 'Faviorite',

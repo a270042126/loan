@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <div class="banner">
-      <img src="../../../assets/images/bg-product.png">
+      <img src="@/assets/images/bg-product.png">
       <div class="content">
         <div class="icon">
           <img v-lazy="baseUrl + info.product.logo">

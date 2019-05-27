@@ -2,7 +2,10 @@
   <article class="container">
     <slot name="header">
       <header v-if="navOptions"  ref="navBar"
-              :class="`nav-bar ${navOptions.isShadow ? 'shadow': ''} ${navOptions.isFixed ? 'fixed' : ''}`">
+              :class="`nav-bar
+               ${navOptions.isShadow ? 'shadow': ''}
+               ${navOptions.isFixed ? 'fixed' : ''}
+               ${navOptions.isScrollShow ? 'scroll-bg' : ''}`">
         <div>
           <div class="left-item">
             <div v-if="navOptions.isBack" class="arrow material-icons" @click="_navBackClick">&#xe5c4;</div>
@@ -41,7 +44,8 @@ export default {
       rightItem: '',
       isBack: true,
       isShadow: false,
-      isFixed: true
+      isFixed: true,
+      isScrollShow: false
     },
     tabBarIndex: String
   },

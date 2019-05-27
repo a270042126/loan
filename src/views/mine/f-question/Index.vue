@@ -58,13 +58,16 @@ export default {
 <style lang="less" scoped>
 @import "~less/variable";
 @import "~less/mixin";
-.title {
-  text-align: center;
-  font-size: @font_size_4;
-  padding: 10px 0;
-}
-.content{
-  padding: 0 @space1 20px @space1;
-  line-height: 20px;
+.container{
+  background: white;
+  .title {
+    text-align: center;
+    font-size: @font_size_4;
+    padding: 10px 0;
+  }
+  .content{
+    padding: 0 @space1 20px @space1;
+    line-height: 20px;
+  }
 }
 </style>

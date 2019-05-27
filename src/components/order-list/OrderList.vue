@@ -21,31 +21,58 @@
         <div class="need-verify">
           {{item.statusName}}
         </div>
-        <div class="operate-btn">
-          <button>操作</button>
+        <div class="operate-btn" @click.stop>
+          <button class="verify-btn" v-if="getStatusNum(item) === 0"  @click="gotoVerifyClick">前往认证</button>
+          <button class="cancel-btn" v-if="getStatusNum(item) >= 0 && getStatusNum(item) <= 2"  @click="cancelClick(item.id)">取消订单</button>
+          <button v-if="getStatusNum === 3"  @click="repayClick">我要还款</button>
+          <button class="renewal_btn" v-if="getStatusNum(item) === 3 && item.isRenewalAllowed"  @click="renewalClick(item.id)">我要续期</button>
         </div>
       </div>
     </div>
+    <order-operate :id="currentId" ref="orderOperate" @onRefresh="onRefresh"/>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import {common} from '@/utils'
+import { common } from '@/utils'
+import OrderOperate from '@/components/order/OrderOperate'
 export default {
   name: 'OrderList',
+  components: { OrderOperate },
   props: {
     list: Array
   },
+  data () {
+    return {
+      currentId: ''
+    }
+  },
   methods: {
-    // getStatusNum (order) {
-    //   common.getStatusNum(order.statusName)
-    // },
+    onRefresh () {
+      this.bus.$emit('myOrdersRefresh')
+    },
+    // 跳转认证
+    gotoVerifyClick () {
+      this.$router.replace({ name: 'verify' })
+    },
+    getStatusNum (order) {
+      return common.getStatusNum(order.statusName)
+    },
     getTime (time) {
       return moment(time).format('YYYY-MM-DD')
     },
     gotoDetailOrder (key) {
       this.$router.push({ name: 'detail-order', query: { id: this.list[key].id } })
+    },
+    // 取消订单点击
+    cancelClick (id) {
+      this.currentId = id
+      this.$refs.orderOperate.cancelClick()
+    },
+    renewalClick (id) {
+      this.currentId = id
+      this.$refs.orderOperate.renewalClick()
     }
   }
 }
@@ -88,7 +115,7 @@ export default {
     display: flex;
     align-items: center;
     .quota{
-      padding-right: 12px;
+      padding-right: 10px;
       & > div:first-child{
         font-size: @font_size_4;
         color: @theme_color3;
@@ -117,16 +144,23 @@ export default {
     .need-verify{
       color: @theme_color2;
       font-size: @font_size_2;
-      padding-left: 12px;
+      padding-left: 10px;
     }
     .operate-btn{
       flex: 1;
       text-align: right;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
       button {
         background: @theme_primary;
-        padding: 8px 20px;
+        padding: 8px 2px;
         border-radius: 4px;
         font-size: @font_size_3;
+        margin-left: 8px;
+      }
+      .cancel-btn{
+        background: @light_gray3
       }
     }
   }

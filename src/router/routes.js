@@ -1,41 +1,27 @@
 import PageTransition from '../views/PageTransition'
-const Home = (resolve) => {
-  import('../views/home/Home.vue').then((module) => {
-    resolve(module)
-  })
-}
+
 const Product = (resolve) => {
-  import('../views/product/Product.vue').then((module) => {
+  import('../views/product/product/Index').then((module) => {
     resolve(module)
   })
 }
 const Find = (resolve) => {
-  import('../views/find/Find.vue').then((module) => {
-    resolve(module)
-  })
-}
-const UserInfo = (resolve) => {
-  import('../views/UserInfo.vue').then((module) => {
-    resolve(module)
-  })
-}
-const Mine = (resolve) => {
-  import('../views/mine/Mine.vue').then((module) => {
+  import('../views/find/Index').then((module) => {
     resolve(module)
   })
 }
 const LoanProduct = (resolve) => {
-  import('../views/LoanProduct.vue').then((module) => {
+  import('../views/loan/loan-product/Index').then((module) => {
     resolve(module)
   })
 }
 const CreateOrder = (resolve) => {
-  import('../views/create-order/CreateOrder.vue').then((module) => {
+  import('../views/loan/create-order/Index').then((module) => {
     resolve(module)
   })
 }
 const Message = (resolve) => {
-  import('../views/message/list/Message').then((module) => {
+  import('../views/message/list/Index').then((module) => {
     resolve(module)
   })
 }
@@ -44,48 +30,8 @@ const Login = (resolve) => {
     resolve(module)
   })
 }
-const Verify = (resolve) => {
-  import('../views/verify/Verify.vue').then((module) => {
-    resolve(module)
-  })
-}
-const MyOrders = (resolve) => {
-  import('../views/my-orders/MyOrder.vue').then((module) => {
-    resolve(module)
-  })
-}
-const EditPwd = (resolve) => {
-  import('../views/EditPwd.vue').then((module) => {
-    resolve(module)
-  })
-}
-const DetailOrder = (resolve) => {
-  import('../views/detail-order/DetailOrder.vue').then((module) => {
-    resolve(module)
-  })
-}
-const FQuestion = (resolve) => {
-  import('../views/FQuestion.vue').then((module) => {
-    resolve(module)
-  })
-}
-const Share = (resolve) => {
-  import('../views/Share.vue').then((module) => {
-    resolve(module)
-  })
-}
-const Setting = (resolve) => {
-  import('../views/setting/Setting.vue').then((module) => {
-    resolve(module)
-  })
-}
 const Browser = (resolve) => {
   import('../views/Browser.vue').then((module) => {
-    resolve(module)
-  })
-}
-const Favorite = (resolve) => {
-  import('../views/Favorite.vue').then((module) => {
     resolve(module)
   })
 }
@@ -97,7 +43,11 @@ const routes = [
       {
         path: '/',
         name: 'home',
-        component: Home,
+        component: (resolve) => {
+          import('../views/home/Index').then((module) => {
+            resolve(module)
+          })
+        },
         meta: {
           isKeepAlive: true
         }
@@ -126,7 +76,11 @@ const routes = [
       {
         path: '/mine',
         name: 'mine',
-        component: Mine,
+        component: (resolve) => {
+          import('../views/mine/mine/Index').then((module) => {
+            resolve(module)
+          })
+        },
         meta: {
           isKeepAlive: true
         }
@@ -147,11 +101,6 @@ const routes = [
         component: CreateOrder
       },
       {
-        path: '/user-info',
-        name: 'user-info',
-        component: UserInfo
-      },
-      {
         path: '/login',
         name: 'login',
         component: Login
@@ -159,37 +108,65 @@ const routes = [
       {
         path: '/setting',
         name: 'setting',
-        component: Setting
-      },
-      {
-        path: '/verify',
-        name: 'verify',
-        component: Verify
-      },
-      {
-        path: '/my-orders',
-        name: 'my-orders',
-        component: MyOrders
-      },
-      {
-        path: '/detail-order',
-        name: 'detail-order',
-        component: DetailOrder
-      },
-      {
-        path: '/fquestion',
-        name: 'fquestion',
-        component: FQuestion
-      },
-      {
-        path: '/share',
-        name: 'share',
-        component: Share
+        component: (resolve) => {
+          import('../views/setting/setting/Index').then((module) => {
+            resolve(module)
+          })
+        }
       },
       {
         path: '/edit-pwd',
         name: 'edit-pwd',
-        component: EditPwd
+        component: (resolve) => {
+          import('../views/setting/edit-pwd/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/user-info',
+        name: 'user-info',
+        component: (resolve) => {
+          import('../views/setting/user-info/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/my-orders',
+        name: 'my-orders',
+        component: (resolve) => {
+          import('../views/my-orders/my-orders/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/detail-order',
+        name: 'detail-order',
+        component: (resolve) => {
+          import('../views/my-orders/detail-order/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/fquestion',
+        name: 'fquestion',
+        component: (resolve) => {
+          import('../views/mine/f-question/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/share',
+        name: 'share',
+        component: (resolve) => {
+          import('../views/mine/share/Index').then((module) => {
+            resolve(module)
+          })
+        }
       },
       {
         path: '/browser',
@@ -199,58 +176,98 @@ const routes = [
       {
         path: '/favorite',
         name: 'favorite',
-        component: Favorite
+        component: (resolve) => {
+          import('../views/mine/favorite/Index').then((module) => {
+            resolve(module)
+          })
+        }
       },
       {
-        path: '/bank-card-verify',
+        path: '/verify',
+        name: 'verify',
+        component: (resolve) => {
+          import('../views/verify/verify/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/verify/bank-card-verify',
         name: 'bankCardVerify',
         component: (resolve) => {
-          import('../views/bank-card-verify/BankCardVerify').then((module) => {
+          import('../views/verify/bank-card-verify/Index').then((module) => {
             resolve(module)
           })
         }
       },
       {
-        path: '/id-card-verify',
+        path: '/verify/id-card-verify',
         name: 'idCardVerify',
         component: (resolve) => {
-          import('../views/id-card-verify/IdCardVerify').then((module) => {
+          import('../views/verify/id-card-verify/Index').then((module) => {
             resolve(module)
           })
         }
       },
       {
-        path: '/zhima-credit',
+        path: '/verify/zhima-credit',
         name: 'zhimeCredit',
         component: (resolve) => {
-          import('../views/zhima-credit/ZhimeCredit').then((module) => {
+          import('../views/verify/zhima-credit/Index').then((module) => {
             resolve(module)
           })
         }
       },
       {
-        path: '/add-or-update-user-contacts',
+        path: '/verify/add-or-update-user-contacts',
         name: 'addOrUpdateUserContacts',
         component: (resolve) => {
-          import('../views/link-user-contacts/add-or-update/Index').then((module) => {
+          import('../views/verify/link-user-contacts/add-or-update/Index').then((module) => {
             resolve(module)
           })
         }
       },
       {
-        path: '/link-user-contacts',
+        path: '/verify/link-user-contacts',
         name: 'linkUserContacts',
         component: (resolve) => {
-          import('../views/link-user-contacts/list/Index').then((module) => {
+          import('../views/verify/link-user-contacts/list/Index').then((module) => {
             resolve(module)
           })
         }
       },
       {
-        path: '/phone-verify',
+        path: '/verify/phone-verify',
         name: 'phoneVerify',
         component: (resolve) => {
-          import('../views/phone-verify/Index').then((module) => {
+          import('../views/verify/phone-verify/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/invite',
+        name: 'invite',
+        component: (resolve) => {
+          import('../views/mine/invite/invite/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/invite/record',
+        name: 'invateRecord',
+        component: (resolve) => {
+          import('../views/mine/invite/record/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/invite/withdraw',
+        name: 'withdraw',
+        component: (resolve) => {
+          import('../views/mine/invite/withdraw/Index').then((module) => {
             resolve(module)
           })
         }

@@ -1,5 +1,5 @@
 <template>
-  <base-page :navOptions="{ title: '借款', isBack: true, isFixed: isFixed}">
+  <base-page :navOptions="{ title: '借款', isBack: true, isFixed: true, isScrollShow: isScrollShow}">
     <better-scroll :data="orderList" ref="scroll"
                    :pullUpLoad="isShowMore"
                    :pullDownRefresh="true"
@@ -9,7 +9,7 @@
                    @pulling-up="onPullingUp">
       <div class="loan">
         <div>
-          <img src="../assets/images/n-banner.png">
+          <img src="@/assets/images/n-banner.png">
         </div>
         <div class="loan-select">
           <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick">
@@ -33,17 +33,17 @@
 </template>
 
 <script>
-import { request } from '@/utils'
+import { request, common } from '@/utils'
 import { url } from '@/const'
 import { baseMixin, orderMixin } from '@/mixins'
-import OrderList from '../components/order-list/OrderList'
+import OrderList from '@/components/order-list/OrderList'
 export default {
   name: 'LoadProduct',
   components: { OrderList },
   mixins: [baseMixin, orderMixin],
   data () {
     return {
-      isFixed: true,
+      isScrollShow: false,
       isQuotas: true,
       quotas: [],
       terms: [],
@@ -78,33 +78,21 @@ export default {
       this.params.skipCount = 0
       this.getOrders(() => {
         this.orderList.some((item) => {
-          switch (item.statusName) {
-            case '待认证':
-              this.isLoan = false
-              return true
-            case '待审核':
-              this.isLoan = false
-              return true
-            case '待放款':
-              this.isLoan = false
-              return true
-            case '待还款':
-              this.isLoan = false
-              return true
-            case '已还款':
-              this.isLoan = false
-              return true
-            default:
-              this.isLoan = true
+          const num = common.getStatusNum(item.statusName)
+          if (num !== 5) {
+            this.isLoan = false
+            return true
+          } else {
+            this.isLoan = true
           }
         })
       })
     },
     onScroll (pos) {
       if (pos.y < -120) {
-        this.isFixed = false
+        this.isScrollShow = true
       } else {
-        this.isFixed = true
+        this.isScrollShow = false
       }
     },
     showPicker () {

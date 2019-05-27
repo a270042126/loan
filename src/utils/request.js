@@ -21,7 +21,6 @@ axios.interceptors.request.use(
   config => {
     store.dispatch('setIsLoading', true)
     const userKeys = store.getters.userKeys
-    console.log(userKeys)
     if (userKeys && userKeys.accessToken) {
       config.headers.Authorization = `Bearer ${userKeys.accessToken}`
       // token 刷新

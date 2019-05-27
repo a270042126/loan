@@ -41,7 +41,7 @@ export default {
       if (this.userKeys && this.userKeys.userId) {
         return url.baseUrl + url.GetProfilePicture + '/' + this.userKeys.userId
       } else {
-        return require('../../../assets/images/error-userface.png')
+        return require('@/assets/images/error-userface.png')
       }
     },
     ...mapGetters([

@@ -1,6 +1,6 @@
 <template>
   <base-page :navOptions="{ title: '邀请好友', isBack: true}">
-    <div class="content" ref="content">
+    <div class="content" ref="content" :style="shareUrl ? 'background: none' : ''">
       <div v-if="!shareUrl" class="launch">
         <img :src="getFaceImg" class="face">
         <img class="share" :src="getShareUrl" v-loadimg="loadImgChange"/>
@@ -64,7 +64,7 @@ export default {
 .content{
   width: 100%;
   height: 100%;
-  background: url("../assets/images/launch.png") center center no-repeat;
+  background: url("../../../assets/images/launch.png") center center no-repeat;
   background-size: auto 100%;
   & > div {
     width: 100%;

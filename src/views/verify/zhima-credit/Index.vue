@@ -32,7 +32,7 @@
 <script>
 import { baseMixin } from '@/mixins'
 import TextInput from '@/components/TextInput'
-import UploadImage from '../../components/UploadImage'
+import UploadImage from '@/components/UploadImage'
 import { url } from '@/const'
 import { request } from '@/utils'
 export default {

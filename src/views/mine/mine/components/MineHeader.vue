@@ -59,7 +59,7 @@ export default {
 @import "~less/variable";
 @import "~less/mixin";
 .header{
-  background: url("../../../assets/images/minebg.png") left top no-repeat;
+  background: url("../../../../assets/images/minebg.png") left top no-repeat;
   background-size: 100% 100%;
   height: 200px;
   .top {
