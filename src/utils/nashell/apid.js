@@ -103,7 +103,7 @@ class Apid {
     }
     request({
       type: 'post',
-      path: url.HandAppAndPhoneInfo,
+      path: url.CustomerInfoAuthentication.HandAppAndPhoneInfo,
       data: params,
       fn: data => {
         if (typeof _callback === 'function') {

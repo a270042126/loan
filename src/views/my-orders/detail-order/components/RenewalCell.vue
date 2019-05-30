@@ -20,8 +20,14 @@
       <div>续期时间</div>
       <div class="create-time">{{getCreationTime}}</div>
     </div>
-    <div v-if="!item.isCancelled && !item.isCompleted" style="text-align: right">
-      <button class="cancel" @click="renewalCancelClick">取消</button>
+    <div class="pay" v-if="!item.isCancelled && !item.isCompleted">
+      <div class="pay-redio">
+        <input type="radio" v-model="payType" value="0" /><label>支付宝</label>
+      </div>
+      <div style="text-align: right">
+        <button @click="renewalPayClick">支付</button>
+        <button @click="renewalCancelClick">取消</button>
+      </div>
     </div>
     <div v-else style="text-align: right">
       <div class="status" @click="renewalCancelClick">{{item.isCancelled?'已取消':'已完成' }}</div>
@@ -34,10 +40,15 @@ import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
 export default {
-  name: 'DetailOrderReLCell',
+  name: 'RenewalCell',
   mixins: [baseMixin],
   props: {
     item: {}
+  },
+  data () {
+    return {
+      payType: 0
+    }
   },
   computed: {
     getCreationTime () {
@@ -45,19 +56,25 @@ export default {
     }
   },
   methods: {
+    renewalPayClick () {
+      const payUrl = url.baseUrl + url.Alipay.WapPay +
+        `?orderId=${this.item.id}&returnUrl=${url.domainUrl}/detail-order?id=${this.item.orderId}`
+      window.location.href = payUrl
+    },
     renewalCancelClick () {
       this.loadingT()
       const params = {
         remark: '',
-        id: this.item.orderId
+        id: this.item.id
       }
       request({
         type: 'post',
-        path: url.CancelRenewalOrder,
+        path: url.Loan.CancelRenewalOrder,
         data: params,
         fn: data => {
-          this.hideT()
-          this.successT('续期取消成功')
+          if (data.success) {
+            this.successT('续期取消成功')
+          }
           this.$emit('onChange')
         },
         errFn: () => {
@@ -72,6 +89,7 @@ export default {
 <style lang="less" scoped>
 @import "~less/variable";
 @import "~less/mixin";
+
 .cell {
   text-align: center;
   font-size: @font_size_2;
@@ -82,14 +100,17 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-  .cancel{
+  button{
     background: @theme_primary;
     font-size: @font_size_1;
-    margin-top: 10px;
+    margin: 10px 0 0 10px;
     color: white;
     padding: 8px 15px;
   }
-  .status{
+  button:first-child {
+    margin-left: 0;
+  }
+  .status {
     color: @light_gray2;
   }
 }

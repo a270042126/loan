@@ -34,7 +34,7 @@ export default {
       }
       request({
         type: 'post',
-        path: url.GetProjectContentByTag,
+        path: url.ProjectContent.GetProjectContentByTag,
         data: params,
         fn: data => {
           this.question = data.result

@@ -2,7 +2,7 @@
   <base-page :navOptions="{ isBack: true, title: '我的收藏'}">
     <better-scroll ref="scroll"
                    :data="productList"
-                   :pullUpLoad="false"
+                   :pullUpLoad="true"
                    :pullDownRefresh="true"
                    @pulling-down="onPullingDown"
                    @pulling-up="onPullingUp">
@@ -48,12 +48,17 @@ export default {
       }
       request({
         type: 'post',
-        path: url.GetProductFavorites,
+        path: url.Favorite.GetProductFavorites,
         data: params,
         fn: data => {
           let items = data.result.items
           this.productList = items
-          // this.isShowMore = this.productList.length < data.result.totalCount
+          const totalCount = data.result.totalCount
+          if (this.productList.length < totalCount) {
+            this.$refs.scroll.openPullUp()
+          } else {
+            this.$refs.scroll.closePullUp()
+          }
         },
         errFn: () => {
           this.foreceUpdate()

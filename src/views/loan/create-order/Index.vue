@@ -89,7 +89,7 @@ export default {
       const routeParams = this.$route.query
       request({
         type: 'post',
-        path: url.LoanCalculate,
+        path: url.Loan.LoanCalculate,
         data: routeParams,
         fn: data => {
           this.repayCalutate = data.result
@@ -99,15 +99,19 @@ export default {
     // 创建订单
     createOrderClick () {
       let routeParams = this.$route.query
-      routeParams.agreementId = this.repayCalutate.agreementId
+      const params = {
+        agreementId: this.repayCalutate.agreementId,
+        quotaId: routeParams.quotaId,
+        termId: routeParams.termId
+      }
       if (!this.isAgree) {
         this.errorT('请仔细阅读并同意条款合同')
       } else {
         this.loadingT()
         request({
           type: 'post',
-          path: url.CreateOrder,
-          data: routeParams,
+          path: url.Loan.CreateOrder,
+          data: params,
           fn: data => {
             this.hideT()
             this.successT('签约成功')

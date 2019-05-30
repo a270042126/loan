@@ -43,7 +43,7 @@ const OrderMixin = {
       const params = this.params
       request({
         type: 'post',
-        path: url.GetOrders,
+        path: url.Loan.GetOrders,
         data: params,
         fn: data => {
           if (this.params.skipCount > 0) {

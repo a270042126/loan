@@ -2,6 +2,7 @@
 const isApp = false
 
 const url = {
+  domainUrl: 'http://m.jxstudio.cn',
   baseUrl: 'https://p-huohuodai.jxstudio.cn',
   upload: '/File/Upload',
   ChangePassword: '/api/services/app/Profile/ChangePassword',
@@ -23,43 +24,47 @@ const url = {
   InitGeetest: '/api/services/app/Geetest/InitGeetest',
   // .获取用户头像
   GetProfilePicture: '/Profile/GetProfilePicture',
-
-  // 是否收藏
-  IsProductFavorite: '/api/services/client/Favorite/IsProductFavorite',
-  // 添加收藏
-  AddProductFavorite: '/api/services/client/Favorite/AddProductFavorite',
-  // 取消收藏
-  CancelProductFavorite: '/api/services/client/Favorite/CancelProductFavorite',
-  // 获取收藏列表
-  GetProductFavorites: '/api/services/client/Favorite/GetProductFavorites',
+  // .刷新token
+  RefreshToken: '/api/TokenAuth/RefreshToken',
+  Favorite: {
+    // 是否收藏
+    IsProductFavorite: '/api/services/client/Favorite/IsProductFavorite',
+    // 添加收藏
+    AddProductFavorite: '/api/services/client/Favorite/AddProductFavorite',
+    // 取消收藏
+    CancelProductFavorite: '/api/services/client/Favorite/CancelProductFavorite',
+    // 获取收藏列表
+    GetProductFavorites: '/api/services/client/Favorite/GetProductFavorites',
+  },
   // .获取产品列表
   productsUrl: '/api/services/client/Market/GetProducts',
   // .获取产品详情
   GetProduct: '/api/services/client/Market/GetProduct',
-  // 获取产品详细信息
-  LoanProduct: '/api/services/client/Loan/GetProduct',
-  // .刷新token
-  RefreshToken: '/api/TokenAuth/RefreshToken',
-  // 借款计算
-  LoanCalculate: '/api/services/client/Loan/Calculate',
-  // 创建订单
-  CreateOrder: '/api/services/client/Loan/CreateOrder',
-  // 获取订单列表
-  GetOrders: '/api/services/client/Loan/GetOrders',
-  // 获取订单详情
-  GetOrderDetail: '/api/services/client/Loan/GetOrder',
-  // 取消订单
-  CancelOrder: '/api/services/client/Loan/CancelOrder',
-  // 获取借款产品信息(仅续期)
-  GetProductRenewals: '/api/services/client/Loan/GetRenewals',
-  // 借款续期
-  RenewalOrder: '/api/services/client/Loan/RenewalOrder',
-  // 取消未完成的借款续期
-  CancelRenewalOrder: '/api/services/client/Loan/CancelRenewalOrder',
-  // 常见问题
-  GetProjectContentByTag: '/api/services/client/ProjectContent/GetProjectContentByTag',
-  // .采集
-  HandAppAndPhoneInfo: '/api/services/client/CustomerInfoAuthentication/HandAppAndPhoneInfo',
+  Loan: {
+    // 借款计算
+    LoanCalculate: '/api/services/client/Loan/Calculate',
+    // 创建订单
+    CreateOrder: '/api/services/client/Loan/CreateOrder',
+    // 获取订单列表
+    GetOrders: '/api/services/client/Loan/GetOrders',
+    // 获取订单详情
+    GetOrderDetail: '/api/services/client/Loan/GetOrder',
+    // 取消订单
+    CancelOrder: '/api/services/client/Loan/CancelOrder',
+    CancelRepayOrder: '/api/services/client/Loan/CancelRepayOrder',
+    // 借款续期
+    RenewalOrder: '/api/services/client/Loan/RenewalOrder',
+    CancelRenewalOrder: '/api/services/client/Loan/CancelRenewalOrder',
+    // 获取借款产品信息(仅续期)
+    GetProductRenewals: '/api/services/client/Loan/GetRenewals',
+    // 获取产品详细信息
+    LoanProduct: '/api/services/client/Loan/GetProduct',
+    RepayOrder: '/api/services/client/Loan/RepayOrder'
+  },
+  CustomerInfoAuthentication: {
+    // .采集
+    HandAppAndPhoneInfo: '/api/services/client/CustomerInfoAuthentication/HandAppAndPhoneInfo'
+  },
   UserVerify: {
     // 借款
     IsAuthBaseInfo: '/api/services/client/UserVerify/IsAuthBaseInfo',
@@ -75,7 +80,13 @@ const url = {
     DeleteContact: '/api/services/client/UserVerify/DeleteContact'
   },
   ProjectContent: {
+    // 取消未完成的借款续期
+    // 常见问题
+    GetProjectContentByTag: '/api/services/client/ProjectContent/GetProjectContentByTag',
     GetContentList: '/api/services/client/ProjectContent/GetContentList'
+  },
+  Alipay: {
+    WapPay: '/Gateway/Alipay/WapPay'
   }
 }
 export {

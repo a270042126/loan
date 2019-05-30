@@ -61,7 +61,7 @@ export default {
       }
       request({
         type: 'post',
-        path: url.CancelProductFavorite,
+        path: url.Favorite.CancelProductFavorite,
         data: { id: this.info.product.id },
         fn: () => {
           this.isProductFavorite = false
@@ -76,7 +76,7 @@ export default {
       }
       request({
         type: 'post',
-        path: url.AddProductFavorite,
+        path: url.Favorite.AddProductFavorite,
         data: { id: this.info.product.id },
         fn: () => {
           this.isProductFavorite = true
@@ -89,7 +89,7 @@ export default {
       if (userKeys && userKeys.hasOwnProperty('userId')) {
         request({
           type: 'post',
-          path: url.IsProductFavorite,
+          path: url.Favorite.IsProductFavorite,
           data: { id: id },
           fn: data => {
             this.isProductFavorite = data.result

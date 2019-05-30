@@ -22,31 +22,47 @@
           {{item.statusName}}
         </div>
         <div class="operate-btn" @click.stop>
-          <button v-if="getStatusNum(item) === 3"  @click="repayClick">我要还款</button>
+          <button v-if="getStatusNum(item) === 3"  @click="repayClick(item)">我要还款</button>
         </div>
       </div>
     </div>
-    <order-operate :id="currentId" ref="orderOperate" @onRefresh="onRefresh"/>
+    <r-dialog ref="repayDialog" title="我要还款">
+      <div class="repay-div">
+        <div class="input-group">
+          <label>还款金额</label>
+          <input v-model="repayGross" placeholder="还款金额...."/>
+        </div>
+        <button class="simple-btn remark_btn" @click="createRepayClick">创建还款</button>
+      </div>
+    </r-dialog>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import { common } from '@/utils'
-import OrderOperate from '@/components/order/OrderOperate'
+import { baseMixin, orderOperateMixin } from '@/mixins'
 export default {
   name: 'OrderList',
-  components: { OrderOperate },
   props: {
-    list: Array
+    list: Array,
+    from: String
   },
+  mixins: [baseMixin, orderOperateMixin],
   data () {
     return {
-      currentId: ''
+      repayGross: '',
+      orderId: ''
     }
   },
   methods: {
-    repayClick () {},
+    createRepayClick () {
+      this.createRepayRequest(this.orderId, this.repayGross)
+    },
+    repayClick (item) {
+      this.orderId = item.id
+      this.$refs.repayDialog.open()
+    },
     onRefresh () {
       this.bus.$emit('myOrdersRefresh')
     },
@@ -61,11 +77,7 @@ export default {
       return moment(time).format('YYYY-MM-DD')
     },
     gotoDetailOrder (key) {
-      this.$router.push({ name: 'detail-order', query: { id: this.list[key].id } })
-    },
-    renewalClick (id) {
-      this.currentId = id
-      this.$refs.orderOperate.renewalClick()
+      this.$router.push({ name: 'detail-order', query: { id: this.list[key].id, from: this.from } })
     }
   }
 }

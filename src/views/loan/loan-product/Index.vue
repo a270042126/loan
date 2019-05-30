@@ -44,7 +44,7 @@
           <button class="simple-btn" v-if="currentNum === 3" @click="repayClick">我要还款</button>
         </div>
       </div>
-      <order-list :list="orderList"/>
+      <order-list :list="orderList" from="loan"/>
     </better-scroll>
   </base-page>
 </template>
@@ -198,7 +198,7 @@ export default {
     getLoanProduct () {
       request({
         type: 'post',
-        path: url.LoanProduct,
+        path: url.Loan.LoanProduct,
         fn: data => {
           this.quotas = data.result.quotas
           this.terms = data.result.terms
