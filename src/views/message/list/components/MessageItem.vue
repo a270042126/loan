@@ -1,38 +1,49 @@
 <template>
-  <div class="message-item" @click="_click">
-    <div class="material-icons">notifications_active</div>
-    <div class="content-item">
-      <div class="title">{{item.displayName}}</div>
-      <VerticalToggle>
-        <div class="content" v-if="isShow" v-html="item.content"></div>
-      </VerticalToggle>
+  <div :class="`cell ${item.state === 0 ? 'read' : ''}`" @click="gotoDetailClick">
+    <div>
+      <h2>{{item.notification.notificationName}}</h2>
+      <div>
+        <svg-icon iconClass="message" />
+      </div>
     </div>
-    <div class="arrow">
-      <svg-icon v-if="isShow" iconClass="down"/>
-      <svg-icon v-else iconClass="up"/>
+    <p class="time">{{getCreationTime}}</p>
+    <p class="message">{{item.notification.data.message}}</p>
+    <div class="bottom">
+      <p>立即查看</p>
+      <div class="arrow-icon">
+        <svg-icon iconClass="arrow-right"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import VerticalToggle from '@/components/vertical-toggle'
+import moment from 'moment'
 export default {
   name: 'MessageItem',
   props: {
     item: {}
   },
-  components: {
-    VerticalToggle
-  },
   data () {
-    return {
-      isShow: false
+    return {}
+  },
+  computed: {
+    getCreationTime () {
+      return moment(this.item.notification.creationTime).format('YYYY-MM-DD HH:MM')
     }
   },
   methods: {
-    _click () {
-      console.log(123)
-      this.isShow = !this.isShow
+    gotoDetailClick () {
+      this.$router.push({
+        name: 'message-detail',
+        query: {
+          creationTime: this.item.notification.creationTime,
+          notificationName: this.item.notification.notificationName,
+          message: this.item.notification.data.message,
+          id: this.item.id,
+          state: this.item.state
+        }
+      })
     }
   }
 }
@@ -41,41 +52,53 @@ export default {
 <style lang="less" scoped>
 @import "~less/variable";
 @import "~less/mixin";
-.message-item{
-  padding: 8px @space1 10px @space1;
+.cell {
+  margin: 0 15px 15px 15px;
+  border-radius: 5px;
+  font-size: @font_size_2;
   background: white;
-  display: flex;
-  justify-content: space-between;
-  .material-icons{
-    background: @theme_primary;
-    color:white;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    margin-right: 10px;
-  }
-  .content-item{
-    width: 0;
-    padding-bottom: 6px;
-    border-bottom: 1px solid @light_gray;
-    flex-grow: 1;
-    .title{
-      font-size: @font_size_3;
-      margin-bottom: 10px;
-      height: 40px;
-      line-height: 40px;
+  padding: 10px 15px;
+  color: @light_gray2;
+  & > div:first-child{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2{
+      font-size: @font_size_4;
+      font-weight: 600;
     }
-    .content{
-      font-size: @font_size_1;
-      color: @light_gray2;
-      padding-bottom: 10px;
+    div {
+      font-size: @font_size_6;
+      color: white;
+      background: @theme_primary;
+      padding: 5px;
+      border-radius: 50%;
     }
   }
-  .arrow{
-    margin-top: 10px;
-    color: @light_gray3;
-    font-size: @font_size_5;
+  .time{
+    padding: 5px 0;
+  }
+  .message{
+    font-size: @font_size_3;
+    padding: 5px 0 10px 0;
+    .no-wrap;
+  }
+  .bottom{
+    border-top: 1px solid @light_gray;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: @font_size_3;
+    .arrow-icon{
+      font-size: @font_size_5;
+    }
+  }
+}
+.read{
+  color: black;
+  .bottom{
+    color: @light_gray2;
   }
 }
 </style>

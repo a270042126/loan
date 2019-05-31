@@ -5,7 +5,9 @@
         <div v-if="isShow" class="dialog">
           <div style="position: relative;height: 100%">
             <div class="header">
-              <img :src="require('./close_black.png')" class="close" @click="close">
+              <div @click="close" class="close">
+                <svg-icon iconClass="close"/>
+              </div>
               <div class="title">{{title}}</div>
             </div>
             <div class="content" :style="height ? `height: ${height}` : ''">
@@ -23,12 +25,24 @@ export default {
   name: 'OrderPact',
   props: {
     title: String,
-    height: String
+    height: String,
+    isDialogShow: {
+      default: false
+    }
   },
   data () {
     return {
       isShow: false,
       isCover: false
+    }
+  },
+  watch: {
+    isDialogShow (newValue) {
+      if (newValue) {
+        this.open()
+      } else {
+        this.close()
+      }
     }
   },
   methods: {
@@ -37,6 +51,7 @@ export default {
       setTimeout(() => {
         this.isCover = false
       }, 300)
+      this.$emit('onClose')
     },
     open () {
       this.isCover = true
@@ -66,13 +81,16 @@ export default {
       background: @theme_primary;
       .close{
         position: absolute;
-        right: 10px;
-        top: 10px;
+        right: 12px;
+        top: 6px;
         width: 20px;
+        font-size: @font_size_7;
+        color: white;
       }
       .title {
         font-size: @font_size_3;
         text-align: center;
+        color: white;
         line-height: 40px;
       }
     }

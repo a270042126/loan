@@ -1,29 +1,6 @@
 import Vue from 'vue'
 const vm = new Vue()
 class Common {
-  static getStatusNum (statusName) {
-    switch (statusName) {
-      case '已拒绝':
-        return 5
-      case '已取消':
-        return 5
-      case '待认证':
-        return 0
-      case '待审核':
-        return 1
-      case '待放款':
-        return 2
-      case '待还款':
-        return 3
-      case '已还款':
-        return 4
-      case '已完成':
-        return 5
-      default:
-        return 5
-    }
-  }
-
   static platform () {
     let ua = navigator.userAgent.toLowerCase()
     if (/micromessenger/.test(ua)) {

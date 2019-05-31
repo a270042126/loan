@@ -36,6 +36,15 @@ export default {
   mounted () {
     this.getYSProducts()
     this.getRecommendProducts()
+    const orderId = this.$route.query.orderId
+    if (orderId) {
+      this.$router.push({
+        name: 'detail-order',
+        query: {
+          id: orderId
+        }
+      })
+    }
   },
   methods: {
     onPullingDown () {

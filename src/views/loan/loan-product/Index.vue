@@ -11,7 +11,7 @@
         <div>
           <img src="@/assets/images/n-banner.png">
         </div>
-        <div v-if="!order" class="loan-select">
+        <div v-if="currentNum >= 4" class="loan-select">
           <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick">
             {{quotas.length > 0 ? quotas[quotasIndex].name : '0元'}}
             <div class="material-icons icon">expand_more</div>
@@ -21,12 +21,12 @@
             <div class="material-icons icon">expand_more</div>
           </div>
         </div>
-        <div v-if="!order" class="loanBtn">
+        <div v-if="currentNum >= 4" class="loanBtn">
           <button v-if="quotas.length > 0" class="ra-Btn" @click="loanClick">
             {{goOnLoan ? '继续借款' : '立即借款'}}
           </button>
         </div>
-        <div v-else class="order">
+        <div v-else-if="order.id" class="order">
           <div class="status" v-if="currentNum === 0">
             待认证
           </div>
@@ -35,6 +35,12 @@
               <svg-icon iconClass="find"/>
             </div>
             <p>查看详情</p>
+          </div>
+          <div v-if="currentNum === 3">
+            <p>待还金额(元)</p>
+            <p class="need-repay-gross">{{order.needRepayGross}}元</p>
+            <p>应还时间</p>
+            <p class="repay-time">{{getAgreedRepayTime}}</p>
           </div>
           <p>借款金额(元)</p>
           <p class="apply-gross">{{order.applyGross}}元</p>
@@ -46,20 +52,25 @@
       </div>
       <order-list :list="orderList" from="loan"/>
     </better-scroll>
+    <order-operate :isDialogShow="isOrderOperate" :order="order" @onRefresh="onRefresh" @onClose="isOrderOperate = false"/>
   </base-page>
 </template>
 
 <script>
-import { request, common } from '@/utils'
+import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin, orderMixin } from '@/mixins'
-import OrderList from '@/components/order-list/OrderList'
+import OrderList from '@/components/order/OrderList'
+import OrderOperate from '@/components/order/OrderOperate'
+import moment from 'moment'
+import statusData from '@/data/status-data'
 export default {
   name: 'LoadProduct',
-  components: { OrderList },
+  components: { OrderOperate, OrderList },
   mixins: [baseMixin, orderMixin],
   data () {
     return {
+      isOrderOperate: false,
       isScrollShow: false,
       isQuotas: true,
       quotas: [],
@@ -67,15 +78,18 @@ export default {
       quotasIndex: 0,
       termsIndex: 0,
       goOnLoan: false,
-      order: '',
+      order: {},
       currentNum: 5
     }
   },
   mounted () {
-    this.getLoanProduct()
-    this.onPullingDown()
+    this.onRefresh()
   },
   computed: {
+    getAgreedRepayTime () {
+      let time = this.order.agreedRepayTime
+      return this.order && time ? moment(time).format('YYYY-MM-DD') : ''
+    },
     quotaItems () {
       let arr = []
       for (let item of this.quotas) {
@@ -92,7 +106,13 @@ export default {
     }
   },
   methods: {
-    repayClick () {},
+    onRefresh () {
+      this.getLoanProduct()
+      this.onPullingDown()
+    },
+    repayClick () {
+      this.isOrderOperate = true
+    },
     gotoDetailClick () {
       this.$router.push({ name: 'detail-order', query: { id: this.order.id } })
     },
@@ -103,13 +123,13 @@ export default {
       this.params.skipCount = 0
       this.getOrders(() => {
         this.orderList.some((item) => {
-          const num = common.getStatusNum(item.statusName)
+          const num = statusData[item.statusName]
           this.currentNum = num
           if (num !== 5) {
             this.order = item
             return true
           } else {
-            this.order = ''
+            this.order = {}
           }
         })
       })
@@ -262,6 +282,14 @@ export default {
       color: @theme_color2;
       font-size: @font_size_6;
       font-weight: bold;
+    }
+    .need-repay-gross{
+      color: @theme_color2;
+      font-size: @font_size_4;
+    }
+    .repay-time{
+      color: @light_gray2;
+      font-size: @font_size_3;
     }
     .mess{
       color: @theme_color4;

@@ -74,6 +74,15 @@ const routes = [
         }
       },
       {
+        path: '/message/detail',
+        name: 'message-detail',
+        component: (resolve) => {
+          import('../views/message/detail/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
         path: '/mine',
         name: 'mine',
         component: (resolve) => {

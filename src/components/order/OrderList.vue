@@ -26,44 +26,36 @@
         </div>
       </div>
     </div>
-    <r-dialog ref="repayDialog" title="我要还款">
-      <div class="repay-div">
-        <div class="input-group">
-          <label>还款金额</label>
-          <input v-model="repayGross" placeholder="还款金额...."/>
-        </div>
-        <button class="simple-btn remark_btn" @click="createRepayClick">创建还款</button>
-      </div>
-    </r-dialog>
+    <order-operate :isDialogShow="isOrderOperate" :order="order" @onRefresh="onRefresh" @onClose="isOrderOperate = false"/>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import { common } from '@/utils'
-import { baseMixin, orderOperateMixin } from '@/mixins'
+import { baseMixin } from '@/mixins'
+import OrderOperate from './OrderOperate'
+import statusData from '@/data/status-data'
 export default {
   name: 'OrderList',
+  components: { OrderOperate },
   props: {
     list: Array,
     from: String
   },
-  mixins: [baseMixin, orderOperateMixin],
+  mixins: [baseMixin],
   data () {
     return {
-      repayGross: '',
-      orderId: ''
+      isOrderOperate: false,
+      order: {}
     }
   },
   methods: {
-    createRepayClick () {
-      this.createRepayRequest(this.orderId, this.repayGross)
-    },
     repayClick (item) {
-      this.orderId = item.id
-      this.$refs.repayDialog.open()
+      this.order = item
+      this.isOrderOperate = true
     },
     onRefresh () {
+      this.isOrderOperate = false
       this.bus.$emit('myOrdersRefresh')
     },
     // 跳转认证
@@ -71,7 +63,8 @@ export default {
       this.$router.replace({ name: 'verify' })
     },
     getStatusNum (order) {
-      return common.getStatusNum(order.statusName)
+      console.log(statusData)
+      return statusData[order.statusName]
     },
     getTime (time) {
       return moment(time).format('YYYY-MM-DD')

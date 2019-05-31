@@ -127,6 +127,7 @@ button{
   top: 0;
   bottom: 0;
   left: 0;
+  height: 100vh;
   width: 100%;
   background-color: rgba(0,0,0,.3);
   z-index: 999;
@@ -171,27 +172,18 @@ button{
 .scroll-x::-webkit-scrollbar {
   display: none;
 }
-
-.repay-div{
-  .input-group{
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-    font-size: @font_size_3;
-    label{
-      color: @light_gray2;
-      padding: 5px 5px;
-    }
-    input {
-      flex: 1;
-      border: 1px solid @light_gray;
-      padding: 10px 5px;
-    }
+.cancel-order{
+  .remark{
+    border: 1px solid @light_gray2;
+    width: 95%;
+    height: 80px;
+    padding: 4px;
+    font-size: @font_size_2;
   }
-  .radio{
-    display: flex;
-    align-items: center;
-    margin: 5px 0;
+  .remark_btn{
+    display: block;
+    font-size: @font_size_2 !important;
+    margin: 20px auto 0 auto;
   }
 }
 .pay-redio{

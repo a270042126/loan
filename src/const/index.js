@@ -2,7 +2,7 @@
 const isApp = false
 
 const url = {
-  domainUrl: 'http://m.jxstudio.cn',
+  domainUrl: 'http://localhost:3000',
   baseUrl: 'https://p-huohuodai.jxstudio.cn',
   upload: '/File/Upload',
   ChangePassword: '/api/services/app/Profile/ChangePassword',
@@ -84,6 +84,12 @@ const url = {
     // 常见问题
     GetProjectContentByTag: '/api/services/client/ProjectContent/GetProjectContentByTag',
     GetContentList: '/api/services/client/ProjectContent/GetContentList'
+  },
+  Notification: {
+    GetUserNotifications: '/api/services/app/Notification/GetUserNotifications',
+    SetAllNotificationsAsRead: '/api/services/app/Notification/SetAllNotificationsAsRead',
+    SetNotificationAsRead: '/api/services/app/Notification/SetNotificationAsRead',
+    DeleteNotification: '/api/services/app/Notification/DeleteNotification'
   },
   Alipay: {
     WapPay: '/Gateway/Alipay/WapPay'
