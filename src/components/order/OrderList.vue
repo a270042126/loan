@@ -22,7 +22,7 @@
           {{item.statusName}}
         </div>
         <div class="operate-btn" @click.stop>
-          <button v-if="getStatusNum(item) === 3"  @click="repayClick(item)">我要还款</button>
+          <button  @click="repayClick(item)">我要还款</button>
         </div>
       </div>
     </div>
@@ -63,7 +63,6 @@ export default {
       this.$router.replace({ name: 'verify' })
     },
     getStatusNum (order) {
-      console.log(statusData)
       return statusData[order.statusName]
     },
     getTime (time) {

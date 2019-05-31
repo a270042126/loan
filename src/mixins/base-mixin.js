@@ -34,19 +34,19 @@ const baseMixin = {
     hideT () {
       this.toast.hide()
     },
-    alertT (text, okCallBack) {
+    alertT (text, okCallBack, cancelCallBack, sureTitle = '确定', cancelTile = '取消') {
       this.$createDialog({
         type: 'confirm',
         title: '提示',
         content: text,
         confirmBtn: {
-          text: '确定',
+          text: sureTitle,
           active: true,
           disabled: false,
           href: 'javascript:;'
         },
         cancelBtn: {
-          text: '取消',
+          text: cancelTile,
           active: false,
           disabled: false,
           href: 'javascript:;'
@@ -56,7 +56,11 @@ const baseMixin = {
             okCallBack()
           }
         },
-        onCancel: () => {}
+        onCancel: () => {
+          if (cancelCallBack && typeof cancelCallBack === 'function') {
+            cancelCallBack()
+          }
+        }
       }).show()
     }
   }

@@ -46,6 +46,9 @@ export default {
       this.isShow = false
       this.$emit('onClose')
     },
+    onRefresh () {
+      this.$emit('onRefresh')
+    },
     createRepayClick () {
       const params = {
         orderId: this.order.id,
@@ -56,12 +59,17 @@ export default {
         path: url.Loan.RepayOrder,
         data: params,
         fn: data => {
-          this.$emit('onRefresh')
           if (data.success) {
             const id = data.result.id
             const orderId = data.result.orderId
-            window.location.href = url.baseUrl + url.Alipay.WapPay +
+            const payUrl = url.baseUrl + url.Alipay.WapPay +
               `?orderId=${id}&returnUrl=${url.domainUrl}?orderId=${orderId}`
+            window.open(payUrl, '_blank')
+            this.alertT('订单支付', () => {
+              this.onRefresh()
+            }, () => {
+              this.onRefresh()
+            }, '支付完成', '支付出问题')
           }
         },
         errFn: () => {

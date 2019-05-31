@@ -22,7 +22,12 @@ const DialogOperateMixin = {
     gotoAlipay (itemId, orderId) {
       const payUrl = url.baseUrl + url.Alipay.WapPay +
         `?orderId=${itemId}&returnUrl=${url.domainUrl}?orderId=${orderId}`
-      window.location.href = payUrl
+      window.open(payUrl, '_blank')
+      this.alertT('订单支付', () => {
+        this.onRefresh()
+      }, () => {
+        this.onClose()
+      }, '支付完成', '支付出问题')
     },
     onClose () {
       this.isShow = false
