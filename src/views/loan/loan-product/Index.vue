@@ -50,7 +50,7 @@
           <button class="simple-btn" v-if="currentNum === 3" @click="repayClick">我要还款</button>
         </div>
       </div>
-      <order-list :list="orderList" from="loan"/>
+      <order-list :list="orderList" from="loan" @onRepay="repayClick"/>
     </better-scroll>
     <order-operate :isDialogShow="isOrderOperate" :order="order" @onRefresh="onRefresh" @onClose="isOrderOperate = false"/>
   </base-page>
@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     onRefresh () {
+      this.isOrderOperate = false
       this.getLoanProduct()
       this.onPullingDown()
     },

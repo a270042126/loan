@@ -74,7 +74,6 @@ export default {
         this.errorT('请选择续期')
       } else {
         this.$refs.renewalDialog.close()
-        this.loadingT()
         const params = {
           renewalId: this.currentItem.id,
           orderId: this.id
@@ -86,7 +85,6 @@ export default {
           fn: data => {
             this.onRefresh()
             if (data.success) {
-              // this.successT('续期添加成功')
               const renewalId = data.result.id
               const orderId = data.result.orderId
               this.gotoAlipay(renewalId, orderId)

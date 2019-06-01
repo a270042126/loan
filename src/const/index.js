@@ -2,7 +2,7 @@
 const isApp = false
 
 const url = {
-  domainUrl: 'http://localhost:3000',
+  domainUrl: 'https://m.jxstudio.cn',
   baseUrl: 'https://p-huohuodai.jxstudio.cn',
   upload: '/File/Upload',
   ChangePassword: '/api/services/app/Profile/ChangePassword',

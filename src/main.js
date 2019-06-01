@@ -15,8 +15,8 @@ import './directive'
 // 页面App导航
 Vue.use(Navigation, { router, store })
 // fastclick 坑点 点击高亮不起作用
-// import fastclick from 'fastclick'
-// fastclick.attach(document.body)
+import fastclick from 'fastclick'
+fastclick.attach(document.body)
 Vue.use(VueLazyload, {
   loading: require('assets/images/zmverified_grey.png')
 })

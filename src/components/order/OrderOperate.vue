@@ -64,7 +64,8 @@ export default {
             const orderId = data.result.orderId
             const payUrl = url.baseUrl + url.Alipay.WapPay +
               `?orderId=${id}&returnUrl=${url.domainUrl}?orderId=${orderId}`
-            window.open(payUrl, '_blank')
+            const newWin = window.open('/loading', '_blank')
+            newWin.location.replace(payUrl)
             this.alertT('订单支付', () => {
               this.onRefresh()
             }, () => {

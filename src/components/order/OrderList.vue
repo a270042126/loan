@@ -22,37 +22,27 @@
           {{item.statusName}}
         </div>
         <div class="operate-btn" @click.stop>
-          <button  @click="repayClick(item)">我要还款</button>
+          <button v-if="getStatusNum(item) === 3"  @click="repayClick(item)">我要还款</button>
         </div>
       </div>
     </div>
-    <order-operate :isDialogShow="isOrderOperate" :order="order" @onRefresh="onRefresh" @onClose="isOrderOperate = false"/>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import { baseMixin } from '@/mixins'
-import OrderOperate from './OrderOperate'
 import statusData from '@/data/status-data'
 export default {
   name: 'OrderList',
-  components: { OrderOperate },
   props: {
     list: Array,
     from: String
   },
   mixins: [baseMixin],
-  data () {
-    return {
-      isOrderOperate: false,
-      order: {}
-    }
-  },
   methods: {
     repayClick (item) {
-      this.order = item
-      this.isOrderOperate = true
+      this.$emit('onRepay', item)
     },
     onRefresh () {
       this.isOrderOperate = false

@@ -2,9 +2,9 @@ import { url } from '@/const'
 const DialogOperateMixin = {
   props: {
     isDialogShow: {
-      default: false,
-      id: String
-    }
+      default: false
+    },
+    id: String
   },
   data () {
     return {

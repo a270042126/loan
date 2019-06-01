@@ -7,7 +7,7 @@
                  @pulling-down="onPullingDown"
                  @pulling-up="onPullingUp">
       <div class="content">
-        <order-list :list="orderList"/>
+        <order-list :list="orderList" @onRepay="onRepay"/>
         <div v-if="!isLoading && orderList.length === 0" class="empty">
           <router-link :to="{path:'loan-product'}">
             <button class="simple-btn">前往借款</button>
@@ -15,6 +15,7 @@
         </div>
       </div>
     </better-scroll>
+    <order-operate :isDialogShow="isOrderOperate" :order="currentItem" @onRefresh="onRefresh" @onClose="isOrderOperate = false"/>
   </base-page>
 </template>
 
@@ -22,21 +23,37 @@
 import MyOrderFilter from './components/MyOrderFilter'
 import { baseMixin, orderMixin } from '@/mixins'
 import OrderList from '@/components/order/OrderList'
+import OrderOperate from '@/components/order/OrderOperate'
 export default {
   name: 'MyOrders',
   mixins: [baseMixin, orderMixin],
+  data () {
+    return {
+      isOrderOperate: false,
+      currentItem: ''
+    }
+  },
   mounted () {
     const searchFlag = this.$route.query.searchFlag
     this.params.searchFlag = searchFlag || 4
-    this.onPullingDown()
+    this.onRefresh()
   },
   methods: {
+    onRefresh () {
+      this.isOrderOperate = false
+      this.onPullingDown()
+    },
+    onRepay (item) {
+      this.currentItem = item
+      this.isOrderOperate = true
+    },
     filterChange (value) {
       this.params.searchFlag = value
       this.onPullingDown()
     }
   },
   components: {
+    OrderOperate,
     OrderList,
     MyOrderFilter
   }
