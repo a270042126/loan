@@ -16,11 +16,13 @@ import { storage, apid } from '@/utils'
 import { isApp } from '@/const'
 import { mapMutations, mapGetters, mapActions } from 'vuex'
 import Welcome from '@/views/Welcome'
+import { fixIosMixin } from '@/mixins'
 export default {
   data: () => ({}),
   created () {
     this.setWelcome()
   },
+  mixins: [fixIosMixin],
   computed: {
     ...mapGetters([
       'isWelcome',
