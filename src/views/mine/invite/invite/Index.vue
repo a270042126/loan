@@ -35,7 +35,10 @@
         <div class="header">
           <p class="mess">财富需要挖掘，你准备好了吗？</p>
           <button class="simple-btn invite-btn" @click="shareClick">立即分享</button>
-          <button class="record-btn" @click="recordClick">邀请记录</button>
+          <div class="record">
+            <button class="record-btn" @click="recordClick">邀请记录</button>
+            <button class="record-btn" @click="goldClick">推广佣金</button>
+          </div>
         </div>
         <div class="desc">
           <dot-two-invite-item num="1">
@@ -81,6 +84,11 @@ export default {
       } else {
         this.isScrollShow = false
       }
+    },
+    goldClick () {
+      this.$router.push({
+        name: 'inviteGold'
+      })
     },
     recordClick () {
       this.$router.push({
@@ -141,14 +149,22 @@ export default {
         margin-bottom: 20px;
         color: #ffec56;
       }
+      .record{
+        display: flex;
+        justify-content: center;
+        button{
+          padding-top: 10px;
+          color: @light_gray2;
+          border-bottom: 1px solid @light_gray2;
+          padding-bottom: 2px;
+        }
+        button:last-child{
+          margin-left: 20px;
+        }
+      }
       .invite-btn{
         width: 80%;
-        margin-bottom: 20px;
-      }
-      .record-btn{
-        color: @light_gray2;
-        border-bottom: 1px solid @light_gray2;
-        padding-bottom: 2px;
+        margin-bottom: 10px;
       }
     }
     .desc{

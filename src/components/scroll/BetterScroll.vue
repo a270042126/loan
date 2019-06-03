@@ -54,7 +54,7 @@ export default {
   name: COMPONENT_NAME,
   props: {
     data: {
-      type: Array,
+      type: null,
       default: function () {
         return []
       }
@@ -228,7 +228,6 @@ export default {
       this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
     },
     clickItem (e, item) {
-      console.log(e)
       this.$emit('click', item)
     },
     finishPullUp () {

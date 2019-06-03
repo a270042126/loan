@@ -1,7 +1,7 @@
 <template>
   <div>
     <r-dialog ref="recordListDialog" title="还款记录" :isDialogShow="isShow" @onClose="onClose">
-      <better-scroll :crollbar="{fade: false}" class="record-scroll">
+      <better-scroll :data="repayments" :crollbar="{fade: false}" class="record-scroll">
         <template v-for="(item, key) in repayments">
           <div class="cell" :key="key">
             <div class="_flex">

@@ -1,6 +1,6 @@
 <template>
   <base-page :navOptions="{title: '详细订单',isBack: true}">
-    <better-scroll :bounce="false">
+    <better-scroll :bounce="false" :data="order">
       <div class="order">
         <DetailOrderHeader :current="getStatusNum"/>
         <div class="space"></div>

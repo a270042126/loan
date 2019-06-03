@@ -1,7 +1,7 @@
 <template>
   <r-dialog ref="renewalDialog" title="选择续期" :isDialogShow="isShow" @onClose="onClose">
     <div class="renewal">
-      <better-scroll class="scroll" :crollbar="{fade: false}">
+      <better-scroll :data="renewals" class="scroll" :crollbar="{fade: false}">
         <ul class="title">
           <li>天数</li>
           <li>利率</li>

@@ -4,7 +4,7 @@
       <i class="mdui-icon material-icons" v-if="!isProductFavorite" @click="favoriteClick">favorite_border</i>
       <i class="mdui-icon material-icons" v-else @click="cancelFavoriteClick">favorite</i>
     </div>
-    <better-scroll :bounce="false">
+    <better-scroll :bounce="false" :data="info">
       <product-list :info="info"/>
       <div class="sumbit">
         <cube-button :light="true" @click="gotoApply">立即申请</cube-button>
@@ -43,9 +43,6 @@ export default {
   },
   mounted () {
     this.getProductInfo()
-  },
-  destroyed () {
-    console.log('destroyed')
   },
   computed: {
     ...mapGetters([
@@ -141,7 +138,7 @@ export default {
 .container{
   background: white;
   .sumbit{
-    margin: 10px 6px 20px 6px;
+    padding: 10px 6px 40px 6px;
     border-top: 1px solid @light_gray;
     button{
       color: black;

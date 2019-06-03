@@ -3,7 +3,7 @@
     <div slot="navRightItem" class="nav-bar-right-item" @click="gotoOtherClick(-1)">
       <svg-icon iconClass="add" />
     </div>
-    <better-scroll>
+    <better-scroll :data="list">
       <ul>
         <li v-for="(item, key) in list" :key="key" @click="gotoOtherClick(key)">
           <p>{{item.name}}<span>({{item.relation}})</span></p>

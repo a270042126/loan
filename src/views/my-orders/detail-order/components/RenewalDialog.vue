@@ -1,6 +1,6 @@
 <template>
   <r-dialog ref="renewalListDialog" title="续期记录" :isDialogShow="isShow" @onClose="onClose">
-    <better-scroll :crollbar="{fade: false}" class="renewal-scroll">
+    <better-scroll :data="renewals" :crollbar="{fade: false}" class="renewal-scroll">
       <template v-for="(item, key) in renewals">
         <div class="cell" :key="key">
           <div class="_flex">

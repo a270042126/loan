@@ -10,17 +10,15 @@
                    @pulling-up="onPullingUp">
       <ul class="list">
         <li>
+          <p>客户</p>
+          <p>类型</p>
           <p>佣金</p>
-          <p>状态名称</p>
-          <p>佣金类型名称</p>
-          <p>被邀请客户</p>
           <p>时间</p>
         </li>
         <li v-for="(item, key) in list" :key="key">
-          <p>{{item.amount}}</p>
-          <p>{{item.statusName}}</p>
-          <p>{{item.typeName}}</p>
           <p>{{item.invitedUserName}}</p>
+          <p>{{item.typeName}}</p>
+          <p>{{item.amount}}</p>
           <p>{{item.creationTime|dateFormat}}</p>
         </li>
       </ul>
@@ -100,22 +98,7 @@ export default {
         text-align: center;
         padding: 10px 0;
         p{
-          width: 20%;
-        }
-        p:nth-child(1){
-          width: 12%;
-        }
-        p:nth-child(2){
-          width: 18%;
-        }
-        p:nth-child(3){
-          width: 23%;
-        }
-        p:nth-child(4){
-          width: 22%;
-        }
-        p:nth-child(5){
-          width: 20%;
+          flex: 1;
         }
       }
     }

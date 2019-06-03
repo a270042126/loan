@@ -12,15 +12,13 @@
         <li>
           <p>账号</p>
           <p>姓名</p>
-          <p>佣金</p>
           <p>状态</p>
           <p>时间</p>
         </li>
         <li v-for="(item, key) in list" :key="key">
           <p>{{item.userName}}</p>
           <p>{{item.name}}</p>
-          <p>{{item.surName}}</p>
-          <p>{{item.registerAddress}}</p>
+          <p>{{item.verifyNames.length > 0 ? '已认证' : ''}}</p>
           <p>{{item.creationTime|dateFormat}}</p>
         </li>
       </ul>
@@ -111,13 +109,7 @@ export default {
       text-align: center;
       padding: 10px 0;
       p{
-        width: 20%;
-      }
-      p:nth-child(4){
-        width: 15%;
-      }
-      p:nth-child(5){
-        width: 25%;
+        flex: 1;
       }
     }
   }
