@@ -255,6 +255,15 @@ const routes = [
         }
       },
       {
+        path: '/verify/credit-info',
+        name: 'creditInfo',
+        component: (resolve) => {
+          import('../views/verify/credit-info/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
         path: '/invite',
         name: 'invite',
         component: (resolve) => {

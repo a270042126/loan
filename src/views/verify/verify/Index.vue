@@ -20,11 +20,12 @@ export default {
     return {
       verifyNames: [],
       list: [
-        { icon: 'featured_play_list', title: '银行卡认证', desc: '银行卡认证可以提高你的额度', pathName: 'bankCardVerify', status: false, verifyNames: true },
-        { icon: 'featured_play_list', title: '身份证认证', desc: '身份证认证可以提高你的额度', pathName: 'idCardVerify', status: false, verifyNames: true },
-        { icon: 'featured_play_list', title: '芝麻分认证', desc: '芝麻分认证可以提高你的额度', pathName: 'zhimeCredit', status: false, verifyNames: true },
-        { icon: 'featured_play_list', title: '紧急联系人', desc: '紧急联系人可以提高你的额度', pathName: 'linkUserContacts', status: false, verifyNames: true },
-        { icon: 'featured_play_list', title: '手机运营商', desc: '手机运营商可以提高你的额度', pathName: 'phoneVerify', status: false, verifyNames: true }
+        { icon: 'bank', title: '银行卡认证', desc: '银行卡认证可以提高你的额度', pathName: 'bankCardVerify', status: false, verifyNames: true },
+        { icon: 'id-card', title: '身份证认证', desc: '身份证认证可以提高你的额度', pathName: 'idCardVerify', status: false, verifyNames: true },
+        { icon: 'zhime', title: '芝麻分认证', desc: '芝麻分认证可以提高你的额度', pathName: 'zhimeCredit', status: false, verifyNames: true },
+        { icon: 'contact', title: '紧急联系人', desc: '紧急联系人可以提高你的额度', pathName: 'linkUserContacts', status: false, verifyNames: true },
+        { icon: 'Phone', title: '手机运营商', desc: '手机运营商可以提高你的额度', pathName: 'phoneVerify', status: false, verifyNames: true },
+        { iconName: '征', title: '征信', desc: '征信认证可以提高你的额度', pathName: 'creditInfo', status: false, verifyNames: true }
       ]
     }
   },

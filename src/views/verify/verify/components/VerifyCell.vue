@@ -1,7 +1,12 @@
 <template>
   <div class="verify-cell" @click="_gotoOther">
     <div class="top">
-      <div class="material-icons icon">{{item.icon}}</div>
+      <div class="icon" v-if="item.icon">
+        <svg-icon :iconClass="item.icon"/>
+      </div>
+      <div v-else-if="item.iconName" class="icon name">
+        {{item.iconName}}
+      </div>
       <div class="title">{{item.title}}
         <span v-if="item.verifyNames" :class="`status ${item.status ? 'green' : 'red'}`">({{item.status ? '已认证' : '未认证'}})</span></div>
       <div class="go-verify">{{item.status ? '重新认证' : '去认证'}}</div>
@@ -42,7 +47,18 @@ export default {
     justify-content: space-between;
     align-items: center;
     .icon{
-      color: @theme_primary;
+      color: white;
+      font-size: @font_size_3;
+      background: @theme_primary;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .icon.name{
+      font-size: @font_size_1;
     }
     .title{
       font-size: @font_size_3;
