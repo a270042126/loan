@@ -18,7 +18,7 @@ import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
 export default {
-  name: 'OrderOperate',
+  name: 'OrderRepay',
   mixins: [baseMixin],
   props: {
     isDialogShow: {
@@ -54,6 +54,7 @@ export default {
         orderId: this.order.id,
         repayGross: this.repayGross
       }
+      const tempPage = window.open('', '_blank')
       request({
         type: 'post',
         path: url.Loan.RepayOrder,
@@ -64,8 +65,7 @@ export default {
             const orderId = data.result.orderId
             const payUrl = url.baseUrl + url.Alipay.WapPay +
               `?orderId=${id}&returnUrl=${url.domainUrl}?orderId=${orderId}`
-            const newWin = window.open('/loading', '_blank')
-            newWin.location.replace(payUrl)
+            tempPage.location = payUrl
             this.alertT('订单支付', () => {
               this.onRefresh()
             }, () => {
@@ -74,7 +74,6 @@ export default {
           }
         },
         errFn: () => {
-          this.hideT()
         }
       })
     }

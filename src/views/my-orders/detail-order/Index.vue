@@ -4,43 +4,23 @@
       <div class="order">
         <DetailOrderHeader :current="getStatusNum"/>
         <div class="space"></div>
-        <div class="remind">
-          <div class="title">{{`${order.needRepayGross}`}}元</div>
-          <div class="status">{{order.statusName}}</div>
-          <!--<div class="desc">原因：尊敬的客户，由于您本次提交的某些信息不符合我们的审核标准，您的借款已被取消</div>-->
-          <div class="operate">
-            <button v-if=" getStatusNum >= 4" @click="reapplyClick">重新借款</button>
-            <button class="verify-btn" v-if="getStatusNum === 0"  @click="gotoVerifyClick">前往认证</button>
-            <div v-if="getStatusNum === 3">
-              <button @click="repayClick">我要还款</button>
-            </div>
-            <button class="renewal_btn" v-if="getStatusNum === 3 && isRenewalEnable"  @click="renewalClick">我要续期</button>
-            <button class="cancel-btn" v-if="getStatusNum >= 0 && getStatusNum <= 2"  @click="cancelOrderClick">取消订单</button>
-          </div>
-        </div>
+        <order-status :order="order" @onRepay="repayClick" @onRenewal="renewalClick"/>
         <div class="space"></div>
         <div class="detail-list">
           <detail-order-cell title="单号" :text="order.id"/>
           <detail-order-cell title="借款金额" :text="`${order.applyGross}元`"/>
           <detail-order-cell title="借款天数" :text="`${order.applyTerm}`"/>
           <detail-order-cell title="应还金额" :text="`${order.needRepayGross}元`"/>
-          <detail-order-cell title="应还时间" :text="getAgreedRepayTime"/>
+          <detail-order-cell title="应还时间" :text="order.agreedRepayTime|dateFormat"/>
           <detail-order-cell title="还款记录" text="查看还款" :arrow="true" @onClick="openRecordllist"/>
           <detail-order-cell title="续期记录" text="查看续期" :arrow="true" @onClick="openRenewallist"/>
           <detail-order-cell title="利息费用" :text="`${order.interestFee}元`"/>
           <detail-order-cell title="综合服务费用" :text="`${order.serviceFee}元`"/>
           <detail-order-cell title="放款金额" :text="`${order.loanGross}元`"/>
-          <detail-order-cell title="签约时间" :text="getCreationTime"/>
+          <detail-order-cell title="签约时间" :text="order.creationTime | dateFormat"/>
         </div>
       </div>
     </better-scroll>
-    <r-dialog ref="cancelOrderDialog" title="取消订单">
-      <div class="cancel-order">
-        <textarea v-model="remark" placeholder="备注...." class="remark">
-        </textarea>
-        <button class="simple-btn remark_btn" @click="sureCancelClick">提交</button>
-      </div>
-    </r-dialog>
     <renewal-dialog
       :renewals="order.renewals"
       :isDialogShow="isRenewalShow"
@@ -58,7 +38,7 @@
       :isDialogShow="isSelectRenewalShow"
       @onRefresh="onRefresh"
       @onClose="isSelectRenewalShow = false"/>
-    <order-operate
+    <order-repay
       :isDialogShow="isOrderOperateShow"
       :order="order"
       @onRefresh="onRefresh"
@@ -67,7 +47,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
@@ -75,9 +54,10 @@ import DetailOrderHeader from './components/DetailOrderHeader'
 import DetailOrderCell from './components/DetailOrderCell'
 import RenewalDialog from './components/RenewalDialog'
 import RepaymentsDialog from './components/RepaymentsDialog'
-import SelectRenewalDialog from './components/SelectRenewalDialog'
-import OrderOperate from '@/components/order/OrderOperate'
+import SelectRenewalDialog from '@/components/order/SelectRenewalDialog'
+import OrderRepay from '@/components/order/OrderRepay'
 import statusData from '@/data/status-data'
+import OrderStatus from '@/components/order/OrderStatus'
 export default {
   name: 'OrderDetail',
   mixins: [baseMixin],
@@ -100,10 +80,7 @@ export default {
         interestFee: 0,
         serviceFee: 0,
         isRenewalAllowed: false
-      },
-      remark: '',
-      currentItem: '',
-      payType: 0
+      }
     }
   },
   mounted () {
@@ -112,14 +89,6 @@ export default {
   computed: {
     getStatusNum () {
       return statusData[this.order.statusName]
-    },
-    getCreationTime () {
-      let time = this.order.creationTime
-      return this.order && time ? moment(time).format('YYYY-MM-DD') : ''
-    },
-    getAgreedRepayTime () {
-      let time = this.order.agreedRepayTime
-      return this.order && time ? moment(time).format('YYYY-MM-DD') : ''
     }
   },
   methods: {
@@ -135,10 +104,6 @@ export default {
     renewalClick () {
       this.isSelectRenewalShow = true
     },
-    // 跳转认证
-    gotoVerifyClick () {
-      this.$router.replace({ name: 'verify' })
-    },
     openRecordllist () {
       this.isRepaymentsShow = true
     },
@@ -153,15 +118,6 @@ export default {
     repayClick () {
       this.isOrderOperateShow = true
     },
-    // 跳转重新借款
-    reapplyClick () {
-      if (this.$route.query.from === 'loan') {
-        this.$router.goBack()
-      } else {
-        this.$router.replace({ name: 'loan-product' })
-      }
-    },
-
     // 获取订单
     getDetailOrder () {
       const id = this.$route.query.id
@@ -171,7 +127,6 @@ export default {
         data: { id: id },
         fn: data => {
           const order = data.result
-          console.log(order)
           this.isRenewalEnable = order.isRenewalAllowed
           const renewals = order.renewals
           if (renewals) {
@@ -189,38 +144,11 @@ export default {
         errFn: () => {
         }
       })
-    },
-
-    cancelOrderClick () {
-      this.remark = ''
-      this.$refs.cancelOrderDialog.open()
-    },
-
-    // 取消订单
-    sureCancelClick () {
-      const params = {
-        remark: this.remark,
-        id: this.order.id
-      }
-      request({
-        type: 'post',
-        path: url.Loan.CancelOrder,
-        data: params,
-        fn: data => {
-          if (data.success) {
-            this.successT('取消订单成功')
-          }
-          this.$refs.cancelOrderDialog.close()
-          this.onRefresh()
-        },
-        errFn: () => {
-          this.hideT()
-        }
-      })
     }
   },
   components: {
-    OrderOperate,
+    OrderStatus,
+    OrderRepay,
     SelectRenewalDialog,
     DetailOrderCell,
     DetailOrderHeader,

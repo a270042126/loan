@@ -1,7 +1,7 @@
 <template>
-  <base-page :navOptions="{ title: '邀请记录', isBack: true}">
+  <base-page :navOptions="{ title: '推广佣金', isBack: true}">
     <div slot="navRightItem">
-      <button @click="extendClick" style="color: white">推广佣金</button>
+      <button @click="withdrawClick" style="color: white">提现</button>
     </div>
     <better-scroll class="record" :data="list" ref="scroll"
                    :pullUpLoad="true"
@@ -10,17 +10,17 @@
                    @pulling-up="onPullingUp">
       <ul class="list">
         <li>
-          <p>账号</p>
-          <p>姓名</p>
           <p>佣金</p>
-          <p>状态</p>
+          <p>状态名称</p>
+          <p>佣金类型名称</p>
+          <p>被邀请客户</p>
           <p>时间</p>
         </li>
         <li v-for="(item, key) in list" :key="key">
-          <p>{{item.userName}}</p>
-          <p>{{item.name}}</p>
-          <p>{{item.surName}}</p>
-          <p>{{item.registerAddress}}</p>
+          <p>{{item.amount}}</p>
+          <p>{{item.statusName}}</p>
+          <p>{{item.typeName}}</p>
+          <p>{{item.invitedUserName}}</p>
           <p>{{item.creationTime|dateFormat}}</p>
         </li>
       </ul>
@@ -43,22 +43,19 @@ export default {
       }
     }
   },
-  mounted () {
-    this.onPullingDown()
-  },
   methods: {
     onPullingDown () {
       this.params.skipCount = 0
-      this.getRefereeUserList()
+      this.getEarningRecordList()
     },
     onPullingUp () {
       this.params.skipCount += this.params.maxResultCount
-      this.getRefereeUserList()
+      this.getEarningRecordList()
     },
-    getRefereeUserList () {
+    getEarningRecordList () {
       request({
         type: 'post',
-        path: url.Affiliate.GetRefereeUserList,
+        path: url.Affiliate.GetEarningRecordList,
         data: this.params,
         fn: data => {
           const totalCount = data.result.totalCount
@@ -79,47 +76,48 @@ export default {
         }
       })
     },
-    // 取消刷新
-    foreceUpdate () {
-      if (this.$refs.scroll) {
-        this.$refs.scroll.forceUpdate()
-      }
-    },
-    extendClick () {
-      this.$router.push({
-        name: 'inviteGold'
-      })
+    withdrawClick () {
+      this.$router.push({ name: 'withdraw' })
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-@import "~less/variable";
-.record{
-  .list{
-    background: white;
-    padding: 0 5px;
-    font-size: @font_size_2;
-    li:first-child {
-      border-bottom: 1px solid @light_gray3;
-      padding: 15px 0;
-    }
-    li{
-      display: flex;
-      justify-content: space-between;
-      text-align: center;
-      padding: 10px 0;
-      p{
-        width: 20%;
+  @import "~less/variable";
+  .record{
+    .list{
+      background: white;
+      padding: 0 5px;
+      font-size: @font_size_2;
+      li:first-child {
+        border-bottom: 1px solid @light_gray3;
+        padding: 15px 0;
       }
-      p:nth-child(4){
-        width: 15%;
-      }
-      p:nth-child(5){
-        width: 25%;
+      li{
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        padding: 10px 0;
+        p{
+          width: 20%;
+        }
+        p:nth-child(1){
+          width: 12%;
+        }
+        p:nth-child(2){
+          width: 18%;
+        }
+        p:nth-child(3){
+          width: 23%;
+        }
+        p:nth-child(4){
+          width: 22%;
+        }
+        p:nth-child(5){
+          width: 20%;
+        }
       }
     }
   }
-}
 </style>

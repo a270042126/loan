@@ -12,11 +12,13 @@ import { event, apid, push } from '@/utils/'
 import 'amfe-flexible'
 import Navigation from './components/navigation'
 import './directive'
+import fastclick from 'fastclick'
+import * as filters from '@/filters' // global filters
+
+fastclick.attach(document.body)
+
 // 页面App导航
 Vue.use(Navigation, { router, store })
-// fastclick 坑点 点击高亮不起作用
-import fastclick from 'fastclick'
-fastclick.attach(document.body)
 Vue.use(VueLazyload, {
   loading: require('assets/images/zmverified_grey.png')
 })
@@ -28,6 +30,10 @@ Vue.config.productionTip = true
 // 对导入的组件进行全局组件注册
 Object.keys(components).forEach((key) => {
   Vue.component(key, components[key])
+})
+// 注册全局过滤器
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
 })
 
 if (isApp) {

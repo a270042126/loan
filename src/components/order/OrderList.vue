@@ -5,7 +5,7 @@
         <div class="material-icons icon">assignment</div>
         <div class="title">简单贷</div>
         <div class="status">{{item.statusName}}</div>
-        <div class="time">{{getTime(item.creationTime)}}</div>
+        <div class="time">{{item.creationTime|dateFormat}}</div>
       </div>
       <div class="bottom">
         <div class="quota">
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { baseMixin } from '@/mixins'
 import statusData from '@/data/status-data'
 export default {
@@ -54,9 +53,6 @@ export default {
     },
     getStatusNum (order) {
       return statusData[order.statusName]
-    },
-    getTime (time) {
-      return moment(time).format('YYYY-MM-DD')
     },
     gotoDetailOrder (key) {
       this.$router.push({ name: 'detail-order', query: { id: this.list[key].id, from: this.from } })

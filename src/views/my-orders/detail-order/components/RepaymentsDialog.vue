@@ -22,11 +22,11 @@
             </div>
             <div class="_flex" v-if="item.isCompleted">
               <div>完成时间</div>
-              <div>{{getTime(item.completedTime)}}</div>
+              <div>{{item.completedTime|dateFormat}}</div>
             </div>
             <div class="_flex" v-if="item.isCancelled">
               <div>取消时间</div>
-              <div>{{getTime(item.cancelledTime)}}</div>
+              <div>{{item.cancelledTime|dateFormat}}</div>
             </div>
             <div class="_flex operate" v-if="!item.isCompleted && !item.isCancelled">
               <div class="pay-redio">
@@ -56,9 +56,8 @@
 <script>
 import { request } from '@/utils'
 import { url } from '@/const'
-import moment from 'moment'
 import { baseMixin } from '@/mixins'
-import DialogOperateMixin from '../mixins/dialog-operate-mixins'
+import DialogOperateMixin from '@/mixins/dialog-operate-mixins'
 export default {
   name: 'RepaymentsCell',
   mixins: [baseMixin, DialogOperateMixin],
@@ -89,17 +88,9 @@ export default {
           this.onRefresh()
         },
         errFn: () => {
-          this.hideT()
         }
       })
       this.currentItem = ''
-    },
-    getTime (value) {
-      if (value) {
-        return moment(value).format('YYYY-MM-DD HH:MM')
-      } else {
-        return '无'
-      }
     },
     okRepayClick (item) {
       this.gotoAlipay(item.id, this.id)

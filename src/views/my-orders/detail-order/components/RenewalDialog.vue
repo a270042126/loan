@@ -21,7 +21,7 @@
           </div>
           <div class="_flex">
             <div>续期时间</div>
-            <div class="create-time">{{getTime(item.creationTime)}}</div>
+            <div class="create-time">{{item.creationTime | dateFormat}}</div>
           </div>
           <div class="pay" v-if="!item.isCancelled && !item.isCompleted">
             <div class="pay-redio">
@@ -41,11 +41,10 @@
   </r-dialog>
 </template>
 <script>
-import moment from 'moment'
 import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
-import DialogOperateMixin from '../mixins/dialog-operate-mixins'
+import DialogOperateMixin from '@/mixins/dialog-operate-mixins'
 export default {
   name: 'RenewalCell',
   mixins: [baseMixin, DialogOperateMixin],
@@ -53,13 +52,6 @@ export default {
     renewals: Array
   },
   methods: {
-    getTime (value) {
-      if (value) {
-        return moment(value).format('YYYY-MM-DD')
-      } else {
-        return '无'
-      }
-    },
     renewalPayClick (item) {
       this.gotoAlipay(item.id, this.id)
     },
@@ -80,7 +72,6 @@ export default {
             this.onRefresh()
           },
           errFn: () => {
-            this.hideT()
           }
         })
       })

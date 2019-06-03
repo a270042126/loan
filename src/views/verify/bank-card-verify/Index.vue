@@ -4,7 +4,7 @@
       <div class="quota-info" v-if="quotaName">
         <h2>借款金额(元)<br>
         <span>{{quotaName}}</span></h2>
-        <p>{{getNowDate}}, 为期{{termName}}</p>
+        <p>{{new Date()|dateFormat}}, 为期{{termName}}</p>
       </div>
       <div class="bank-card">
         <div class="title">
@@ -30,7 +30,6 @@
 <script>
 import { request, FormValidate } from '@/utils'
 import { url } from '@/const'
-import moment from 'moment'
 import TextInput from '@/components/TextInput'
 import { baseMixin } from '@/mixins'
 export default {
@@ -57,11 +56,6 @@ export default {
           { require: true, message: '身份证不能为空' }
         ]
       }
-    }
-  },
-  computed: {
-    getNowDate () {
-      return moment().format('YYYY-MM-DD')
     }
   },
   methods: {
@@ -92,7 +86,6 @@ export default {
             }
           },
           errFn: () => {
-            this.hideT()
           }
         })
       }

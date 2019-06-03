@@ -36,7 +36,7 @@
 import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
-import DialogOperateMixin from '../mixins/dialog-operate-mixins'
+import DialogOperateMixin from '@/mixins/dialog-operate-mixins'
 export default {
   name: 'SelectRenewalDialog',
   mixins: [baseMixin, DialogOperateMixin],
@@ -91,7 +91,6 @@ export default {
             }
           },
           errFn: () => {
-            this.hideT()
           }
         })
         this.currentItem = ''

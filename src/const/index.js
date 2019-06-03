@@ -93,6 +93,13 @@ const url = {
   },
   Alipay: {
     WapPay: '/Gateway/Alipay/WapPay'
+  },
+  Affiliate: {
+    GetRefereeUserList: '/api/services/client/Affiliate/GetRefereeUserList',
+    GetEarningRecordList: '/api/services/client/Affiliate/GetRefereeUserList',
+    CreateEarningApply: '/api/services/client/Affiliate/CreateEarningApply',
+    GetEarningApplyList: '/api/services/client/Affiliate/GetEarningApplyList',
+    GetEarningInfo: '/api/services/client/Affiliate/GetEarningInfo'
   }
 }
 export {

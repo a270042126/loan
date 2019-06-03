@@ -26,10 +26,8 @@ export default {
         data: params,
         fn: data => {
           this.$emit('uploadCallBack', data.result)
-          this.hideT()
         },
         errFn: () => {
-          this.hideT()
         }
       })
     },

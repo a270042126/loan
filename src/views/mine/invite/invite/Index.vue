@@ -100,6 +100,12 @@ export default {
 @import "~less/variable";
 .container{
   background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img{
+    width: 100%;
+  }
   .banner{
     width: 100%;
     height: 280px;

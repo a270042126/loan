@@ -20,9 +20,8 @@ const OrderMixin = {
   },
   methods: {
     accapceNotification () {
-      const that = this
       this.bus.$on('myOrdersRefresh', () => {
-        that.onPullingDown()
+        this.onRefresh()
       })
     },
     onPullingUp () {

@@ -78,7 +78,6 @@ export default {
             }
           },
           errFn: () => {
-            this.hideT()
           }
         })
       })
@@ -108,7 +107,6 @@ export default {
             }
           },
           errFn: () => {
-            this.hideT()
           }
         })
       }

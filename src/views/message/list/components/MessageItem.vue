@@ -6,7 +6,7 @@
         <svg-icon iconClass="message" />
       </div>
     </div>
-    <p class="time">{{getCreationTime}}</p>
+    <p class="time">{{item.notification.creationTime|dateFormat}}</p>
     <p class="message">{{item.notification.data.message}}</p>
     <div class="bottom">
       <p>立即查看</p>
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 export default {
   name: 'MessageItem',
   props: {
@@ -26,11 +25,6 @@ export default {
   },
   data () {
     return {}
-  },
-  computed: {
-    getCreationTime () {
-      return moment(this.item.notification.creationTime).format('YYYY-MM-DD HH:MM')
-    }
   },
   methods: {
     gotoDetailClick () {

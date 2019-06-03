@@ -3,7 +3,6 @@
     <div class="desc">
       <div class="left">
         <div class="sign">
-          <img src="@/assets/images/invite/icon3.png">
           <p>{{num}}</p>
         </div>
         <p class="line1"></p>
@@ -46,12 +45,14 @@ export default {
         width: 34px;
         height: 34px;
         margin-bottom: 15px;
+        background: url("../../../../../assets/images/invite/icon3.png") no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         p{
-          position: absolute;
           color: white;
           font-size: @font_size_5;
-          top: 7px;
-          left: 11px;
         }
       }
       & > p {

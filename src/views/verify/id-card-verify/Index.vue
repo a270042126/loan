@@ -89,7 +89,6 @@ export default {
           }, 2000)
         },
         errFn: () => {
-          this.hideT()
         }
       })
     }

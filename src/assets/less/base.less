@@ -36,20 +36,20 @@ button{
   background: @theme_primary;
   color: @nav_bar_color;
   & > div {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
     height: @nav_bar_height;
     line-height: @nav_bar_height;
     .left-item{
-      padding-left: @nav_bar_item_space;
-      width: @nav_bar_item_width;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: @nav_bar_item_space;
     }
     .right-item{
-      margin-right: @nav_bar_item_space;
-      width: @nav_bar_item_width;
-      padding: 0;
-      background: none;
-      text-align: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: @nav_bar_item_space;
     }
     .title{
       flex: 1;

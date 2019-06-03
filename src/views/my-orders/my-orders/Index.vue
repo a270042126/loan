@@ -15,7 +15,7 @@
         </div>
       </div>
     </better-scroll>
-    <order-operate :isDialogShow="isOrderOperate" :order="currentItem" @onRefresh="onRefresh" @onClose="isOrderOperate = false"/>
+    <order-repay :isDialogShow="isOrderOperate" :order="currentItem" @onRefresh="onRefresh" @onClose="isOrderOperate = false"/>
   </base-page>
 </template>
 
@@ -23,14 +23,14 @@
 import MyOrderFilter from './components/MyOrderFilter'
 import { baseMixin, orderMixin } from '@/mixins'
 import OrderList from '@/components/order/OrderList'
-import OrderOperate from '@/components/order/OrderOperate'
+import OrderRepay from '@/components/order/OrderRepay'
 export default {
   name: 'MyOrders',
   mixins: [baseMixin, orderMixin],
   data () {
     return {
       isOrderOperate: false,
-      currentItem: ''
+      currentItem: {}
     }
   },
   mounted () {
@@ -53,7 +53,7 @@ export default {
     }
   },
   components: {
-    OrderOperate,
+    OrderRepay,
     OrderList,
     MyOrderFilter
   }

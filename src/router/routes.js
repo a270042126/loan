@@ -273,6 +273,15 @@ const routes = [
         }
       },
       {
+        path: '/invite/gold',
+        name: 'inviteGold',
+        component: (resolve) => {
+          import('../views/mine/invite/invite-gold/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
         path: '/invite/withdraw',
         name: 'withdraw',
         component: (resolve) => {

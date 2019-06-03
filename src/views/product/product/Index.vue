@@ -42,7 +42,6 @@ export default {
     }
   },
   mounted () {
-    console.log('product mounted')
     this.getProductInfo()
   },
   destroyed () {

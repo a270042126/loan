@@ -8,7 +8,7 @@
     <better-scroll>
       <div class="message">
         <h2>{{notificationName}}</h2>
-        <p class="time">{{getCreationTime}}</p>
+        <p class="time">{{$route.query.creationTime|dateFormat}}</p>
         <p class="content">{{message}}</p>
       </div>
     </better-scroll>
@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
@@ -28,11 +27,6 @@ export default {
       notificationName: this.$route.query.notificationName,
       message: this.$route.query.message,
       id: this.$route.query.id
-    }
-  },
-  computed: {
-    getCreationTime () {
-      return moment(this.$route.query.creationTime).format('YYYY-MM-DD HH:MM')
     }
   },
   mounted () {

@@ -142,7 +142,6 @@ export default {
           this.loginShowTime()
         },
         errFn: () => {
-          this.hideT()
         }
       })
     },
@@ -173,13 +172,11 @@ export default {
           storage.set('loginName', this.user.username)
           const userKeys = data.result
           this.setToken(userKeys)
-          this.hideT()
           this.successT('登录成功')
           apid.sendEvent('user', { type: 'login' })
           this.$router.goBack()
         },
         errFn: () => {
-          this.hideT()
           captchaClient.reset() // 调用该接口进行重置
         }
       })

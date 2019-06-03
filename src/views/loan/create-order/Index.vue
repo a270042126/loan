@@ -70,7 +70,7 @@ export default {
       return this.repayCalutate.applyGross + this.repayCalutate.serviceFee
     },
     repayTime () {
-      let time = moment().add(7, 'days').format('YYYY-MM-DD h:mm')
+      let time = moment().add(this.repayCalutate.applyTerm, 'days').format('YYYY-MM-DD h:mm')
       return time
     }
   },
@@ -113,7 +113,6 @@ export default {
           path: url.Loan.CreateOrder,
           data: params,
           fn: data => {
-            this.hideT()
             this.successT('签约成功')
             this.sendNotification()
             let result = data.result
@@ -124,7 +123,6 @@ export default {
             }
           },
           errFn: () => {
-            this.hideT()
           }
         })
       }

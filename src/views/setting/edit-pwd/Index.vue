@@ -43,11 +43,9 @@ export default {
           path: url.ChangePassword,
           data: user,
           fn: () => {
-            this.hideT()
             this.successT('修改成功')
           },
           errFn: () => {
-            this.hideT()
           }
         })
       }

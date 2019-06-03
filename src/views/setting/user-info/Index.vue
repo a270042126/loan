@@ -92,11 +92,9 @@ export default {
         path: url.UpdateUserinfo,
         data: params,
         fn: () => {
-          this.hideT()
           this.successT('修改成功')
         },
         errFn: () => {
-          this.hideT()
         }
       })
     },
@@ -156,11 +154,9 @@ export default {
         path: url.UploadProfilePicture,
         data: params,
         fn: data => {
-          this.hideT()
           this.updateface2(data.result)
         },
         errFn: () => {
-          this.hideT()
         }
       })
     },
