@@ -14,7 +14,7 @@
       <p class="apply-gross">{{order.applyGross}}元</p>
       <p v-if="getStatusNum !== 3">期限：{{order.applyTerm}}天</p>
     </div>
-    <div v-if="order.needVerify > 0" class="verify">
+    <div v-if="order.needVerify > 0 && getStatusNum === 0" class="verify">
       <p class="mess">您的资料不完善，需要补充后，方可放款</p>
       <button @click="gotoVerify">点击补充资料</button>
     </div>
@@ -108,8 +108,6 @@ export default {
   }
   .repay{
     .info{
-      display: flex;
-      justify-content: center;
       p:first-child{
         padding-right: 10px;
       }

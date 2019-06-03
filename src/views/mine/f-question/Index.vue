@@ -1,6 +1,6 @@
 <template>
   <base-page :navOptions="{ title: '常见问题', isBack: true}">
-    <better-scroll>
+    <better-scroll :data="question">
       <div>
         <div class="title">{{question.displayName}}</div>
         <div class="content" v-html="question.content"></div>
