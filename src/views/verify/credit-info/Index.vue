@@ -14,26 +14,52 @@
     </div>
     <better-scroll>
       <ul class="list">
-        <li>
-          <input type="radio" />
-          <div>
-            <p class="title">征信查询高级版</p>
-            <p class="recommend">推荐</p>
+        <li v-for="(item, key) in productList" :key="key">
+          <radio-input :value="key" v-model="checkedValue"/>
+          <div class="title-div">
+            <p class="title">{{item.text}}</p>
+            <p class="recommend" v-if="item.isRecommend">推荐</p>
           </div>
-          <p class="price">￥35</p>
-          <button>查看详情</button>
+          <p class="price">￥{{item.price}}</p>
+          <button @click="productDetailClick(key)">查看详情</button>
         </li>
       </ul>
+      <div class="search-div">
+        <p>为了保证公平，改征信查询结果将向你公开，无征信黑名单记录，放款率98%</p>
+        <button class="simple-btn">查询并付款</button>
+      </div>
+      <div class="result">
+        <p>卡号有误，重新填写</p>
+        <p>查询个人征信<span>无问题</span> 成功借款1500元7天</p>
+      </div>
     </better-scroll>
+    <r-dialog ref="dialog" title="高级试用" height="60vh" :isDialogShow="isDialogShow" @onClose="isDialogShow = false">
+      <better-scroll :scrollbar="{fade: false}">
+        高级试用
+      </better-scroll>
+    </r-dialog>
   </base-page>
 </template>
 
 <script>
+import RadioInput from '@/components/RadioInput'
 export default {
   name: 'Index',
+  components: { RadioInput },
   data () {
     return {
-      list: []
+      productList: [
+        { text: '征信查询初级版', price: '25' },
+        { text: '征信查询高级版', price: '35', isRecommend: true },
+        { text: '征信查询大额版', price: '45' }
+      ],
+      isDialogShow: false,
+      checkedValue: 0
+    }
+  },
+  methods: {
+    productDetailClick () {
+      this.isDialogShow = true
     }
   }
 }
@@ -82,7 +108,7 @@ export default {
     font-size: @font_size_2;
     display: flex;
     align-items: center;
-    div{
+    .title-div{
       flex: 1;
       display: flex;
       align-items: center;
@@ -108,6 +134,34 @@ export default {
       padding: 10px;
       color: white;
       border-radius: 4px;
+    }
+  }
+}
+.search-div{
+  padding: 20px @space1;
+  background: white;
+  p{
+    color: @light_gray2;
+    line-height: 18px;
+    padding-bottom: 20px;
+  }
+  button{
+    border-radius: 4px;
+  }
+}
+.result{
+  background: white;
+  p:first-child{
+    color: @light_blue1;
+    text-align: center;
+    padding-bottom: 10px;
+  }
+  p:nth-child(2){
+    font-size: @font_size_4;
+    text-align: center;
+    padding-bottom: 20px;
+    span{
+      color: @theme_primary;
     }
   }
 }
