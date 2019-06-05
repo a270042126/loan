@@ -15,3 +15,7 @@ export const setToken = ({ commit }, userKeys) => {
 export const setIsLoading = ({ commit }, isLoading) => {
   commit(types.SET_IS_LOADING, isLoading)
 }
+
+export const setBaseUrl = ({ commit }, baseUrl) => {
+  commit(types.SET_BASE_URL, baseUrl)
+}

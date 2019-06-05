@@ -4,7 +4,7 @@
       <img src="@/assets/images/bg-product.png">
       <div class="content">
         <div class="icon">
-          <img v-lazy="baseUrl + info.product.logo">
+          <img v-lazy="baseUrl + '/File/Download/' + info.product.logo">
         </div>
         <div class="desc">
           <div>
@@ -32,15 +32,17 @@
 </template>
 
 <script>
-import { url } from '@/const'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ProductInfo',
   props: {
     info: {}
   },
+  computed: {
+    ...mapGetters(['baseUrl'])
+  },
   data () {
     return {
-      baseUrl: url.baseUrl + '/File/Download/',
       list: [
         { title: '申请条件', desc: '22-60周岁' },
         { title: '所需材料', desc: '身份证、银行卡、手机号' },

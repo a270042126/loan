@@ -20,6 +20,9 @@ axios.defaults.baseURL = url.baseUrl
 axios.interceptors.request.use(
   config => {
     store.dispatch('setIsLoading', true)
+
+    config.url = store.getters.baseUrl + config.url
+
     const userKeys = store.getters.userKeys
     if (userKeys && userKeys.accessToken) {
       config.headers.Authorization = `Bearer ${userKeys.accessToken}`

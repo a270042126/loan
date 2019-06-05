@@ -27,17 +27,18 @@ export default {
   },
   computed: {
     getShareUrl () {
-      return `http://p-huohuodai.jxstudio.cn/Affiliate/Page?refereeId=${this.userKeys.refereeId}&type=index`
+      return `${this.baseUrl}/Affiliate/Page?refereeId=${this.userKeys.refereeId}&type=index`
     },
     getFaceImg () {
       if (this.userKeys && this.userKeys.userId) {
-        return url.baseUrl + url.GetProfilePicture + '/' + this.userKeys.userId
+        return this.baseUrl + url.GetProfilePicture + '/' + this.userKeys.userId
       } else {
         return require('@/assets/images/error-userface.png')
       }
     },
     ...mapGetters([
-      'userKeys'
+      'userKeys',
+      'baseUrl'
     ])
   },
   methods: {

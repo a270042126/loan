@@ -19,7 +19,6 @@ export default {
       const params = new FormData()
       params.append('file', rawFile)
 
-      this.loadingT()
       request({
         type: 'post',
         path: url.upload,

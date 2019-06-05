@@ -39,13 +39,14 @@ export default {
     },
     getFaceImg () {
       if (this.userKeys && this.userKeys.userId) {
-        return url.baseUrl + url.GetProfilePicture + '/' + this.userKeys.userId
+        return this.baseUrl + url.GetProfilePicture + '/' + this.userKeys.userId
       } else {
         return require('@/assets/images/error-userface.png')
       }
     },
     ...mapGetters([
-      'userKeys'
+      'userKeys',
+      'baseUrl'
     ])
   },
   destroyed () {
@@ -59,7 +60,7 @@ export default {
       })
     },
     mineRefresh () {
-      this.userInfo.faceImg = url.baseUrl + url.GetProfilePicture + '/' + this.userKeys.userId + '?' + new Date()
+      this.userInfo.faceImg = this.baseUrl + url.GetProfilePicture + '/' + this.userKeys.userId + '?' + new Date()
     },
     gotoUserInfo () {
       let userKeys = this.userKeys

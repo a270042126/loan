@@ -17,6 +17,7 @@
 import { request } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
+import { mapGetters } from 'vuex'
 export default {
   name: 'OrderRepay',
   mixins: [baseMixin],
@@ -32,6 +33,9 @@ export default {
       repayGross: 0,
       isShow: false
     }
+  },
+  computed: {
+    ...mapGetters(['baseUrl'])
   },
   watch: {
     isDialogShow (newValue) {
@@ -63,7 +67,7 @@ export default {
           if (data.success) {
             const id = data.result.id
             const orderId = data.result.orderId
-            const payUrl = url.baseUrl + url.Alipay.WapPay +
+            const payUrl = this.baseUrl + url.Alipay.WapPay +
               `?orderId=${id}&returnUrl=${url.domainUrl}?orderId=${orderId}`
             tempPage.location = payUrl
             this.alertT('订单支付', () => {

@@ -7,7 +7,7 @@
           <router-link :to="{name:'product', query: {name: item.name, id: item.id}}">
             <div class="product_item">
               <div class="title">
-                <img v-lazy="baseUrl + item.logo">
+                <img v-lazy="baseUrl + '/File/Download/' + item.logo">
                 <div>{{item.name}}</div>
               </div>
               <div class="mess">
@@ -34,16 +34,14 @@
 
 <script>
 import HomeTitle from './HomeTitle'
-import { url } from '@/const'
+import { mapGetters } from 'vuex'
 export default {
   name: 'HomeRecommend',
   props: {
     list: Array
   },
-  data () {
-    return {
-      baseUrl: url.baseUrl + '/File/Download/'
-    }
+  computed: {
+    ...mapGetters(['baseUrl'])
   },
   components: {
     HomeTitle

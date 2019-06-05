@@ -4,7 +4,7 @@
     <better-scroll class="wrapper" :data="list" :scrollX="true">
       <ul class="content" ref="ysUl">
         <li v-for="(item,index) in list" :key="index" @click="gotoProductInfo(item)">
-          <img v-lazy="baseUrl + item.logo">
+          <img v-lazy="baseUrl + '/File/Download/' + item.logo">
           <div class="subtitle">{{item.name}}</div>
         </li>
       </ul>
@@ -15,16 +15,14 @@
 
 <script>
 import HomeTitle from './HomeTitle'
-import { url } from '@/const'
+import { mapGetters } from 'vuex'
 export default {
   name: 'HomeYsProduct',
   props: {
     list: Array
   },
-  data () {
-    return {
-      baseUrl: url.baseUrl + '/File/Download/'
-    }
+  computed: {
+    ...mapGetters(['baseUrl'])
   },
   methods: {
     gotoProductInfo (item) {

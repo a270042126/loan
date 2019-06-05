@@ -4,7 +4,7 @@
       <li v-for="(item,index) in list" :key="index">
         <router-link :to="{name:'product', query: {name: item.name, id: item.id}}">
           <div class="product_item">
-            <div class="img"><img v-lazy="baseUrl + item.logo"></div>
+            <div class="img"><img v-lazy="baseUrl + '/File/Download/' + item.logo"></div>
             <div class="inner">
               <div class="top">
                 <div class="title">{{item.name}}</div>
@@ -27,16 +27,14 @@
 </template>
 
 <script>
-import { url } from '@/const'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ProductList',
   props: {
     list: Array
   },
-  data () {
-    return {
-      baseUrl: url.baseUrl + '/File/Download/'
-    }
+  computed: {
+    ...mapGetters(['baseUrl'])
   }
 }
 </script>

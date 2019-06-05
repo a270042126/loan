@@ -1,4 +1,5 @@
 import { url } from '@/const'
+import { mapGetters } from 'vuex'
 const DialogOperateMixin = {
   props: {
     isDialogShow: {
@@ -13,6 +14,9 @@ const DialogOperateMixin = {
       currentItem: ''
     }
   },
+  computed: {
+    ...mapGetters(['baseUrl'])
+  },
   watch: {
     isDialogShow (newValue) {
       this.isShow = newValue
@@ -20,7 +24,7 @@ const DialogOperateMixin = {
   },
   methods: {
     gotoAlipay (itemId, orderId) {
-      const payUrl = url.baseUrl + url.Alipay.WapPay +
+      const payUrl = this.baseUrl + url.Alipay.WapPay +
         `?orderId=${itemId}&returnUrl=${url.domainUrl}?orderId=${orderId}`
       window.open(payUrl, '_blank')
       this.alertT('订单支付', () => {

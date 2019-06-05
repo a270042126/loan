@@ -35,6 +35,7 @@ import TextInput from '@/components/TextInput'
 import UploadImage from '@/components/UploadImage'
 import { url } from '@/const'
 import { request } from '@/utils'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ZhimeCredit',
   components: { UploadImage, TextInput },
@@ -48,9 +49,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['baseUrl']),
     getZhimaImageUrl () {
       const id = this.form.zhimaImage
-      return `${url.baseUrl}/File/Download?id=${id}`
+      return `${this.baseUrl}/File/Download?id=${id}`
     }
   },
   methods: {

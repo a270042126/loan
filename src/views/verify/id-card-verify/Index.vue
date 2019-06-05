@@ -38,6 +38,7 @@ import { baseMixin } from '@/mixins'
 import UploadImage from '@/components/UploadImage'
 import { url } from '@/const'
 import { request } from '@/utils'
+import { mapGetters } from 'vuex'
 export default {
   name: 'IdCardVerify',
   components: { UploadImage },
@@ -53,13 +54,14 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['baseUrl']),
     getFrontUrl () {
       const id = this.form.identityCardFront
-      return `${url.baseUrl}/File/Download?id=${id}`
+      return `${this.baseUrl}/File/Download?id=${id}`
     },
     getreverseUrl () {
       const id = this.form.identityCardBack
-      return `${url.baseUrl}/File/Download?id=${id}`
+      return `${this.baseUrl}/File/Download?id=${id}`
     }
   },
   methods: {
@@ -74,7 +76,6 @@ export default {
       this.form.identityCardBack = result[0]
     },
     sumbitClick () {
-      this.loadingT()
       request({
         type: 'post',
         data: this.form,

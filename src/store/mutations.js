@@ -11,6 +11,9 @@ const mutations = {
   },
   [types.SET_IS_LOADING] (state, isLoading) {
     state.isLoading = isLoading
+  },
+  [types.SET_BASE_URL] (state, baseUrl) {
+    state.baseUrl = baseUrl
   }
 }
 export default mutations
