@@ -63,7 +63,6 @@ export default {
   methods: {
     deleteClick () {
       this.alertT('你确定要删除？', () => {
-        this.loadingT()
         request({
           type: 'post',
           data: { id: this.form1.id },
@@ -92,7 +91,6 @@ export default {
       if (result.length > 0) {
         this.errorT(result[0].message)
       } else {
-        this.loadingT()
         request({
           type: 'post',
           data: this.form1,

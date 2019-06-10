@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { request, FormValidate } from '@/utils'
+import { request, FormValidate, storage } from '@/utils'
 import { url } from '@/const'
 import TextInput from '@/components/TextInput'
 import { baseMixin } from '@/mixins'
@@ -63,12 +63,13 @@ export default {
     sendNotification () {
       this.bus.$emit('verifyRefresh')
     },
-    sumbitClick () {
+    async sumbitClick () {
       const result = FormValidate.checkForm(this.form, this.rules)
       if (result.length > 0) {
         this.errorT(result[0].message)
       } else {
-        this.loadingT()
+        const creditToken = await storage.get('creditToken')
+        this.form.creditToken = creditToken
         request({
           type: 'post',
           data: this.form,

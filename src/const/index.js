@@ -1,5 +1,5 @@
 
-const isApp = false
+const isApp = true
 
 const url = {
   domainUrl: 'https://m.jxstudio.cn',
@@ -92,7 +92,8 @@ const url = {
     DeleteNotification: '/api/services/app/Notification/DeleteNotification'
   },
   Alipay: {
-    WapPay: '/Gateway/Alipay/WapPay'
+    WapPay: '/Gateway/Alipay/WapPay',
+    AppPay: '/Gateway/Alipay/AppPay'
   },
   Affiliate: {
     GetRefereeUserList: '/api/services/client/Affiliate/GetRefereeUserList',

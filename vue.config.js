@@ -39,7 +39,7 @@ module.exports = {
         bypassOnDebug: true
       }).end()
   },
-  publicPath: '/',
+  publicPath: './',
   // 将构建好的文件输出到哪里
   outputDir: 'dist',
   devServer: {
@@ -64,6 +64,9 @@ module.exports = {
     }
   },
   configureWebpack: config => {
+    config.externals = [
+      require('webpack-require-http')
+    ]
     if (isProduction) {
       config.plugins.push(
         new UglifyJsPlugin({

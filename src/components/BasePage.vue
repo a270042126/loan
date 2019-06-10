@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     resetNavBarTop () {
-      if (!this.navOptions) { return }
+      if (!this.$refs.navBar) { return }
       this.$refs.navBar.style.paddingTop = apid.getSafeAreaTop() + 'px'
       this.$nextTick(() => {
         // 使用nextTick为了保证dom元素都已经渲染完毕

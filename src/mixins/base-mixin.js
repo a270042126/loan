@@ -34,6 +34,20 @@ const baseMixin = {
     hideT () {
       this.toast.hide()
     },
+    alertTT (text, content, okCallBack) {
+      this.$createDialog({
+        type: 'alert',
+        icon: 'cubeic-alert',
+        showClose: true,
+        title: text,
+        content: content,
+        onClose: () => {
+          if (okCallBack && typeof okCallBack === 'function') {
+            okCallBack()
+          }
+        }
+      }).show()
+    },
     alertT (text, okCallBack, cancelCallBack, sureTitle = '确定', cancelTile = '取消') {
       this.$createDialog({
         type: 'confirm',

@@ -79,7 +79,6 @@ export default {
     },
     submitClick () {
       if (!this.checkFrom(this.user)) { return }
-      this.loadingT('正在提交')
       const user = this.user
       const params = {
         name: user.name,
@@ -138,7 +137,6 @@ export default {
       this.updateface(file)
     },
     updateface (ret) {
-      this.loadingT('图片上传中')
       let params = new FormData()
       params.append('FileType', 'png')
       params.append('FileName', md5('letter', 6))

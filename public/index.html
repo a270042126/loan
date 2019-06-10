@@ -29,6 +29,19 @@
     g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
+<script>
+function setItem (key, value) {
+  let params = {}
+  params.value = value
+  let mydata = JSON.stringify(params)
+  localStorage.setItem(key, mydata)
+}
+function dfCallBack(token,sign){
+  setItem('creditToken', token)
+  setItem('creditSign', sign)
+}
+</script>
 <!-- End Matomo Code -->
+<script src="https://p-huohuodai.jxstudio.cn/Gateway/Credit/XinyanScripts?callback=dfCallBack"></script>
 </body>
 </html>

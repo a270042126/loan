@@ -18,7 +18,7 @@ if (userKeys) {
 }
 
 const newRouter = new Router({
-  mode: 'history',
+  // mode: 'history',
   routes
 })
 
@@ -26,7 +26,7 @@ newRouter.beforeEach((to, from, next) => {
   const baseUrl = store.getters.baseUrl
   if (!baseUrl) {
     const domain = document.domain
-    const projectName = domain.substring(0, domain.indexOf('.m.'))
+    const projectName = domain.substring(0, domain.indexOf('.m.')) || 'huohuodai'
     if (projectName) {
       const domainUrl = `https://p-${projectName}.jxstudio.cn`
       store.dispatch('setBaseUrl', domainUrl)

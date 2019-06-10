@@ -14,10 +14,11 @@
 </template>
 
 <script>
-import { request } from '@/utils'
-import { url } from '@/const'
+import { request, apid } from '@/utils'
+import { isApp, url } from '@/const'
 import { baseMixin } from '@/mixins'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'OrderRepay',
   mixins: [baseMixin],
@@ -58,6 +59,13 @@ export default {
         orderId: this.order.id,
         repayGross: this.repayGross
       }
+      if (!isApp) {
+        this.webAlipay(params)
+      } else {
+        this.appAplipay(params)
+      }
+    },
+    webAlipay (params) {
       const tempPage = window.open('', '_blank')
       request({
         type: 'post',
@@ -67,14 +75,39 @@ export default {
           if (data.success) {
             const id = data.result.id
             const orderId = data.result.orderId
-            const payUrl = this.baseUrl + url.Alipay.WapPay +
+            tempPage.location = this.baseUrl + url.Alipay.WapPay +
               `?orderId=${id}&returnUrl=${url.domainUrl}?orderId=${orderId}`
-            tempPage.location = payUrl
             this.alertT('订单支付', () => {
               this.onRefresh()
             }, () => {
               this.onRefresh()
             }, '支付完成', '支付出问题')
+          }
+        },
+        errFn: () => {
+        }
+      })
+    },
+    appAplipay (params) {
+      request({
+        type: 'post',
+        path: url.Loan.RepayOrder,
+        data: params,
+        fn: data => {
+          if (data.success) {
+            request({
+              type: 'get',
+              path: url.Alipay.AppPay,
+              data: {
+                orderId: data.result.id
+              },
+              fn: (result) => {
+                apid.payOrder(result, (ret, err) => {
+                  this.alertTT('支付结果', ret.code === '9000' ? '支付成功' : '支付失败')
+                  this.onRefresh()
+                })
+              }
+            })
           }
         },
         errFn: () => {

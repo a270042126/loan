@@ -283,5 +283,16 @@ class Apid {
       extra: extra || {}
     })
   }
+
+  static payOrder (orderInfo, __callBack) {
+    const aliPay = api.require('aliPay')
+    aliPay.payOrder({
+      orderInfo: orderInfo
+    }, (ret, err) => {
+      if (__callBack && typeof __callBack === 'function') {
+        __callBack(ret, err)
+      }
+    })
+  }
 }
 export default Apid

@@ -31,6 +31,10 @@ export default {
     ])
   },
   methods: {
+    dfCallBack (token, sign) {
+      console.log('---------', token)
+      console.log('----------', sign)
+    },
     // 设置欢迎页
     setWelcome () {
       if (!isApp) {

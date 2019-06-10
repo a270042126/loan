@@ -61,7 +61,6 @@ export default {
       this.bus.$emit('verifyRefresh')
     },
     sumbitClick () {
-      this.loadingT()
       request({
         type: 'post',
         data: this.form,

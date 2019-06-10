@@ -37,7 +37,6 @@ export default {
       } else if (user.newPassword !== user.rePassword) {
         this.errorT('两次设置的新密码不一致')
       } else {
-        this.loadingT()
         request({
           type: 'post',
           path: url.ChangePassword,

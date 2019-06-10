@@ -22,6 +22,7 @@
         {{isRegister ?  '账号密码登录' : '还没有账号？立即注册'}}
       </div>
     </better-scroll>
+    <!--<remote-js :js-url="'https://p-huohuodai.jxstudio.cn/Gateway/Credit/XinyanScripts?callback=dfCallBack'" :js-load-call-back="loadRongJs"/>-->
   </base-page>
 </template>
 
@@ -31,6 +32,7 @@ import { request, validate, apid, storage } from '@/utils'
 import { url } from '@/const'
 import 'assets/lib/gt'
 import { mapActions } from 'vuex'
+// import RemoteJs from '@/components/RemoteJs'
 const TIME_COUNT = 30
 let captchaClient = ''
 let captchaResponse = ''
@@ -51,8 +53,8 @@ export default {
   mounted () {
     this.user.username = storage.get('loginName')
     this.initGeetest()
+    // this.dfCallBack()
   },
-
   methods: {
     registerClick () {
       this.isRegister = !this.isRegister
@@ -76,7 +78,6 @@ export default {
           }, function (captchaObj) {
             captchaClient = captchaObj
             captchaObj.onReady(function () {
-              console.log('ready')
               // H.addCls(H.byId('wait'), 'none');
               // captchaObj.appendTo(H.byId('captcha-box'));
             }).onSuccess(function () {
@@ -89,7 +90,6 @@ export default {
               }
             })
           })
-          console.log(data.result)
         }
       })
     },
@@ -132,7 +132,6 @@ export default {
         phoneNumber: this.user.username,
         captchaResponse: captchaResponse
       }
-      this.loadingT()
       request({
         type: 'post',
         path: url.AuthenticateBySms,
@@ -146,7 +145,7 @@ export default {
       })
     },
 
-    loginClick () {
+    async loginClick () {
       if (!this.loginCheck(this.user)) {
         return
       }
@@ -163,7 +162,8 @@ export default {
           password: this.user.password
         }
       }
-      this.loadingT('正在提交...')
+      const creditToken = await storage.get('creditToken')
+      params.creditToken = creditToken
       request({
         type: 'post',
         path: (this.isRegister) ? url.AuthenticateBySms : url.Authenticate,

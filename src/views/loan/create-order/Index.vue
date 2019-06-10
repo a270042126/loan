@@ -39,7 +39,7 @@
 <script>
 import { baseMixin } from '@/mixins'
 import { url } from '@/const'
-import { request } from '@/utils'
+import { request, storage } from '@/utils'
 import CreateOrderCell from './components/CreateOrderCell'
 import moment from 'moment'
 export default {
@@ -97,17 +97,18 @@ export default {
       })
     },
     // 创建订单
-    createOrderClick () {
+    async createOrderClick () {
       let routeParams = this.$route.query
       const params = {
         agreementId: this.repayCalutate.agreementId,
         quotaId: routeParams.quotaId,
         termId: routeParams.termId
       }
+      const creditToken = await storage.get('creditToken')
+      params.creditToken = creditToken
       if (!this.isAgree) {
         this.errorT('请仔细阅读并同意条款合同')
       } else {
-        this.loadingT()
         request({
           type: 'post',
           path: url.Loan.CreateOrder,

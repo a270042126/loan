@@ -180,7 +180,6 @@ export default {
       })
     },
     getIsAuthBaseInfo (_callBack) {
-      this.loadingT()
       request({
         type: 'post',
         path: url.UserVerify.IsAuthBaseInfo,
@@ -229,6 +228,10 @@ export default {
   .loan{
     background: white;
     margin-bottom: 20px;
+    .loanBtn{
+      text-align: center;
+      padding: 40px 0 20px 0;
+    }
     .loan-select{
       padding: 20px 0;
       display: flex;
