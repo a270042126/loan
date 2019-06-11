@@ -43,6 +43,7 @@ export default {
       title: '',
       rightItem: '',
       isBack: true,
+      setBackClick: false,
       isShadow: false,
       isFixed: true,
       isScrollShow: false
@@ -93,8 +94,11 @@ export default {
       })
     },
     _navBackClick () {
-      this.$emit('navBackClick')
-      this.$router.goBack()
+      if (this.navOptions.setBackClick) {
+        this.$emit('navBackClick')
+      } else {
+        this.$router.goBack()
+      }
     },
     resetTabBarBottom () {
       if (!this.tabIndex) { return }

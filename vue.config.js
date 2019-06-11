@@ -64,9 +64,6 @@ module.exports = {
     }
   },
   configureWebpack: config => {
-    config.externals = [
-      require('webpack-require-http')
-    ]
     if (isProduction) {
       config.plugins.push(
         new UglifyJsPlugin({

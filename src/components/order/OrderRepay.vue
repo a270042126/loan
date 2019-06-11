@@ -73,10 +73,11 @@ export default {
         data: params,
         fn: data => {
           if (data.success) {
+            const domainUrl = `https://${document.domain}`
             const id = data.result.id
             const orderId = data.result.orderId
             tempPage.location = this.baseUrl + url.Alipay.WapPay +
-              `?orderId=${id}&returnUrl=${url.domainUrl}?orderId=${orderId}`
+              `?orderId=${id}&returnUrl=${domainUrl}?orderId=${orderId}`
             this.alertT('订单支付', () => {
               this.onRefresh()
             }, () => {

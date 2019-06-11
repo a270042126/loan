@@ -154,11 +154,14 @@ class Apid {
     })
   }
   // 关闭浏览器
-  static closeBrowser () {
+  static closeBrowser (callBack) {
     const that = this
     this.browserModel.historyBack((ret, err) => {
       if (!ret.status) {
         that.browserModel.closeView()
+        if (callBack && typeof callBack === 'function') {
+          callBack()
+        }
       }
     })
   }

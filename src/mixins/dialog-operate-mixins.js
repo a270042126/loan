@@ -26,8 +26,9 @@ const DialogOperateMixin = {
   methods: {
     gotoAlipay (itemId, orderId) {
       if (!isApp) {
+        const domainUrl = `https://${document.domain}`
         const payUrl = this.baseUrl + url.Alipay.WapPay +
-          `?orderId=${itemId}&returnUrl=${url.domainUrl}?orderId=${orderId}`
+          `?orderId=${itemId}&returnUrl=${domainUrl}?orderId=${orderId}`
         window.open(payUrl, '_blank')
         this.alertT('订单支付', () => {
           this.onRefresh()

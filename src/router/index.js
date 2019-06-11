@@ -4,6 +4,7 @@ import routes from './routes'
 import store from '@/store'
 import storage from '@/utils/storage'
 import { common } from '@/utils'
+import { isApp } from '@/const'
 
 Router.prototype.goBack = function () {
   this.isBack = true
@@ -17,10 +18,13 @@ if (userKeys) {
   store.commit('SET_USER_KEYS', userKeys)
 }
 
-const newRouter = new Router({
-  // mode: 'history',
+let routeT = {
   routes
-})
+}
+if (!isApp) {
+  routeT.mode = 'history'
+}
+const newRouter = new Router(routeT)
 
 newRouter.beforeEach((to, from, next) => {
   const baseUrl = store.getters.baseUrl

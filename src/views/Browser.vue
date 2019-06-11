@@ -1,5 +1,8 @@
 <template>
-  <base-page :navOptions="{ title: '网页浏览',isBack: true }" @navBackClick="backClick" @eventGetHeight="getNavBarHeight">
+  <base-page
+    :navOptions="{ title: '网页浏览',isBack: true, setBackClick: true }"
+    @navBackClick="backClick"
+    @eventGetHeight="getNavBarHeight">
   </base-page>
 </template>
 
@@ -15,7 +18,9 @@ export default {
   },
   methods: {
     backClick () {
-      apid.closeBrowser()
+      apid.closeBrowser(() => {
+        this.$router.goBack()
+      })
     },
     getNavBarHeight (height) {
       let url = this.$route.query.url

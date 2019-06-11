@@ -44,6 +44,10 @@ export default {
           id: orderId
         }
       })
+    } else if (this.$route.query.from) {
+      this.$router.push({
+        name: this.$router.query.form
+      })
     }
   },
   methods: {

@@ -1,5 +1,5 @@
 
-const isApp = true
+const isApp = false
 
 const url = {
   domainUrl: 'https://m.jxstudio.cn',
@@ -101,6 +101,9 @@ const url = {
     CreateEarningApply: '/api/services/client/Affiliate/CreateEarningApply',
     GetEarningApplyList: '/api/services/client/Affiliate/GetEarningApplyList',
     GetEarningInfo: '/api/services/client/Affiliate/GetEarningInfo'
+  },
+  Credit: {
+    XinyanQuanzhi: '/api/services/client/Credit/XinyanQuanzhi'
   }
 }
 export {
