@@ -20,14 +20,27 @@ export default {
     return {
       verifyNames: [],
       list: [
-        { icon: 'bank', title: '银行卡认证', desc: '银行卡认证可以提高你的额度', pathName: 'bankCardVerify', status: false, verifyNames: true },
-        { icon: 'id-card', title: '身份证认证', desc: '身份证认证可以提高你的额度', pathName: 'idCardVerify', status: false, verifyNames: true },
-        { icon: 'zhime', title: '芝麻分认证', desc: '芝麻分认证可以提高你的额度', pathName: 'zhimeCredit', status: false, verifyNames: true },
-        { icon: 'contact', title: '紧急联系人', desc: '紧急联系人可以提高你的额度', pathName: 'linkUserContacts', status: false, verifyNames: true },
-        { icon: 'Phone', title: '手机运营商', desc: '手机运营商可以提高你的额度', pathName: 'phoneVerify', status: false, verifyNames: true },
-        { iconName: '征', title: '征信', desc: '征信认证可以提高你的额度', pathName: 'creditInfo', status: false, verifyNames: true },
-        { icon: 'Phone', title: '淘宝认证', desc: '淘宝认证可以提高你的额度', pathName: 'creditInfo', status: false, verifyNames: true },
-        { icon: 'Phone', title: '支付宝认证', desc: '支付宝认证可以提高你的额度', pathName: 'creditInfo', status: false, verifyNames: true }
+        { icon: 'bank', title: '银行卡认证', pathName: 'bankCardVerify', status: false, verifyNames: true },
+        { icon: 'id-card', title: '身份证认证', pathName: 'idCardVerify', status: false, verifyNames: true },
+        { icon: 'zhime', title: '芝麻分认证', pathName: 'zhimeCredit', status: false, verifyNames: true },
+        { icon: 'contact', title: '紧急联系人', pathName: 'linkUserContacts', status: false, verifyNames: true },
+        { icon: 'Phone', title: '手机运营商', xinyan: 'carrier', status: false, verifyNames: true },
+        { iconName: '征', title: '征信', pathName: 'creditInfo', status: false, verifyNames: true },
+        { iconName: '淘', title: '淘宝认证', xinyan: 'taobaoweb', status: false, verifyNames: true },
+        { iconName: '支', title: '支付宝认证', xinyan: 'zhifubao', status: false, verifyNames: true },
+        { iconName: '京', title: '京东认证', xinyan: 'jingdong', status: false, verifyNames: true },
+        { iconName: '学', title: '学信网认证', xinyan: 'education', status: false, verifyNames: true },
+        { iconName: '饿', title: '饿了么认证', xinyan: 'ele', status: false, verifyNames: true },
+        { iconName: '美', title: '美团认证', xinyan: 'meituan', status: false, verifyNames: true },
+        { iconName: '百', title: '百度云认证', xinyan: 'baiduyun', status: false, verifyNames: true },
+        { iconName: 'Q', title: 'QQ同步助手认证', xinyan: 'qqyun', status: false, verifyNames: true },
+        { iconName: '米', title: '小米云认证', xinyan: 'xiaomiyun', status: false, verifyNames: true },
+        { iconName: '信', title: '信用卡办卡进度查询', xinyan: 'card_progress', status: false, verifyNames: true },
+        { iconName: '社', title: '社保数据认证', xinyan: ' social_insurance', status: false, verifyNames: true },
+        { iconName: '公', title: '公积金数据认证', xinyan: ' housingfund', status: false, verifyNames: true },
+        { iconName: '芝', title: '芝麻信用查验认证', xinyan: 'zhimafen', status: false, verifyNames: true },
+        { iconName: '信', title: '信用卡邮箱账单', xinyan: 'credit_bill_mail', status: false, verifyNames: true },
+        { iconName: '车', title: '车险保单查验认证', xinyan: 'auto_insurance', status: false, verifyNames: true }
       ]
     }
   },
@@ -88,12 +101,8 @@ export default {
       })
     },
     gotoOther (item) {
-      if (item.title === '手机运营商') {
-        this.gotoXinyanQuanzhi('carrier')
-      } else if (item.title === '淘宝认证') {
-        this.gotoXinyanQuanzhi('taobaoweb')
-      } else if (item.title === '支付宝认证') {
-        this.gotoXinyanQuanzhi('zhifubao')
+      if (item.xinyan) {
+        this.gotoXinyanQuanzhi(item.xinyan)
       } else if (item.pathName) {
         this.$router.push({
           name: item.pathName

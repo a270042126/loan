@@ -12,7 +12,7 @@
       <div class="go-verify">{{item.status ? '重新认证' : '去认证'}}</div>
     </div>
     <div class="bottom">
-      {{item.desc}}
+      {{item.title}}可以提高你的额度
     </div>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
       flex: 1;
       .status{
         font-size: @font_size_2;
-        margin-left: 10px;
+        margin-left: 2px;
       }
       .red{
         color: red;
