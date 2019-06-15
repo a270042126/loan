@@ -21,19 +21,19 @@ export default {
       swipeList: [
         {
           url: require('../../../assets/images/banner_home.png'),
-          pathName: ''
+          pathName: 'loan-product'
         },
         {
           url: require('../../../assets/images/banner_home.png'),
-          pathName: ''
+          pathName: 'loan-product'
         },
         {
           url: require('../../../assets/images/banner_home.png'),
-          pathName: ''
+          pathName: 'loan-product'
         },
         {
           url: require('../../../assets/images/banner_home.png'),
-          pathName: ''
+          pathName: 'loan-product'
         }
       ],
       tabList: [

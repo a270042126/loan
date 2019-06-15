@@ -104,6 +104,9 @@ const url = {
   },
   Credit: {
     XinyanQuanzhi: '/api/services/client/Credit/XinyanQuanzhi'
+  },
+  AffiliateTemplate: {
+    GetRegisterTemplate: '/api/services/client/Affiliate/GetRegisterTemplate'
   }
 }
 export {

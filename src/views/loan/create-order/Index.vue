@@ -11,10 +11,11 @@
           <create-order-cell title="借款金额" :text="`${repayCalutate.applyGross}元`"/>
           <create-order-cell title="借款天数" :text="`${repayCalutate.applyTerm}天`"/>
           <create-order-cell title="综合服务费" :text="`${repayCalutate.serviceFee}元`"/>
-          <create-order-cell title="利息费用" :text="`${repayCalutate.applyTerm}元`"/>
+          <create-order-cell title="利息费用" :text="`${repayCalutate.interestFee}元`"/>
           <create-order-cell title="借款申请费用" :text="`${repayCalutate.totalApplyFee}元`"/>
           <!--<create-order-cell title="还款方式" :text="`一次性还${totalFee}元`"/>-->
           <create-order-cell title="还款日期" :text="repayTime"/>
+          <create-order-cell title="到手金额" :text="`${repayCalutate.loanGross}元`"/>
         </div>
         <div></div>
         <div class="repayBtns">

@@ -98,7 +98,7 @@ export default {
       }
     },
     gotoXinyanQuanzhi (name) {
-      const domainUrl = `https;//${document.domain}?form=verify`
+      const domainUrl = `http://${document.domain}?form=verify`
       const params = {
         name: name,
         returnUrl: domainUrl

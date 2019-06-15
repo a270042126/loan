@@ -1,12 +1,13 @@
 <template>
-  <base-page :navOptions="{ isBack: true, isFixed: true}">
+  <base-page :navOptions="{ isBack: true, isFixed: true}" :style="template.hasTemplate ? 'background:' + template.background : ''">
     <better-scroll class="login">
-      <img src="../assets/images/bg-login.png">
+      <img v-if="template.hasTemplate" :src="baseUrl + '/File/Download?id=' + template.registerImage"  alt=""/>
+      <img v-else src="../assets/images/bg-login.png"  alt=""/>
       <ul class="from">
-        <li>
+        <li :style="template.hasTemplate ? 'background:' + template.background : ''">
           <input type="text" placeholder="手机号码" v-model.trim="user.username" />
         </li>
-        <li class="code" v-show="isRegister">
+        <li class="code" v-show="isRegister" :style="template.hasTemplate ? 'background:' + template.background : ''">
           <input type="text" placeholder="验证码" v-model.trim="user.code"/>
           <div v-if="timerCount === 0" class="code_btn" @click="codeClick" >
             获取验证码
@@ -15,8 +16,12 @@
             {{timerCount + 's'}}
           </div>
         </li>
-        <li><input type="password" placeholder="请输入密码" v-model.trim="user.password"/></li>
-        <li><cube-button class="submit" @click="loginClick">立即登录</cube-button></li>
+        <li :style="template.hasTemplate ? 'background:' + template.background : ''">
+          <input type="password" placeholder="请输入密码" v-model.trim="user.password"/>
+        </li>
+        <li :style="template.hasTemplate ? 'background:' + template.background : ''">
+          <cube-button class="submit" @click="loginClick">立即登录</cube-button>
+        </li>
       </ul>
       <div class="register" @click="registerClick">
         {{isRegister ?  '账号密码登录' : '还没有账号？立即注册'}}
@@ -31,7 +36,7 @@ import { baseMixin } from '@/mixins'
 import { request, validate, apid, storage } from '@/utils'
 import { url } from '@/const'
 import 'assets/lib/gt'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 // import RemoteJs from '@/components/RemoteJs'
 const TIME_COUNT = 30
 let captchaClient = ''
@@ -47,15 +52,33 @@ export default {
         username: '',
         password: '',
         code: ''
-      }
+      },
+      template: ''
     }
+  },
+  computed: {
+    ...mapGetters(['baseUrl'])
   },
   mounted () {
     this.user.username = storage.get('loginName')
+    this.getTemplate()
     this.initGeetest()
-    // this.dfCallBack()
   },
   methods: {
+    async getTemplate () {
+      const refereeId = await storage.get('refereeId')
+      if (refereeId) {
+        request({
+          type: 'post',
+          path: url.AffiliateTemplate.GetRegisterTemplate,
+          data: { id: refereeId },
+          fn: data => {
+            console.log(data)
+            this.template = data.result
+          }
+        })
+      }
+    },
     registerClick () {
       this.isRegister = !this.isRegister
       this.user.password = ''
@@ -253,7 +276,7 @@ export default {
           height: 44px;
           width: 0;
           font-size: @font_size_1;
-          background: @login_input_bg;
+          background: none;
           color: @login_color;
         }
         input::-webkit-input-placeholder{
