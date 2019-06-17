@@ -4,23 +4,44 @@
       <img v-if="template.hasTemplate" :src="baseUrl + '/File/Download?id=' + template.registerImage"  alt=""/>
       <img v-else src="../assets/images/bg-login.png"  alt=""/>
       <ul class="from">
-        <li :style="template.hasTemplate ? 'background:' + template.background : ''">
-          <input type="text" placeholder="手机号码" v-model.trim="user.username" />
+        <li :style="`background:${template.inputColor ? template.inputColor : ''};
+        border-color:${template.buttonColor ? template.buttonColor : ''}`">
+          <input type="text"
+                 placeholder="手机号码"
+                 v-model.trim="user.username"
+                :style="`color:${template.fontColor ? template.fontColor : ''}`"/>
         </li>
-        <li class="code" v-show="isRegister" :style="template.hasTemplate ? 'background:' + template.background : ''">
-          <input type="text" placeholder="验证码" v-model.trim="user.code"/>
-          <div v-if="timerCount === 0" class="code_btn" @click="codeClick" >
+        <li class="code" v-show="isRegister"
+            :style="`background:${template.inputColor ? template.inputColor : ''};
+            border-color:${template.buttonColor ? template.buttonColor : ''}`">
+          <input type="text"
+                 placeholder="验证码"
+                 v-model.trim="user.code"
+                 :style="`color:${template.fontColor ? template.fontColor : ''}`"/>
+          <div v-if="timerCount === 0"
+               class="code_btn"
+               @click="codeClick"
+               :style="`background:${template.buttonColor ? template.buttonColor : ''};
+            color:${template.inputColor ? template.inputColor : ''}`">
             获取验证码
           </div>
           <div v-else class="code_btn">
             {{timerCount + 's'}}
           </div>
         </li>
-        <li :style="template.hasTemplate ? 'background:' + template.background : ''">
-          <input type="password" placeholder="请输入密码" v-model.trim="user.password"/>
+        <li :style="`background:${template.inputColor ? template.inputColor : ''};
+        border-color:${template.buttonColor ? template.buttonColor : ''}`">
+          <input type="password"
+                 placeholder="请输入密码"
+                 v-model.trim="user.password"
+                 :style="`color:${template.fontColor ? template.fontColor : ''}`"/>
         </li>
         <li :style="template.hasTemplate ? 'background:' + template.background : ''">
-          <cube-button class="submit" @click="loginClick">立即登录</cube-button>
+          <cube-button
+            class="submit"
+            @click="loginClick"
+            :style="`background:${template.buttonColor ? template.buttonColor : ''};
+            color:${template.inputColor ? template.inputColor : ''}`">立即登录</cube-button>
         </li>
       </ul>
       <div class="register" @click="registerClick">
@@ -303,7 +324,7 @@ export default {
         }
       }
       li:hover {
-        border: 1px solid @login_input_border_hover_color;
+        border: 1px solid transparent;
       }
       li:last-child{
         border: none;
