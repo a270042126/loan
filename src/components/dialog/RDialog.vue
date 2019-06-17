@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'OrderPact',
+  name: 'RDialog',
   props: {
     title: String,
     height: String,

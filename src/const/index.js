@@ -103,7 +103,10 @@ const url = {
     GetEarningInfo: '/api/services/client/Affiliate/GetEarningInfo'
   },
   Credit: {
-    XinyanQuanzhi: '/api/services/client/Credit/XinyanQuanzhi'
+    XinyanQuanzhi: '/api/services/client/Credit/XinyanQuanzhi',
+    GetCreditProducts: '/api/services/client/Credit/GetCreditProducts',
+    GetCreditReport: '/api/services/client/Credit/GetCreditReport',
+    CreateCreditOrder: '/api/services/client/Credit/CreateCreditOrder'
   },
   AffiliateTemplate: {
     GetRegisterTemplate: '/api/services/client/Affiliate/GetRegisterTemplate'

@@ -15,51 +15,92 @@
     <better-scroll>
       <ul class="list">
         <li v-for="(item, key) in productList" :key="key">
-          <radio-input :value="key" v-model="checkedValue"/>
+          <radio-input :value="item.id" v-model="checkedValue"/>
           <div class="title-div">
-            <p class="title">{{item.text}}</p>
+            <p class="title">{{item.name}}</p>
             <p class="recommend" v-if="item.isRecommend">推荐</p>
           </div>
-          <p class="price">￥{{item.price}}</p>
+          <p class="price">￥{{item.price}}<span v-if="item.originalPrice">(￥{{item.originalPrice}})</span></p>
           <button @click="productDetailClick(key)">查看详情</button>
         </li>
       </ul>
       <div class="search-div">
         <p>为了保证公平，改征信查询结果将向你公开，无征信黑名单记录，放款率98%</p>
-        <button class="simple-btn">查询并付款</button>
+        <button class="simple-btn" @click="searchClick">查询并付款</button>
       </div>
       <div class="result">
-        <p>卡号有误，重新填写</p>
+        <router-link :to="{name: 'bankCardVerify'}">
+          <p>卡号有误，重新填写</p>
+        </router-link>
         <p>查询个人征信<span>无问题</span> 成功借款1500元7天</p>
       </div>
     </better-scroll>
     <r-dialog ref="dialog" title="高级试用" height="60vh" :isDialogShow="isDialogShow" @onClose="isDialogShow = false">
       <better-scroll :scrollbar="{fade: false}">
-        高级试用
+        {{currentKey ? productList[currentKey].remark : ''}}
       </better-scroll>
     </r-dialog>
+    <credit-pay-dialog
+      :isShow="isPayDialogShow" :product="checkedValue ? productList[checkedValue] : ''"
+      @close="isPayDialogShow = false" @onRefresh="refresh"/>
   </base-page>
 </template>
 
 <script>
 import RadioInput from '@/components/RadioInput'
+import { request } from '@/utils'
+import { url } from '@/const'
+import { baseMixin } from '@/mixins'
+import CreditPayDialog from './components/CreditPayDialog'
 export default {
   name: 'Index',
-  components: { RadioInput },
+  components: { CreditPayDialog, RadioInput },
+  mixins: [ baseMixin ],
   data () {
     return {
       productList: [
-        { text: '征信查询初级版', price: '25' },
-        { text: '征信查询高级版', price: '35', isRecommend: true },
-        { text: '征信查询大额版', price: '45' }
       ],
+      isPayDialogShow: false,
       isDialogShow: false,
-      checkedValue: 0
+      checkedValue: 0,
+      currentKey: ''
     }
   },
+  mounted () {
+    this.refresh()
+  },
   methods: {
-    productDetailClick () {
+    refresh () {
+      this.getCreditProducts()
+    },
+    searchClick () {
+      if (!this.checkedValue) {
+        this.errorT('请选择产品')
+      } else {
+        this.isPayDialogShow = true
+      }
+    },
+    getCreditProducts () {
+      request({
+        type: 'post',
+        path: url.Credit.GetCreditProducts,
+        fn: data => {
+          const items = data.result.items
+          this.productList = items
+          items.some((item) => {
+            if (item.isRecommend) {
+              this.checkedValue = item.id
+              return true
+            }
+          })
+        },
+        errFn: () => {
+        }
+      })
+    },
+    productDetailClick (key) {
       this.isDialogShow = true
+      this.currentKey = key
     }
   }
 }
@@ -128,6 +169,14 @@ export default {
       color: @theme_color3;
       font-size: @font_size_3;
       padding: 0 10px;
+      display: flex;
+      align-items: center;
+      span{
+        font-size: @font_size_1;
+        color: @light_gray2;
+        text-decoration: line-through;
+        margin-left: 5px;
+      }
     }
     button{
       background: @theme_color3;
@@ -151,6 +200,7 @@ export default {
 }
 .result{
   background: white;
+  text-align: center;
   p:first-child{
     color: @light_blue1;
     text-align: center;
