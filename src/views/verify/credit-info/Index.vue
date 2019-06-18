@@ -34,6 +34,19 @@
         </router-link>
         <p>查询个人征信<span>无问题</span> 成功借款1500元7天</p>
       </div>
+      <ul class="order-list">
+        <li v-for="(item, key) in orderList" :key="key">
+          <div>
+            <p class="title">产品名称：{{item.name}}<span>({{item.statusName}})</span></p>
+            <p>银行卡：{{item.bankCardNumber}}</p>
+            <p>手机号码：{{item.phoneNumber}}</p>
+          </div>
+          <div>
+            <p class="price">金额：{{item.price}}</p>
+            <p>{{item.creationTime | dateFormat}}</p>
+          </div>
+        </li>
+      </ul>
     </better-scroll>
     <r-dialog ref="dialog" title="高级试用" height="60vh" :isDialogShow="isDialogShow" @onClose="isDialogShow = false">
       <better-scroll :scrollbar="{fade: false}">
@@ -58,6 +71,22 @@ export default {
   mixins: [ baseMixin ],
   data () {
     return {
+      verify: '',
+      orderList: [
+        {
+          price: 0,
+          customerId: 0,
+          name: '123',
+          phoneNumber: '123',
+          idNumber: '123',
+          bankCardNumber: '123',
+          status: 0,
+          statusName: '123',
+          productName: '123',
+          creationTime: '2019-06-18',
+          id: '123'
+        }
+      ],
       productList: [
       ],
       isPayDialogShow: false,
@@ -72,6 +101,18 @@ export default {
   methods: {
     refresh () {
       this.getCreditProducts()
+      // this.getCreditOrders()
+    },
+    getCreditOrders () {
+      request({
+        type: 'post',
+        path: url.Credit.GetCreditOrders,
+        fn: data => {
+          this.orderList = data.result.items
+        },
+        errFn: () => {
+        }
+      })
     },
     searchClick () {
       if (!this.checkedValue) {
@@ -212,6 +253,32 @@ export default {
     padding-bottom: 20px;
     span{
       color: @theme_primary;
+    }
+  }
+}
+.order-list{
+  margin-top: 20px;
+  li{
+    font-size: @font_size_2;
+    background: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    line-height: 24px;
+    .title{
+      font-size: @font_size_4;
+      display: flex;
+      align-items: center;
+      span{
+        font-size: @font_size_1;
+        margin-left: 5px;
+      }
+    }
+    .price{
+      color: @theme_primary;
+    }
+    & > div:nth-child(2){
+      text-align: right;
     }
   }
 }

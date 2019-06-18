@@ -106,7 +106,8 @@ const url = {
     XinyanQuanzhi: '/api/services/client/Credit/XinyanQuanzhi',
     GetCreditProducts: '/api/services/client/Credit/GetCreditProducts',
     GetCreditReport: '/api/services/client/Credit/GetCreditReport',
-    CreateCreditOrder: '/api/services/client/Credit/CreateCreditOrder'
+    CreateCreditOrder: '/api/services/client/Credit/CreateCreditOrder',
+    GetCreditOrders: '/api/services/client/Credit/GetCreditOrders'
   },
   AffiliateTemplate: {
     GetRegisterTemplate: '/api/services/client/Affiliate/GetRegisterTemplate'

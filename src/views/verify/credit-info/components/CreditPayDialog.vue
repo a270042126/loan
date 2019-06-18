@@ -47,6 +47,8 @@ export default {
         data: { productId: this.product.id },
         fn: data => {
           console.log(data)
+          const id = data.result
+          this.pay(id)
         },
         errFn: () => {
         }
@@ -56,7 +58,7 @@ export default {
       if (!isApp) {
         const domainUrl = `https://${document.domain}`
         const payUrl = this.baseUrl + url.Alipay.WapPay +
-          `?orderId=${this.product.id}&returnUrl=${domainUrl}`
+          `?id=${id}&returnUrl=${domainUrl}`
         window.open(payUrl, '_blank')
         this.alertT('订单支付', () => {
           this.$emit('onRefresh')
@@ -68,7 +70,7 @@ export default {
           type: 'get',
           path: url.Alipay.AppPay,
           data: {
-            orderId: this.product.id
+            orderId: id
           },
           fn: (result) => {
             apid.payOrder(result, (ret, err) => {

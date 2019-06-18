@@ -77,7 +77,7 @@ export default {
             const id = data.result.id
             const orderId = data.result.orderId
             tempPage.location = this.baseUrl + url.Alipay.WapPay +
-              `?orderId=${id}&orderId=${orderId}&returnUrl=${domainUrl}`
+              `?orderId=${orderId}&returnUrl=${domainUrl}`
             this.alertT('订单支付', () => {
               this.onRefresh()
             }, () => {
