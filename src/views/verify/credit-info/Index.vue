@@ -1,6 +1,6 @@
 <template>
   <base-page :navOptions="{ title: '征信', isBack: true}">
-    <div class="header">
+    <div class="header" v-if="verifyStatus">
       <div>
         <svg-icon iconClass="loan"/>
       </div>
@@ -71,6 +71,7 @@ export default {
   mixins: [ baseMixin ],
   data () {
     return {
+      verifyStatus: false,
       verify: '',
       orderList: [
         {
@@ -102,6 +103,7 @@ export default {
     refresh () {
       this.getCreditProducts()
       this.getCreditOrders()
+      this.getOrderStatus()
     },
     getCreditOrders () {
       request({
@@ -142,6 +144,32 @@ export default {
     productDetailClick (key) {
       this.isDialogShow = true
       this.currentKey = key
+    },
+    getOrderStatus () {
+      const params = {
+        sorting: '',
+        maxResultCount: 5,
+        skipCount: 0
+      }
+      request({
+        type: 'post',
+        path: url.Loan.GetOrders,
+        data: params,
+        fn: data => {
+          const orderList = data.result.items
+          console.log(orderList)
+          orderList.some((item) => {
+            const needVerifyName = item.needVerifyName
+            if (needVerifyName.indexOf('征信') !== -1) {
+              this.verifyStatus = true
+              return true
+            }
+          })
+        },
+        errFn: () => {
+          this.foreceUpdate()
+        }
+      })
     }
   }
 }
