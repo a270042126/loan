@@ -58,7 +58,7 @@ export default {
       if (!isApp) {
         const domainUrl = `https://${document.domain}`
         const payUrl = this.baseUrl + url.Alipay.WapPay +
-          `?id=${id}&returnUrl=${domainUrl}`
+          `?orderId=${id}&returnUrl=${domainUrl}?from=credit-info`
         window.open(payUrl, '_blank')
         this.alertT('订单支付', () => {
           this.$emit('onRefresh')

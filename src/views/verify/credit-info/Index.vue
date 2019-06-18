@@ -101,7 +101,7 @@ export default {
   methods: {
     refresh () {
       this.getCreditProducts()
-      // this.getCreditOrders()
+      this.getCreditOrders()
     },
     getCreditOrders () {
       request({
@@ -187,7 +187,7 @@ export default {
   li{
     padding: 15px;
     background: white;
-    font-size: @font_size_2;
+    font-size: @font_size_1;
     display: flex;
     align-items: center;
     .title-div{
@@ -195,20 +195,20 @@ export default {
       display: flex;
       align-items: center;
       .title{
-        font-size: @font_size_3;
+        font-size: @font_size_2;
         font-weight: bold;
-        padding: 0 10px;
+        padding: 0 5px;
       }
       .recommend{
         background: @theme_color6;
-        padding: 8px 10px;
+        padding: 8px;
         border-radius: 4px;
         color: white;
       }
     }
     .price{
       color: @theme_color3;
-      font-size: @font_size_3;
+      font-size: @font_size_2;
       padding: 0 10px;
       display: flex;
       align-items: center;
@@ -221,7 +221,7 @@ export default {
     }
     button{
       background: @theme_color3;
-      padding: 10px;
+      padding: 8px;
       color: white;
       border-radius: 4px;
     }
