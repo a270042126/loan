@@ -12,11 +12,10 @@
     <mine-user-item />
     <div class="menus">
       <ul>
-        <li v-for="(item, key) in list" :key="key">
-          <router-link :to="{name: item.path, query: {index: key, searchFlag: item.searchFlag}}">
-            <img :src="item.icon">
-            <p>{{item.title}}</p>
-          </router-link>
+        <li v-for="(item, key) in list" :key="key" @click="gotoSearcgFlag(item, key)"
+            v-stat="{category:'按钮点击事件', action:'我的', name: item.title}">
+          <img :src="item.icon">
+          <p>{{item.title}}</p>
         </li>
       </ul>
     </div>
@@ -42,6 +41,9 @@ export default {
     this.updateUI()
   },
   methods: {
+    gotoSearcgFlag (item, key) {
+      this.$router.push({ name: item.path, query: { index: key, searchFlag: item.searchFlag } })
+    },
     updateUI () {
       let height = apid.getSafeAreaTop()
       if (height !== 0) {

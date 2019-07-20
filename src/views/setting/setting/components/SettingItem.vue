@@ -1,5 +1,6 @@
 <template>
-  <div class="setting_item" @click="_click">
+  <div class="setting_item" @click="_click"
+       v-stat="{category:'按钮点击事件', action:'设置', name: item.title}">
     <div class="icon material-icons">{{item.icon}}</div>
     <div class="title">{{item.title}}</div>
     <div v-if="item.switch" class="switch">

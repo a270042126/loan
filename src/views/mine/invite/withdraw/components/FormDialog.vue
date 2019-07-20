@@ -15,7 +15,7 @@
 
 <script>
 import BTextInput from '@/components/BTextInput'
-import { FormValidate, request } from '@/utils'
+import { FormValidate, request, common } from '@/utils'
 import { baseMixin } from '@/mixins'
 import { url } from '@/const'
 export default {
@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     sumbitClick () {
+      common.trackEvent('按钮点击事件', '推广佣金', '创建提现订单')
       const reslult = FormValidate.checkForm(this.form, this.rules)
       if (reslult.length) {
         this.toastT(reslult[0].message)

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="cell" @click="gotoDetailOrder(key)"  v-for="(item, key) in list" :key="key">
+    <div class="cell" @click="gotoDetailOrder(key)"  v-for="(item, key) in list" :key="key"
+         v-stat="{category:'按钮点击事件', action:'订单', name: '订单详细'}">
       <div class="top">
         <div class="material-icons icon">assignment</div>
         <div class="title">简单贷</div>
@@ -22,7 +23,8 @@
           {{item.statusName}}
         </div>
         <div class="operate-btn" @click.stop>
-          <button v-if="getStatusNum(item) === 3"  @click="repayClick(item)">我要还款</button>
+          <button v-if="getStatusNum(item) === 3"  @click="repayClick(item)"
+                  v-stat="{category:'按钮点击事件', action:'订单', name: '我要还款'}">我要还款</button>
         </div>
       </div>
     </div>

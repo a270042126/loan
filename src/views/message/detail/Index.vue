@@ -1,7 +1,8 @@
 <template>
   <base-page :navOptions="{ title: '消息', isBack: true}">
     <div slot="navRightItem">
-      <div class="nav-right-item" @click="deleteClick">
+      <div class="nav-right-item" @click="deleteClick"
+           v-stat="{category:'按钮点击事件', action:'消息', name: '删除'}">
         <svg-icon iconClass="trash"/>
       </div>
     </div>

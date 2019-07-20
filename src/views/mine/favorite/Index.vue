@@ -28,9 +28,19 @@ export default {
   },
   mounted () {
     this.onPullingDown()
+    this.accapceNotification()
+  },
+  destroyed () {
+    this.bus.$off('favoriteRefresh')
   },
   methods: {
+    accapceNotification () {
+      this.bus.$on('favoriteRefresh', () => {
+        this.onPullingDown()
+      })
+    },
     onPullingDown () {
+      this.skipCount = 0
       this.getProductFavorites()
     },
     onPullingUp () {

@@ -3,7 +3,9 @@
     <home-title title="优势产品" :icon="require('images/youshi.gif')"/>
     <better-scroll class="wrapper" :data="list" :scrollX="true">
       <ul class="content" ref="ysUl">
-        <li v-for="(item,index) in list" :key="index" @click="gotoProductInfo(item)">
+        <li v-for="(item,index) in list" :key="index" @click="gotoProductInfo(item)"
+            v-stat="{category:'按钮点击事件', action:'首页', name: '优势-' + item.name}"
+        >
           <img v-lazy="baseUrl + '/File/Download/' + item.logo">
           <div class="subtitle">{{item.name}}</div>
         </li>

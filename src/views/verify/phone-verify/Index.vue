@@ -4,11 +4,13 @@
       <div class="phone-verify">
         <text-input title="手机号" v-model="form.phone" :readonly="true"  placeholder="请输入手机号"/>
         <text-input title="验证码" v-model="form.code" placeholder="请输入验证码">
-          <button class="code-btn" :disabled="codeNum > 0" @click="codeClick">
+          <button class="code-btn" :disabled="codeNum > 0" @click="codeClick"
+                  v-stat="{category:'按钮点击事件', action:'手机认证', name: '验证码'}">
             {{(codeNum > 0) ?  codeNum + '秒重试' : '获取验证码'}}
           </button>
         </text-input>
-        <button class="simple-btn" @click="verifyClick">认证</button>
+        <button class="simple-btn" @click="verifyClick"
+                v-stat="{category:'按钮点击事件', action:'手机认证', name: '认证'}">认证</button>
       </div>
     </better-scroll>
   </base-page>

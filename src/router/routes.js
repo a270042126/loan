@@ -201,6 +201,24 @@ const routes = [
         }
       },
       {
+        path: '/verify/living-verify',
+        name: 'livingVerify',
+        component: (resolve) => {
+          import('../views/verify/living-verify/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/verify/base-info-verify',
+        name: 'baseInfoVerify',
+        component: (resolve) => {
+          import('../views/verify/base-info-verify/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
         path: '/verify/bank-card-verify',
         name: 'bankCardVerify',
         component: (resolve) => {
@@ -214,15 +232,6 @@ const routes = [
         name: 'idCardVerify',
         component: (resolve) => {
           import('../views/verify/id-card-verify/Index').then((module) => {
-            resolve(module)
-          })
-        }
-      },
-      {
-        path: '/verify/zhima-credit',
-        name: 'zhimeCredit',
-        component: (resolve) => {
-          import('../views/verify/zhima-credit/Index').then((module) => {
             resolve(module)
           })
         }
@@ -264,6 +273,15 @@ const routes = [
         }
       },
       {
+        path: '/verify/credit-info-result',
+        name: 'creditInfoResult',
+        component: (resolve) => {
+          import('../views/verify/credit-info-result/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
         path: '/invite',
         name: 'invite',
         component: (resolve) => {
@@ -295,6 +313,15 @@ const routes = [
         name: 'withdraw',
         component: (resolve) => {
           import('../views/mine/invite/withdraw/Index').then((module) => {
+            resolve(module)
+          })
+        }
+      },
+      {
+        path: '/download',
+        name: 'download',
+        component: (resolve) => {
+          import('../views/download/Index').then((module) => {
             resolve(module)
           })
         }

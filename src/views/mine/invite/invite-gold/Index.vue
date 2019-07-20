@@ -1,7 +1,8 @@
 <template>
   <base-page :navOptions="{ title: '推广佣金', isBack: true}">
     <div slot="navRightItem">
-      <button @click="withdrawClick" style="color: white">提现</button>
+      <button @click="withdrawClick" style="color: white"
+              v-stat="{category:'按钮点击事件', action:'推广佣金', name: '提现'}">提现</button>
     </div>
     <better-scroll class="record" :data="list" ref="scroll"
                    :pullUpLoad="true"

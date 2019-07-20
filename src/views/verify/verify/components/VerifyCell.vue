@@ -1,5 +1,6 @@
 <template>
-  <div class="verify-cell" @click="_gotoOther">
+  <div class="verify-cell" @click="_gotoOther"
+       v-stat="{category:'按钮点击事件', action:'认证', name: item.flagName}">
     <div class="top">
       <div class="icon" v-if="item.icon">
         <svg-icon :iconClass="item.icon"/>
@@ -7,21 +8,42 @@
       <div v-else-if="item.iconName" class="icon name">
         {{item.iconName}}
       </div>
-      <div class="title">{{item.title}}
-        <span v-if="item.verifyNames" :class="`status ${item.status ? 'green' : 'red'}`">({{item.status ? '已认证' : '未认证'}})</span></div>
-      <div class="go-verify">{{item.status ? '重新认证' : '去认证'}}</div>
+      <div class="title">{{item.flagName}}
+        <span :class="`status ${item.status ? 'green' : 'red'}`">
+          ({{item.status ? '已认证' : '未认证'}})
+        </span>
+      </div>
+      <div class="go-verify" v-if="!item.status || getShow || item.flag === -1">
+        {{item.status ? '重新认证' : '去认证'}}
+      </div>
     </div>
     <div class="bottom">
-      {{item.title}}可以提高你的额度
+      {{item.flagName}}可以提高你的额度
     </div>
   </div>
 </template>
 
 <script>
+import { apid } from '@/utils'
+
 export default {
   name: 'VerifyCell',
   props: {
     item: {}
+  },
+  computed: {
+    getShow () {
+      switch (apid.systemType()) {
+        case 'web':
+          return this.item.hasWeb
+        case 'ios':
+          return this.item.hasIos
+        case 'android':
+          return this.item.hasAndroid
+        default:
+          return true
+      }
+    }
   },
   methods: {
     _gotoOther () {

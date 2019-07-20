@@ -1,6 +1,10 @@
 <template>
   <ul>
-    <li v-for="(item, key) in list" :key="key" :class="filterIndex === key ? 'active' : ''" @click="filterClick(key)">
+    <li v-for="(item, key) in list"
+        :key="key"
+        :class="filterIndex === key ? 'active' : ''"
+        @click="filterClick(key)"
+        v-stat="{category:'按钮点击事件', action:'我的订单', name: item.text}">
       <span>{{item.text}}</span>
     </li>
   </ul>

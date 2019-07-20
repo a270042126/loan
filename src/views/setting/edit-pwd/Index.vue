@@ -4,14 +4,15 @@
       <cube-input v-model="user.currentPassword" placeholder="请输入旧密码" type="password" eye="reverse"></cube-input>
       <cube-input v-model="user.newPassword" placeholder="请输入新密码" type="password" eye="reverse"></cube-input>
       <cube-input v-model="user.rePassword" placeholder="确认新密码" type="password" eye="reverse"></cube-input>
-      <cube-button class="submit" @click="submitClick">提交</cube-button>
+      <cube-button class="submit" @click="submitClick"
+                   v-stat="{category:'按钮点击事件', action:'设置', name: '修改密码提交'}">提交</cube-button>
     </div>
   </base-page>
 </template>
 
 <script>
 import { baseMixin } from '@/mixins'
-import { validate, request } from '@/utils'
+import { request } from '@/utils'
 import { url } from '@/const'
 export default {
   name: 'EditPwd',

@@ -12,17 +12,20 @@
           <img src="@/assets/images/n-banner.png">
         </div>
         <div v-if="getStatusNum >= 4" class="loan-select">
-          <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick">
+          <div :class="`selectInput ${isQuotas ? 'active' : '' }`" @click="quotasClick"
+               v-stat="{category:'按钮点击事件', action:'借款', name: '选择金额'}">
             {{quotas.length > 0 ? quotas[quotasIndex].name : '0元'}}
             <div class="material-icons icon">expand_more</div>
           </div>
-          <div :class="`selectInput ${!isQuotas ? 'active' : '' }`" @click="termsClick">
+          <div :class="`selectInput ${!isQuotas ? 'active' : '' }`" @click="termsClick"
+               v-stat="{category:'按钮点击事件', action:'借款', name: '选择金额'}">
             {{terms.length > 0 ? terms[termsIndex].name : '0天'}}
             <div class="material-icons icon">expand_more</div>
           </div>
         </div>
         <div v-if="getStatusNum >= 4" class="loanBtn">
-          <button v-if="quotas.length > 0" class="ra-Btn" @click="loanClick">
+          <button v-if="quotas.length > 0" class="ra-Btn" @click="loanClick"
+                  v-stat="{category:'按钮点击事件', action:'借款', name: goOnLoan ? '继续借款' : '立即借款'}">
             {{goOnLoan ? '继续借款' : '立即借款'}}
           </button>
         </div>
@@ -71,7 +74,12 @@ export default {
   },
   computed: {
     getStatusNum () {
-      return statusData[this.order.statusName] || 5
+      const num = statusData[this.order.statusName]
+      if (num !== undefined) {
+        return num
+      } else {
+        return 5
+      }
     },
     quotaItems () {
       let arr = []
@@ -168,7 +176,7 @@ export default {
           })
         } else {
           this.$router.push({
-            name: 'bankCardVerify',
+            name: 'baseInfoVerify',
             query: {
               quotaName: this.quotas[this.quotasIndex].name,
               termName: this.terms[this.termsIndex].name,

@@ -14,6 +14,12 @@ const mutations = {
   },
   [types.SET_BASE_URL] (state, baseUrl) {
     state.baseUrl = baseUrl
+  },
+  [types.SET_FIRST_LOAD] (state, firstLoad) {
+    state.firstLoad = firstLoad
+  },
+  [types.SET_PROJECT_NAME] (state, projectName) {
+    state.projectName = projectName
   }
 }
 export default mutations

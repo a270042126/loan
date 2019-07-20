@@ -2,17 +2,17 @@
   <section class="tool">
     <h1>常用工具</h1>
     <ul>
-      <li v-for="(item, key) in list" :key="key">
-        <router-link :to="{name:item.path}">
-          <i class="material-icons" :style="`color: ${key % 2 === 0 ? '#03a9f4' : '#ffc107'}`">{{item.icon}}</i>
-          <p>{{item.title}}</p>
-        </router-link>
+      <li v-for="(item, key) in list" :key="key" @click="gotoOther(item)"
+          v-stat="{category:'按钮点击事件', action:'我的', name: item.title}">
+        <i class="material-icons" :style="`color: ${key % 2 === 0 ? '#03a9f4' : '#ffc107'}`">{{item.icon}}</i>
+        <p>{{item.title}}</p>
       </li>
     </ul>
   </section>
 </template>
 
 <script>
+import { common } from '@/utils'
 export default {
   name: 'MineTool',
   data () {
@@ -24,6 +24,12 @@ export default {
         { icon: 'face', title: '邀请好友', path: 'invite' },
         { icon: 'question_answer', title: '常见问题', path: 'fquestion' }
       ]
+    }
+  },
+  methods: {
+    gotoOther (item) {
+      common.trackEvent('按钮点击事件', '我的点击', item.title)
+      this.$router.push({ name: item.path })
     }
   }
 }

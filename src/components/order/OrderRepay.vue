@@ -5,23 +5,33 @@
         <label>还款金额</label>
         <input v-model="repayGross" placeholder="还款金额...."/>
       </div>
-      <div class="pay-redio" style="margin-bottom: 10px">
-        <input type="radio" v-model="payType" value="0" /><label>支付宝</label>
+      <div v-if="payEnable">
+        <ul class="pay-redio" style="margin-bottom: 10px">
+          <template v-for="(item, key) in payList">
+            <li v-if="getPlatform(item)" :key="key">
+              <input type="radio" v-model="payType" :value="item.type"/><label>{{item.typeName}}</label>
+            </li>
+          </template>
+        </ul>
+        <button class="simple-btn remark_btn" @click="createRepayClick"
+                v-stat="{category:'按钮点击事件', action:'订单', name: '创建还款'}">创建还款</button>
       </div>
-      <button class="simple-btn remark_btn" @click="createRepayClick">创建还款</button>
+      <p class="pay-mess" v-else>
+        {{!isApp ? '暂无有效支付方式，请使用APP支付或联系工作人员' : '暂无有效支付方式，联系工作人员'}}
+      </p>
     </div>
   </r-dialog>
 </template>
 
 <script>
-import { request, apid } from '@/utils'
-import { isApp, url } from '@/const'
-import { baseMixin } from '@/mixins'
+import { request, common } from '@/utils'
+import { url } from '@/const'
+import { baseMixin, payMixin } from '@/mixins'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'OrderRepay',
-  mixins: [baseMixin],
+  mixins: [baseMixin, payMixin],
   props: {
     isDialogShow: {
       default: false
@@ -30,7 +40,8 @@ export default {
   },
   data () {
     return {
-      payType: 0,
+      payList: [],
+      payType: 2,
       repayGross: 0,
       isShow: false
     }
@@ -41,6 +52,7 @@ export default {
   watch: {
     isDialogShow (newValue) {
       this.isShow = newValue
+      this.getPaymentConfigs()
     },
     order (newValue) {
       this.repayGross = newValue.needRepayGross
@@ -55,17 +67,11 @@ export default {
       this.$emit('onRefresh')
     },
     createRepayClick () {
+      common.trackEvent('按钮点击事件', '我的订单', '订单支付')
       const params = {
         orderId: this.order.id,
         repayGross: this.repayGross
       }
-      if (!isApp) {
-        this.webAlipay(params)
-      } else {
-        this.appAplipay(params)
-      }
-    },
-    webAlipay (params) {
       const tempPage = window.open('', '_blank')
       request({
         type: 'post',
@@ -73,42 +79,9 @@ export default {
         data: params,
         fn: data => {
           if (data.success) {
-            const domainUrl = `https://${document.domain}`
             const id = data.result.id
             const orderId = data.result.orderId
-            tempPage.location = url.baseUrl + url.Alipay.WapPay +
-              `?orderId=${id}&returnUrl=${domainUrl}?orderId=${orderId}`
-            this.alertT('订单支付', () => {
-              this.onRefresh()
-            }, () => {
-              this.onRefresh()
-            }, '支付完成', '支付出问题')
-          }
-        },
-        errFn: () => {
-        }
-      })
-    },
-    appAplipay (params) {
-      request({
-        type: 'post',
-        path: url.Loan.RepayOrder,
-        data: params,
-        fn: data => {
-          if (data.success) {
-            request({
-              type: 'get',
-              path: url.Alipay.AppPay,
-              data: {
-                orderId: data.result.id
-              },
-              fn: (result) => {
-                apid.payOrder(result, (ret, err) => {
-                  this.alertTT('支付结果', ret.code === '9000' ? '支付成功' : '支付失败')
-                  this.onRefresh()
-                })
-              }
-            })
+            this.gotoAlipay(id, orderId, tempPage)
           }
         },
         errFn: () => {

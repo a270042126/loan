@@ -1,8 +1,11 @@
+import storage from '../utils/storage'
 const state = {
   isWelcome: false,
   filterParams: '',
-  userKeys: {},
+  userKeys: storage.get('userKeys'),
   isLoading: false,
-  baseUrl: ''
+  baseUrl: '',
+  firstLoad: false,
+  projectName: ''
 }
 export default state

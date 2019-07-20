@@ -21,7 +21,7 @@ import HomeApply from './components/HomeApply'
 import HomeHeader from './components/HomeHeader'
 import HomeYsProduct from './components/HomeYsProduct'
 import HomeRecommend from './components/HomeRecommend'
-import { request, common, storage } from '@/utils'
+import { request, common } from '@/utils'
 import { url } from '@/const'
 import { baseMixin } from '@/mixins'
 export default {
@@ -60,72 +60,60 @@ export default {
       this.$refs.scroll.forceUpdate()
     },
     // 优势产品
-    getYSProducts (refresh = false) {
-      const list = storage.get('ys-products')
-      if (list && !refresh) {
-        this.ysList = list
-      } else {
-        const platform = common.platform()
-        let params = {
-          platform: {
-            hasWeb: false,
-            hasAndroid: platform === 2,
-            hasIos: platform === 1
-          },
-          flag: {
-            isRed: false,
-            isHot: false,
-            isTop: true
-          },
-          maxResultCount: '10',
-          skipCount: 0
-        }
-        request({
-          type: 'post',
-          path: url.productsUrl,
-          data: params,
-          fn: data => {
-            this.ysList = data.result.items
-            storage.sessionSet('ys-products', this.ysList)
-          },
-          errFn: () => {
-            this.foreceUpdate()
-          }
-        })
+    getYSProducts () {
+      const platform = common.platform()
+      let params = {
+        platform: {
+          hasWeb: platform === 3,
+          hasAndroid: platform === 2,
+          hasIos: platform === 1
+        },
+        flag: {
+          isRed: false,
+          isHot: false,
+          isTop: true
+        },
+        maxResultCount: '10',
+        skipCount: 0
       }
+      request({
+        type: 'post',
+        path: url.productsUrl,
+        data: params,
+        fn: data => {
+          this.ysList = data.result.items
+        },
+        errFn: () => {
+          this.foreceUpdate()
+        }
+      })
     },
     // 热门产品
-    getRecommendProducts (refresh = false) {
-      const list = storage.get('recommend-products')
-      if (list && !refresh) {
-        this.recommendList = list
-      } else {
-        const platform = common.platform()
-        let params = {
-          platform: {
-            hasWeb: false,
-            hasAndroid: platform === 2,
-            hasIos: platform === 1
-          },
-          flag: {
-            isRed: true
-          },
-          maxResultCount: '30',
-          skipCount: 0
-        }
-        request({
-          type: 'post',
-          path: url.productsUrl,
-          data: params,
-          fn: data => {
-            this.recommendList = data.result.items
-            storage.sessionSet('recommend-products', this.recommendList)
-          },
-          errFn: () => {
-            this.foreceUpdate()
-          }
-        })
+    getRecommendProducts () {
+      const platform = common.platform()
+      let params = {
+        platform: {
+          hasWeb: platform === 3,
+          hasAndroid: platform === 2,
+          hasIos: platform === 1
+        },
+        flag: {
+          isRed: true
+        },
+        maxResultCount: '30',
+        skipCount: 0
       }
+      request({
+        type: 'post',
+        path: url.productsUrl,
+        data: params,
+        fn: data => {
+          this.recommendList = data.result.items
+        },
+        errFn: () => {
+          this.foreceUpdate()
+        }
+      })
     }
   },
   components: {

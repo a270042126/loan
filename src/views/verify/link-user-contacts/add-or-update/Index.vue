@@ -1,6 +1,7 @@
 <template>
   <base-page :navOptions="{ title: this.form1.id ? '修改联系人' : '添加联系人', isBack: true}">
-    <div slot="navRightItem" class="nav-bar-right-item" @click="saveClick">
+    <div slot="navRightItem" class="nav-bar-right-item" @click="saveClick"
+         v-stat="{category:'按钮点击事件', action:'联系人', name: this.form1.id ? '修改联系人' : '添加联系人'}">
       <svg-icon iconClass="save" />
     </div>
     <better-scroll>
@@ -19,7 +20,8 @@
                     v-model="form1.phoneNumber"/>
       </div>
       <div class="sumbit">
-        <button v-if="form1.id" class="simple-btn delete-btn" @click="deleteClick">删除</button>
+        <button v-if="form1.id" class="simple-btn delete-btn" @click="deleteClick"
+                v-stat="{category:'按钮点击事件', action:'联系人', name: '删除'}">删除</button>
       </div>
     </better-scroll>
   </base-page>

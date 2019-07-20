@@ -12,7 +12,8 @@
           <p>已提现金额：{{earningInfo.earningsPaid}}</p>
         </div>
         <div class="btns">
-          <button class="simple-btn" @click="withdrawClick">提现</button>
+          <button class="simple-btn" @click="withdrawClick"
+                  v-stat="{category:'按钮点击事件', action:'提现', name: '提现'}">提现</button>
         </div>
         <div class="record">
           <ul>

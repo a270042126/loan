@@ -14,6 +14,7 @@ import Navigation from './components/navigation'
 import './directive'
 import fastclick from 'fastclick'
 import * as filters from '@/filters' // global filters
+import VueMatomo from 'vue-matomo'
 
 fastclick.attach(document.body)
 
@@ -34,6 +35,26 @@ Object.keys(components).forEach((key) => {
 // 注册全局过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
+})
+
+// matomo用户统计--类似于友盟
+Vue.use(VueMatomo, {
+  // 这里配置你自己的piwik服务器地址和网站ID
+  host: 'https://analytics.jxstudio.cn',
+  siteId: 1,
+  // 根据router自动注册
+  router: router,
+  enableLinkTracking: true,
+  // 是否需要在发送追踪信息之前请求许可
+  // 默认false
+  requireConsent: false,
+  // 是否追踪初始页面
+  // 默认true
+  trackInitialView: true,
+  // 最终的追踪js文件名
+  // 默认 'piwik'
+  trackerFileName: 'piwik',
+  debug: true
 })
 
 if (isApp) {

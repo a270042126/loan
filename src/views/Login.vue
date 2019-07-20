@@ -22,7 +22,8 @@
                class="code_btn"
                @click="codeClick"
                :style="`background:${template.buttonColor ? template.buttonColor : ''};
-            color:${template.inputColor ? template.inputColor : ''}`">
+            color:${template.inputColor ? template.inputColor : ''}`"
+               v-stat="{category:'按钮点击事件', action:'登录', name: '验证码'}">
             获取验证码
           </div>
           <div v-else class="code_btn">
@@ -41,10 +42,12 @@
             class="submit"
             @click="loginClick"
             :style="`background:${template.buttonColor ? template.buttonColor : ''};
-            color:${template.inputColor ? template.inputColor : ''}`">立即登录</cube-button>
+            color:${template.inputColor ? template.inputColor : ''}`"
+            v-stat="{category:'按钮点击事件', action:'登录', name: '立即登录'}">立即登录</cube-button>
         </li>
       </ul>
-      <div class="register" @click="registerClick">
+      <div class="register" @click="registerClick"
+           v-stat="{category:'按钮点击事件', action:'登录', name: '注册'}">
         {{isRegister ?  '账号密码登录' : '还没有账号？立即注册'}}
       </div>
     </better-scroll>
@@ -67,6 +70,7 @@ export default {
   mixins: [baseMixin],
   data () {
     return {
+      isLoginClick: false,
       isRegister: false,
       timerCount: 0,
       user: {
@@ -94,7 +98,6 @@ export default {
           path: url.AffiliateTemplate.GetRegisterTemplate,
           data: { id: refereeId },
           fn: data => {
-            console.log(data)
             this.template = data.result
           }
         })
@@ -127,7 +130,7 @@ export default {
             }).onSuccess(function () {
               let d = captchaObj.getValidate()
               captchaResponse = d.geetest_challenge + '#' + d.geetest_validate + '#' + d.geetest_seccode + '#' + data.result.sessionKey
-              if (that.isRegister) {
+              if (!that.isLoginClick) {
                 that.codeClick()
               } else {
                 that.loginClick()
@@ -152,9 +155,8 @@ export default {
         }, 1000)
       }
     },
-
-    // .获取短信验证码
     codeClick () {
+      this.isLoginClick = false
       if (!this.user.username) {
         this.errorT('请输入手机号码')
         return
@@ -164,7 +166,6 @@ export default {
         this.errorT('手机号码有误')
         return
       }
-
       if (!captchaClient.getValidate()) {
         // 弹出验证框
         captchaClient.verify()
@@ -182,14 +183,17 @@ export default {
         data: params,
         fn: data => {
           this.successT('验证码已经发送')
+          captchaClient.reset()
           this.loginShowTime()
         },
         errFn: () => {
+          captchaClient.reset() // 调用该接口进行重置
         }
       })
     },
 
     async loginClick () {
+      this.isLoginClick = true
       if (!this.loginCheck(this.user)) {
         return
       }
@@ -212,15 +216,22 @@ export default {
         type: 'post',
         path: (this.isRegister) ? url.AuthenticateBySms : url.Authenticate,
         data: params,
-        fn: data => {
+        fn: async data => {
           storage.set('loginName', this.user.username)
+          this.setMatomoUserId(this.user.username)
           const userKeys = data.result
-          this.setToken(userKeys)
+          await this.setToken(userKeys)
           this.successT('登录成功')
           apid.sendEvent('user', { type: 'login' })
-          this.$router.goBack()
+          apid.initService()
+          if (apid.systemType() === 'web') {
+            this.$router.replace({ name: 'download' })
+          } else {
+            this.$router.goBack()
+          }
         },
         errFn: () => {
+          console.log('无效。。。。。。。。。。。')
           captchaClient.reset() // 调用该接口进行重置
         }
       })
@@ -250,13 +261,15 @@ export default {
           return false
         }
       }
-      if (!captchaClient.getValidate()) {
+      if (!captchaClient.getValidate() && !this.isRegister) {
         // 弹出验证框
         captchaClient.verify()
-        this.errorT('请输入短信验证码')
         return false
       }
       return true
+    },
+    setMatomoUserId (username) {
+      this.$matomo.setUserId(username)
     },
     ...mapActions([
       'setToken'

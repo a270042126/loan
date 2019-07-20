@@ -1,9 +1,10 @@
 
 const isApp = false
-
+/**
+ * http://langfa.m.jxstudio.cn
+ http://mashanghua.m.jxstudio.cn
+*/
 const url = {
-  domainUrl: 'https://m.jxstudio.cn',
-  baseUrl: 'https://p-huohuodai.jxstudio.cn',
   upload: '/File/Upload',
   ChangePassword: '/api/services/app/Profile/ChangePassword',
   // .修改用户资料
@@ -34,7 +35,7 @@ const url = {
     // 取消收藏
     CancelProductFavorite: '/api/services/client/Favorite/CancelProductFavorite',
     // 获取收藏列表
-    GetProductFavorites: '/api/services/client/Favorite/GetProductFavorites',
+    GetProductFavorites: '/api/services/client/Favorite/GetProductFavorites'
   },
   // .获取产品列表
   productsUrl: '/api/services/client/Market/GetProducts',
@@ -71,13 +72,14 @@ const url = {
     // 设置收款银行卡
     AuthBaseInfo: '/api/services/client/UserVerify/AuthBaseInfo',
     AuthIdCard: '/api/services/client/UserVerify/AuthIdCard',
-    AuthZhiMa: '/api/services/client/UserVerify/AuthZhiMa',
     createOrUpdateContact: '/api/services/client/UserVerify/CreateOrUpdateContact',
     GetAuthList: '/api/services/client/UserVerify/GetAuthList',
     AuthOperatorRequest: '/api/services/client/UserVerify/AuthOperatorRequest',
     AuthOperatorSubmit: '/api/services/client/UserVerify/AuthOperatorSubmit',
     GetUserContactList: '/api/services/client/UserVerify/GetUserContactList',
-    DeleteContact: '/api/services/client/UserVerify/DeleteContact'
+    DeleteContact: '/api/services/client/UserVerify/DeleteContact',
+    AuthAddressBook: '/api/services/client/UserVerify/AuthAddressBook',
+    AuthBank: '/api/services/client/UserVerify/AuthBank'
   },
   ProjectContent: {
     // 取消未完成的借款续期
@@ -90,6 +92,9 @@ const url = {
     SetAllNotificationsAsRead: '/api/services/app/Notification/SetAllNotificationsAsRead',
     SetNotificationAsRead: '/api/services/app/Notification/SetNotificationAsRead',
     DeleteNotification: '/api/services/app/Notification/DeleteNotification'
+  },
+  PaymentConfig: {
+    GetPaymentConfigs: '/api/services/app/PaymentConfig/GetPaymentConfigs'
   },
   Alipay: {
     WapPay: '/Gateway/Alipay/WapPay',
@@ -107,13 +112,21 @@ const url = {
     GetCreditProducts: '/api/services/client/Credit/GetCreditProducts',
     GetCreditReport: '/api/services/client/Credit/GetCreditReport',
     CreateCreditOrder: '/api/services/client/Credit/CreateCreditOrder',
-    GetCreditOrders: '/api/services/client/Credit/GetCreditOrders'
+    GetCreditOrders: '/api/services/client/Credit/GetCreditOrders',
+    CancelCreditOrder: '/api/services/client/Credit/CancelCreditOrder'
   },
   AffiliateTemplate: {
     GetRegisterTemplate: '/api/services/client/Affiliate/GetRegisterTemplate'
+  },
+  Project: {
+    IsProjectAvailable: '/api/services/app/Project/IsProjectAvailable'
+  },
+  LivingIdentifyInfo: {
+    LivingIdentify: '/api/services/app/LivingIdentifyInfo/LivingIdentify',
+    LivingIdentifyList: '/api/services/app/LivingIdentifyInfo/LivingIdentifyList'
   }
 }
-export {
+module.exports = {
   url,
   isApp
 }

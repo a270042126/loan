@@ -4,30 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>火火钱包</title>
+    <title>贷款平台</title>
 </head>
 <body>
 <noscript>
     <strong>We're sorry but huohuodao doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
 </noscript>
 <div id="app"></div>
-<!-- built files will be auto injected -->
-<!-- Matomo -->
-<script type="text/javascript">
-  var _paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  // you can set up to 5 custom variables for each visitor
-  _paq.push(["setCustomVariable", 1, "Type", "Customer", "visit"]);
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//analytics.jxstudio.cn/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
+<!--&lt;!&ndash; built files will be auto injected &ndash;&gt;-->
+<!--&lt;!&ndash; Matomo &ndash;&gt;-->
+<!--<script type="text/javascript">-->
+  <!--var _paq = window._paq || [];-->
+  <!--/* tracker methods like "setCustomDimension" should be called before "trackPageView" */-->
+  <!--// you can set up to 5 custom variables for each visitor-->
+  <!--_paq.push(["setCustomVariable", 1, "Type", "Customer", "visit"]);-->
+  <!--_paq.push(['trackPageView']);-->
+  <!--_paq.push(['enableLinkTracking']);-->
+  <!--(function() {-->
+    <!--var u="//analytics.jxstudio.cn/";-->
+    <!--_paq.push(['setTrackerUrl', u+'matomo.php']);-->
+    <!--_paq.push(['setSiteId', '1']);-->
+    <!--var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];-->
+    <!--g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);-->
+  <!--})();-->
+<!--</script>-->
 <script>
 function setItem (key, value) {
   let params = {}
@@ -41,6 +41,6 @@ function dfCallBack(token,sign){
 }
 </script>
 <!-- End Matomo Code -->
-<script src="https://p-huohuodai.jxstudio.cn/Gateway/Credit/XinyanScripts?callback=dfCallBack"></script>
+<script async src="https://p-huohuodai.jxstudio.cn/Gateway/Credit/XinyanScripts?callback=dfCallBack"></script>
 </body>
 </html>

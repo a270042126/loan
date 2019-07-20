@@ -24,6 +24,7 @@ axios.interceptors.request.use(
     config.url = store.getters.baseUrl + config.url
 
     const userKeys = store.getters.userKeys
+
     if (userKeys && userKeys.accessToken) {
       config.headers.Authorization = `Bearer ${userKeys.accessToken}`
       // token 刷新

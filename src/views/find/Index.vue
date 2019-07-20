@@ -103,7 +103,7 @@ export default {
       let platform = {
         maxResultCount: MAXCOUNT,
         platform: {
-          hasWeb: false,
+          hasWeb: type === 3,
           hasAndroid: type === 2,
           hasIos: type === 1
         }

@@ -34,10 +34,13 @@
       <div class="new-user">
         <div class="header">
           <p class="mess">财富需要挖掘，你准备好了吗？</p>
-          <button class="simple-btn invite-btn" @click="shareClick">立即分享</button>
+          <button class="simple-btn invite-btn" @click="shareClick"
+                  v-stat="{category:'按钮点击事件', action:'邀请', name: '立即分享'}">立即分享</button>
           <div class="record">
-            <button class="record-btn" @click="recordClick">邀请记录</button>
-            <button class="record-btn" @click="goldClick">推广佣金</button>
+            <button class="record-btn" @click="recordClick"
+                    v-stat="{category:'按钮点击事件', action:'邀请', name: '邀请记录'}">邀请记录</button>
+            <button class="record-btn" @click="goldClick"
+                    v-stat="{category:'按钮点击事件', action:'邀请', name: '推广佣金'}">推广佣金</button>
           </div>
         </div>
         <div class="desc">

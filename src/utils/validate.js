@@ -1,6 +1,6 @@
 class Validate {
   isPhone (str) {
-    const reg = /^(0|86|17951)?(13[0-9]|14[57]|15[012356789]|17[0-9]|18[0-9])[0-9]{8}$/
+    const reg = /^1(3|4|5|6|7|8|9)\d{9}$/
     return reg.test(str)
   }
   password (str) {

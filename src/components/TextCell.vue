@@ -10,14 +10,14 @@
 
 <script>
 export default {
-  name: 'DetailOrderCell',
+  name: 'TextCell',
   props: {
     arrow: {
       type: Boolean,
       default: false
     },
     title: String,
-    text: String,
+    text: null,
     textColor: {
       type: String,
       default: '#000'
@@ -36,6 +36,7 @@ export default {
 @import "~less/mixin";
 .cell{
   padding: 0 @space1;
+  background: white;
   & > div{
     height: 44px;
     font-size: @font_size_2;

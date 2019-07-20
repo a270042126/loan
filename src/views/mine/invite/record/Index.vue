@@ -1,7 +1,8 @@
 <template>
   <base-page :navOptions="{ title: '邀请记录', isBack: true}">
     <div slot="navRightItem">
-      <button @click="extendClick" style="color: white">推广佣金</button>
+      <button @click="extendClick" style="color: white"
+              v-stat="{category:'按钮点击事件', action:'邀请记录', name: '推广佣金'}">推广佣金</button>
     </div>
     <better-scroll class="record" :data="list" ref="scroll"
                    :pullUpLoad="true"

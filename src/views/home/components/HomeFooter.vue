@@ -1,13 +1,18 @@
 <template>
   <section class="footer">
-    <h1>火火钱包 · 您的首选贷款平台</h1>
+    <h1>{{getProject}} · 您的首选贷款平台</h1>
     <p>简单 快捷 安全</p>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'MineFooter'
+  name: 'MineFooter',
+  computed: {
+    getProject () {
+      return document.title
+    }
+  }
 }
 </script>
 

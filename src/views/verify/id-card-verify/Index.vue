@@ -26,7 +26,8 @@
           <!--</li>-->
         </ul>
         <div class="sumbit">
-          <button class="simple-btn" @click="sumbitClick">立即提交</button>
+          <button class="simple-btn" @click="sumbitClick"
+                  v-stat="{category:'按钮点击事件', action:'设置身份证', name: '立即提交'}">立即提交</button>
         </div>
       </div>
     </better-scroll>

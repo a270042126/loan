@@ -14,7 +14,8 @@
           <cube-input v-model="user.selfDesc" placeholder="个人介绍" />
         </div>
         <div>
-          <button class="simple-btn btn" @click="submitClick">立即提交</button>
+          <button class="simple-btn btn" @click="submitClick"
+                  v-stat="{category:'按钮点击事件', action:'设置', name: '修改用户资料提交'}">立即提交</button>
         </div>
       </div>
     </better-scroll>
@@ -22,7 +23,7 @@
 </template>
 
 <script>
-import md5 from 'md5'
+import md5 from 'js-md5'
 import { baseMixin } from '@/mixins'
 import { url, isApp } from '@/const'
 import { apid, request, common, validate } from '@/utils'

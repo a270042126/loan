@@ -1,4 +1,4 @@
-
+const configuration = require('./src/const')
 const path = require('path')
 const isProduction = process.env.NODE_ENV === 'production'
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -39,7 +39,7 @@ module.exports = {
         bypassOnDebug: true
       }).end()
   },
-  publicPath: '/',
+  publicPath: configuration.isApp ? './' : '/',
   // 将构建好的文件输出到哪里
   outputDir: 'dist',
   devServer: {

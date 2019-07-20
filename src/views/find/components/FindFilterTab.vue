@@ -9,8 +9,12 @@
         <transition name="slide-fade">
           <div v-show="current === 0"  class="menu-btns">
             <ul>
-              <li><button @click="filterClick('sorting','IsRed desc')">推荐排序</button></li>
-              <li><button @click="filterClick('sorting','Rate asc')">贷款费率</button></li>
+              <li><button @click="filterClick('sorting','IsRed desc')"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '推荐排序'}"
+              >推荐排序</button></li>
+              <li><button @click="filterClick('sorting','Rate asc')"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '贷款费率'}"
+              >贷款费率</button></li>
             </ul>
           </div>
         </transition>
@@ -20,13 +24,27 @@
         <transition name="slide-fade">
           <div v-show="current === 1" class="menu-btns">
             <ul>
-              <li><button @click="filterClick('all')">不限金额</button></li>
-              <li><button @click="filterClick('minQuota',1000)">1 千以内</button></li>
-              <li><button @click="filterClick('minQuota',3000)">3 千</button></li>
-              <li><button @click="filterClick('minQuota',5000)">5 千</button></li>
-              <li><button @click="filterClick('minQuota',10000)">1 万</button></li>
-              <li><button @click="filterClick('minQuota',50000)">5 万</button></li>
-              <li><button @click="filterClick('minQuota',100000)">10 万以上</button></li>
+              <li><button @click="filterClick('all')"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '不限金额'}"
+              >不限金额</button></li>
+              <li><button @click="filterClick('minQuota',1000)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '1千以内'}"
+              >1 千以内</button></li>
+              <li><button @click="filterClick('minQuota',3000)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '3千'}"
+              >3 千</button></li>
+              <li><button @click="filterClick('minQuota',5000)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '5千'}"
+              >5 千</button></li>
+              <li><button @click="filterClick('minQuota',10000)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '1万'}"
+              >1 万</button></li>
+              <li><button @click="filterClick('minQuota',50000)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '5万'}"
+              >5 万</button></li>
+              <li><button @click="filterClick('minQuota',100000)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '10万以上'}"
+              >10 万以上</button></li>
             </ul>
           </div>
         </transition>
@@ -36,13 +54,27 @@
         <transition name="slide-fade">
           <div v-show="current === 2" class="menu-btns">
             <ul>
-              <li><button @click="filterClick('all')">不限期限</button></li>
-              <li><button @click="filterClick('minTerm',30)">1 个月</button></li>
-              <li><button @click="filterClick('minTerm',90)">3 个月</button></li>
-              <li><button @click="filterClick('minTerm',540)">6 个月</button></li>
-              <li><button @click="filterClick('minTerm',365)">1 年</button></li>
-              <li><button @click="filterClick('minTerm',1095)">3 年</button></li>
-              <li><button @click="filterClick('minTerm',1825)">5 年以上</button></li>
+              <li><button @click="filterClick('all')"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '不限期限'}"
+              >不限期限</button></li>
+              <li><button @click="filterClick('minTerm',30)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '1个月'}"
+              >1 个月</button></li>
+              <li><button @click="filterClick('minTerm',90)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '3个月'}"
+              >3 个月</button></li>
+              <li><button @click="filterClick('minTerm',540)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '6个月'}"
+              >6 个月</button></li>
+              <li><button @click="filterClick('minTerm',365)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '1年'}"
+              >1 年</button></li>
+              <li><button @click="filterClick('minTerm',1095)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '3年'}"
+              >3 年</button></li>
+              <li><button @click="filterClick('minTerm',1825)"
+                          v-stat="{category:'按钮点击事件', action:'发现', name: '5年'}"
+              >5 年以上</button></li>
             </ul>
           </div>
         </transition>
@@ -52,7 +84,8 @@
         <transition name="slide-fade">
           <div v-show="current === 3" class="menu-filter">
             <cube-radio-group v-model="filterType" :options="options"/>
-            <button class="simple-btn submit" @click="filterSubmit">确认</button>
+            <button class="simple-btn submit" @click="filterSubmit"
+                    v-stat="{category:'按钮点击事件', action:'发现', name: filterType}">确认</button>
           </div>
         </transition>
       </div>

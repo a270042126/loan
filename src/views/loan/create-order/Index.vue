@@ -14,7 +14,7 @@
           <create-order-cell title="利息费用" :text="`${repayCalutate.interestFee}元`"/>
           <create-order-cell title="借款申请费用" :text="`${repayCalutate.totalApplyFee}元`"/>
           <!--<create-order-cell title="还款方式" :text="`一次性还${totalFee}元`"/>-->
-          <create-order-cell title="还款日期" :text="repayTime"/>
+          <create-order-cell title="还款日期" :text="repayCalutate.agreedRepayTime|dateFormat"/>
           <create-order-cell title="到手金额" :text="`${repayCalutate.loanGross}元`"/>
         </div>
         <div></div>
@@ -23,14 +23,18 @@
             <cube-checkbox v-model="isAgree">
               我已经阅读并同意
             </cube-checkbox>
-            <span @click="openDialogClick" class="pact">《条款合同》</span>
+            <span @click="openDialogClick" class="pact"
+                  v-stat="{category:'按钮点击事件', action:'借款协议', name: '《条款合同》'}"
+            >《条款合同》</span>
           </div>
-          <button class="ra-Btn signBtn" @click="createOrderClick">立即签约</button>
+          <button class="ra-Btn signBtn" @click="createOrderClick"
+                  v-stat="{category:'按钮点击事件', action:'借款协议', name: '立即签约'}"
+          >立即签约</button>
         </div>
       </div>
     </better-scroll>
     <r-dialog ref="dialog" title="协议合同" height="60vh">
-      <better-scroll :scrollbar="{fade: false}">
+      <better-scroll :data="repayCalutate.agreementContent" :scrollbar="{fade: false}">
         <div class="agreementContent" v-html="repayCalutate.agreementContent"></div>
       </better-scroll>
     </r-dialog>
@@ -42,7 +46,6 @@ import { baseMixin } from '@/mixins'
 import { url } from '@/const'
 import { request, storage } from '@/utils'
 import CreateOrderCell from './components/CreateOrderCell'
-import moment from 'moment'
 export default {
   name: 'LoanBargain',
   mixins: [baseMixin],
@@ -69,10 +72,6 @@ export default {
   computed: {
     totalFee () {
       return this.repayCalutate.applyGross + this.repayCalutate.serviceFee
-    },
-    repayTime () {
-      let time = moment().add(this.repayCalutate.applyTerm, 'days').format('YYYY-MM-DD h:mm')
-      return time
     }
   },
   mounted () {
@@ -182,6 +181,17 @@ export default {
         text-decoration:underline
       }
     }
+  }
+}
+.agreementContent{
+  /deep/ h1 {
+    font-size: @font_size_4;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+  /deep/ p{
+    font-size: @font_size_2;
+    line-height: 20px;
   }
 }
 </style>

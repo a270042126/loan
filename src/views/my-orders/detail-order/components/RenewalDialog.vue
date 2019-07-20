@@ -24,16 +24,28 @@
             <div class="create-time">{{item.creationTime | dateFormat}}</div>
           </div>
           <div class="pay" v-if="!item.isCancelled && !item.isCompleted">
-            <div class="pay-redio">
-              <input type="radio" v-model="payType" value="0" /><label>支付宝</label>
+            <div v-if="payEnable">
+              <ul class="pay-redio" style="margin-bottom: 10px">
+                <template v-for="(item, key) in payList">
+                  <li v-if="getPlatform(item)" :key="key">
+                    <input type="radio" v-model="payType" :value="item.type"/><label>{{item.typeName}}</label>
+                  </li>
+                </template>
+              </ul>
+              <div style="text-align: right">
+                <button @click="renewalPayClick(item)"
+                        v-stat="{category:'按钮点击事件', action:'续期记录', name: '支付' + item.renewalDays}">支付</button>
+                <button @click="renewalCancelClick(item)"
+                        v-stat="{category:'按钮点击事件', action:'续期记录', name: '取消' + item.renewalDays}">取消</button>
+              </div>
             </div>
-            <div style="text-align: right">
-              <button @click="renewalPayClick(item)">支付</button>
-              <button @click="renewalCancelClick(item)">取消</button>
-            </div>
+            <p class="pay-mess" v-else>
+              {{!isApp ? '暂无有效支付方式，请使用APP支付或联系工作人员' : '暂无有效支付方式，联系工作人员'}}
+            </p>
           </div>
           <div v-else style="text-align: right">
-            <div class="status" @click="renewalCancelClick">{{item.isCancelled?'已取消':'已完成' }}</div>
+            <div class="status" @click="renewalCancelClick"
+                 v-stat="{category:'按钮点击事件', action:'续期记录', name: '取消' + item.renewalDays}">{{item.isCancelled?'已取消':'已完成' }}</div>
           </div>
         </div>
       </template>
@@ -43,17 +55,40 @@
 <script>
 import { request } from '@/utils'
 import { url } from '@/const'
-import { baseMixin } from '@/mixins'
-import DialogOperateMixin from '@/mixins/dialog-operate-mixins'
+import { baseMixin, payMixin } from '@/mixins'
 export default {
   name: 'RenewalCell',
-  mixins: [baseMixin, DialogOperateMixin],
+  mixins: [baseMixin, payMixin],
   props: {
-    renewals: Array
+    renewals: Array,
+    isDialogShow: {
+      default: false
+    },
+    id: String
+  },
+  watch: {
+    isDialogShow (newValue) {
+      this.isShow = newValue
+      this.getPaymentConfigs()
+    }
+  },
+  data () {
+    return {
+      isShow: false,
+      currentItem: ''
+    }
   },
   methods: {
+    onClose () {
+      this.isShow = false
+      this.$emit('onClose')
+    },
+    onRefresh () {
+      this.$emit('onRefresh')
+    },
     renewalPayClick (item) {
-      this.gotoAlipay(item.id, this.id)
+      const tempPage = window.open('', '_blank')
+      this.gotoAlipay(item.id, this.id, tempPage)
     },
     renewalCancelClick (item) {
       this.alertT('你确定取消续期吗？', () => {

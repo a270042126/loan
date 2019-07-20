@@ -3,7 +3,9 @@
     <div class="status" v-if="getStatusNum === 0">
       待认证
     </div>
-    <div v-if="isDetail" class="detail" @click="gotoDetailClick">
+    <div v-if="isDetail" class="detail" @click="gotoDetailClick"
+         v-stat="{category:'按钮点击事件', action:'订单', name: '查看详情'}"
+    >
       <div class="icon">
         <svg-icon iconClass="find"/>
       </div>
@@ -16,7 +18,9 @@
     </div>
     <div v-if="order.needVerify > 0 && order.statusName !== '已完成'" class="verify">
       <p class="mess">您的资料不完善，需要补充后，方可放款</p>
-      <button @click="gotoVerify">点击补充资料</button>
+      <button @click="gotoVerify"
+              v-stat="{category:'按钮点击事件', action:'订单', name: '点击补充资料'}"
+      >点击补充资料</button>
     </div>
     <div v-else-if="getStatusNum === 3" class="repay">
       <div class="info">
@@ -27,8 +31,10 @@
         您的借款已逾期, 请尽快还款.
       </p>
       <div class="operate-btns">
-        <button @click="repayClick">我要还款</button>
-        <button v-if="order.canLoanRenewal" @click="renewalClick">我要续期</button>
+        <button @click="repayClick"
+                v-stat="{category:'按钮点击事件', action:'订单', name: '我要还款'}">我要还款</button>
+        <button v-if="order.canLoanRenewal" @click="renewalClick"
+                v-stat="{category:'按钮点击事件', action:'订单', name: '我要续期'}">我要续期</button>
       </div>
     </div>
   </div>
@@ -57,7 +63,12 @@ export default {
       this.$emit('onRepay')
     },
     gotoVerify () {
-      this.$router.push({ name: 'verify' })
+      this.$router.push({
+        name: 'verify',
+        query: {
+          orderId: this.order.id
+        }
+      })
     },
     gotoDetailClick () {
       this.$router.push({ name: 'detail-order', query: { id: this.order.id } })

@@ -13,11 +13,6 @@ Router.prototype.goBack = function () {
 
 Vue.use(Router)
 
-const userKeys = storage.get('userKeys')
-if (userKeys) {
-  store.commit('SET_USER_KEYS', userKeys)
-}
-
 let routeT = {
   routes
 }
@@ -32,8 +27,7 @@ newRouter.beforeEach((to, from, next) => {
     const domain = document.domain
     const projectName = domain.substring(0, domain.indexOf('.m.')) || 'huohuodai'
     if (projectName) {
-      const domainUrl = `https://p-${projectName}.jxstudio.cn`
-      store.dispatch('setBaseUrl', domainUrl)
+      store.dispatch('isProjectAvailable', projectName)
     } else {
       common.errorT('项目不能为空')
     }

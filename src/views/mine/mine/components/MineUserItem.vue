@@ -1,5 +1,6 @@
 <template>
-  <div class="mine-item" @click="gotoUserInfo">
+  <div class="mine-item" @click="gotoUserInfo"
+       v-stat="{category:'按钮点击事件', action:'我的', name: '编辑用户'}">
     <div class="item">
       <div class="icon">
         <img :src="this.userInfo.faceImg ? this.userInfo.faceImg : getFaceImg" ref="face"/>

@@ -1,16 +1,21 @@
 import Vue from 'vue'
 const vm = new Vue()
 class Common {
-  static platform () {
-    let ua = navigator.userAgent.toLowerCase()
-    if (/micromessenger/.test(ua)) {
-      return 0
+  static trackEvent (cate, eventName, name, val) {
+    if (!val) {
+      vm.$matomo.trackEvent(cate, eventName, name)
     } else {
-      if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-        return 1
-      } else if (/(Android)/i.test(navigator.userAgent)) {
-        return 2
-      }
+      vm.$matomo.trackEvent(cate, eventName, name, val)
+    }
+  }
+
+  static platform () {
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+      return 1
+    } else if (/(Android)/i.test(navigator.userAgent)) {
+      return 2
+    } else {
+      return 3
     }
   }
 
@@ -37,7 +42,7 @@ class Common {
   static successT (text) {
     vm.$createToast({
       txt: text,
-      type: 'error'
+      type: 'correct'
     }).show()
   }
 
@@ -78,6 +83,23 @@ class Common {
     } else {
       return ''
     }
+  }
+
+  static substr (str, len) {
+    let strlen = 0
+    let s = ''
+    for (var i = 0; i < str.length; i++) {
+      if (str.charCodeAt(i) > 128) {
+        strlen += 2
+      } else {
+        strlen++
+      }
+      s += str.charAt(i)
+      if (strlen >= len) {
+        return s
+      }
+    }
+    return s
   }
 }
 export default Common

@@ -22,26 +22,49 @@
           </cube-radio>
         </cube-radio-group>
       </better-scroll>
-      <div class="pay-redio">
-        <input type="radio" v-model="payType" value="0" /><label>支付宝</label>
+      <div v-if="payEnable">
+        <ul class="pay-redio" style="margin-bottom: 10px">
+          <template v-for="(item, key) in payList">
+            <li v-if="getPlatform(item)" :key="key">
+              <input type="radio" v-model="payType" :value="item.type"/><label>{{item.typeName}}</label>
+            </li>
+          </template>
+        </ul>
+        <div class="btns">
+          <button @click="renewalCancelClick">取消</button>
+          <button @click="renewalOkClick"
+                  v-stat="{category:'按钮点击事件', action:'订单', name: '创建续期'}">创建续期</button>
+        </div>
       </div>
-      <div class="btns">
-        <button @click="renewalCancelClick">取消</button>
-        <button @click="renewalOkClick">创建续期</button>
-      </div>
+      <p class="pay-mess" v-else>
+        {{!isApp ? '暂无有效支付方式，请使用APP支付或联系工作人员' : '暂无有效支付方式，联系工作人员'}}
+      </p>
     </div>
   </r-dialog>
 </template>
 <script>
-import { request } from '@/utils'
+import { request, common } from '@/utils'
 import { url } from '@/const'
-import { baseMixin } from '@/mixins'
-import DialogOperateMixin from '@/mixins/dialog-operate-mixins'
+import { baseMixin, payMixin } from '@/mixins'
 export default {
   name: 'SelectRenewalDialog',
-  mixins: [baseMixin, DialogOperateMixin],
+  mixins: [baseMixin, payMixin],
+  props: {
+    isDialogShow: {
+      default: false
+    },
+    id: String
+  },
+  watch: {
+    isDialogShow (newValue) {
+      this.isShow = newValue
+      this.getPaymentConfigs()
+    }
+  },
   data () {
     return {
+      isShow: false,
+      currentItem: '',
       renewals: []
     }
   },
@@ -49,6 +72,13 @@ export default {
     this.getRenewals()
   },
   methods: {
+    onClose () {
+      this.isShow = false
+      this.$emit('onClose')
+    },
+    onRefresh () {
+      this.$emit('onRefresh')
+    },
     // 选择续期
     selectRenewalClick (key) {
       this.currentItem = this.renewals[key]
@@ -65,6 +95,7 @@ export default {
     },
     // 续期取消
     renewalCancelClick () {
+      common.trackEvent('按钮点击事件', '我的订单', '续期取消')
       this.currentItem = ''
       this.onClose()
     },
@@ -73,11 +104,13 @@ export default {
       if (!this.currentItem) {
         this.errorT('请选择续期')
       } else {
+        common.trackEvent('按钮点击事件', '我的订单', '续期支付')
         this.$refs.renewalDialog.close()
         const params = {
           renewalId: this.currentItem.id,
           orderId: this.id
         }
+        const tempPage = window.open('', '_blank')
         request({
           type: 'post',
           path: url.Loan.RenewalOrder,
@@ -87,7 +120,7 @@ export default {
             if (data.success) {
               const renewalId = data.result.id
               const orderId = data.result.orderId
-              this.gotoAlipay(renewalId, orderId)
+              this.gotoAlipay(renewalId, orderId, tempPage)
             }
           },
           errFn: () => {
@@ -139,6 +172,13 @@ export default {
       flex: 1;
       display: flex;
       justify-content: space-between;
+    }
+  }
+  ul{
+    li {
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
     }
   }
 }

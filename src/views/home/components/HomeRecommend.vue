@@ -4,25 +4,26 @@
     <div class="recommend">
       <ul>
         <li v-for="(item, index) in list" :key="index">
-          <router-link :to="{name:'product', query: {name: item.name, id: item.id}}">
-            <div class="product_item">
-              <div class="title">
-                <img v-lazy="baseUrl + '/File/Download/' + item.logo">
-                <div>{{item.name}}</div>
+          <div class="product_item"
+               @click="productClick(item)"
+               v-stat="{category:'按钮点击事件', action:'首页', name: '热门-' + item.name}"
+          >
+            <div class="title">
+              <img v-lazy="baseUrl + '/File/Download/' + item.logo">
+              <div>{{item.name}}</div>
+            </div>
+            <div class="mess">
+              <div class="left">
+                <div class="quota">{{item.quota}}</div>
+                <div class="subtitle">额度范围(元)</div>
               </div>
-              <div class="mess">
-                <div class="left">
-                  <div class="quota">{{item.quota}}</div>
-                  <div class="subtitle">额度范围(元)</div>
-                </div>
-                <div class="right">
-                  <div v-if="index % 2 == 0">有身份证就能借</div>
-                  <div v-if="index % 2 != 0">急速放款</div>
-                  <div class="subtitle"> 日利率：{{item.rate}} | {{ item.term }} 天</div>
-                </div>
+              <div class="right">
+                <div v-if="index % 2 == 0">有身份证就能借</div>
+                <div v-if="index % 2 != 0">急速放款</div>
+                <div class="subtitle"> 日利率：{{item.rate}} | {{ item.term }} 天</div>
               </div>
             </div>
-          </router-link>
+          </div>
           <div>
             <i class="material-icons arrow">&#xe5cc;</i>
           </div>
@@ -45,6 +46,11 @@ export default {
   },
   components: {
     HomeTitle
+  },
+  methods: {
+    productClick (item) {
+      this.$router.push({ name: 'product', query: { name: item.name, id: item.id } })
+    }
   }
 }
 </script>

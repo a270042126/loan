@@ -4,7 +4,12 @@
       <swipe :list="swipeList"/>
     </div>
     <ul class="menus">
-      <li v-for="(item,index) in this.tabList" :key="index" @click="filterClick(item.title)">
+      <li
+        v-for="(item,index) in this.tabList"
+        :key="index"
+        @click="filterClick(item.title)"
+        v-stat="{category:'按钮点击事件', action:'首页', name: item.title}"
+      >
         <i class="material-icons" :style="`background: ${item.color}`">{{item.icon}}</i>
         <p>{{item.title}}</p>
       </li>

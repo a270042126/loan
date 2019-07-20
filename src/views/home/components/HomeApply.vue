@@ -6,16 +6,23 @@
       <p class="rate">日率0.02% | 期限：7天</p>
     </div>
     <div>
-      <router-link :to="{ name:'loan-product' }">
-        <cube-button>一键申请</cube-button>
-      </router-link>
+      <cube-button
+        v-stat="{category:'按钮点击事件', action:'首页', name: '一键申请'}"
+        @click="applyClick">一键申请</cube-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomeApply'
+  name: 'HomeApply',
+  methods: {
+    applyClick () {
+      this.$router.push({
+        name: 'loan-product'
+      })
+    }
+  }
 }
 </script>
 

@@ -1,9 +1,11 @@
 <template>
   <base-page :navOptions="{ title: '用户认证', isBack: true}">
-    <better-scroll>
+    <better-scroll :data="list" ref="scroll">
       <div class="content">
         <template v-for="(item, index) in list">
-          <verify-cell :key="index" :item="item" @gotoOther="gotoOther(item)"/>
+          <verify-cell :key="index"
+                       :item="item"
+                       @gotoOther="gotoOther(item)"/>
         </template>
       </div>
     </better-scroll>
@@ -12,35 +14,19 @@
 
 <script>
 import VerifyCell from './components/VerifyCell'
-import { request } from '@/utils'
+import { request, apid, common } from '@/utils'
 import { url, isApp } from '@/const'
 export default {
   name: 'Verify',
   data () {
     return {
-      verifyNames: [],
+      order: {},
       list: [
-        { icon: 'bank', code: 32, title: '银行卡认证', pathName: 'bankCardVerify', status: false, verifyNames: true },
-        { icon: 'id-card', code: 4, title: '身份证认证', pathName: 'idCardVerify', status: false, verifyNames: true },
-        { icon: 'zhime', code: 64, title: '芝麻分认证', pathName: 'zhimeCredit', status: false, verifyNames: true },
-        { icon: 'contact', code: 1, title: '紧急联系人', pathName: 'linkUserContacts', status: false, verifyNames: true },
-        { icon: 'Phone', code: 16, title: '手机运营商', xinyan: 'carrier', status: false, verifyNames: true },
-        { iconName: '征', code: 8, title: '征信', pathName: 'creditInfo', status: false, verifyNames: true },
-        { iconName: '淘', code: 256, title: '淘宝认证', xinyan: 'taobaoweb', status: false, verifyNames: true },
-        { iconName: '支', code: 128, title: '支付宝认证', xinyan: 'zhifubao', status: false, verifyNames: true },
-        { iconName: '京', code: 16384, title: '京东认证', xinyan: 'jingdong', status: false, verifyNames: true },
-        { iconName: '学', code: 32768, title: '学信网认证', xinyan: 'education', status: false, verifyNames: true },
-        { iconName: '饿', code: 65536, title: '饿了么认证', xinyan: 'ele', status: false, verifyNames: true },
-        { iconName: '美', code: 131072, title: '美团认证', xinyan: 'meituan', status: false, verifyNames: true },
-        { iconName: '百', code: 262144, title: '百度云认证', xinyan: 'baiduyun', status: false, verifyNames: true },
-        { iconName: 'Q', code: 1048576, title: 'QQ同步助手认证', xinyan: 'qqyun', status: false, verifyNames: true },
-        { iconName: '米', code: 2097152, title: '小米云认证', xinyan: 'xiaomiyun', status: false, verifyNames: true },
-        { iconName: '信', code: '', title: '信用卡办卡进度查询', xinyan: 'card_progress', status: false, verifyNames: true },
-        { iconName: '社', code: 4194304, title: '社保数据认证', xinyan: ' social_insurance', status: false, verifyNames: true },
-        { iconName: '公', code: 8388608, title: '公积金数据认证', xinyan: ' housingfund', status: false, verifyNames: true },
-        { iconName: '芝', code: 16777216, title: '芝麻信用查验认证', xinyan: 'zhimafen', status: false, verifyNames: true },
-        { iconName: '信', code: 33554432, title: '信用卡邮箱账单', xinyan: 'credit_bill_mail', status: false, verifyNames: true },
-        { iconName: '车', code: 67108864, title: '车险保单查验认证', xinyan: 'auto_insurance', status: false, verifyNames: true }
+        { icon: 'bank', flag: 32, flagName: '', pathName: 'bankCardVerify', status: false },
+        { icon: 'id-card', flag: 4, flagName: '', pathName: 'idCardVerify', status: false },
+        { icon: 'contact', flag: 1, flagName: '', pathName: 'linkUserContacts', status: false },
+        { iconName: '征', flag: 8, flagName: '', pathName: 'creditInfo', status: false },
+        { iconName: '活', flag: 524288, flagName: '', pathName: 'livingVerify', status: false }
       ]
     }
   },
@@ -48,13 +34,19 @@ export default {
     VerifyCell
   },
   mounted () {
-    this.getAuthList()
+    this.refresh()
     this.accapceNotification()
   },
   destroyed () {
     this.bus.$off('verifyRefresh')
   },
   methods: {
+    async refresh () {
+      this.getOrder()
+      if (!this.$route.query.orderId) {
+        this.getAuthList()
+      }
+    },
     accapceNotification () {
       this.bus.$on('verifyRefresh', () => {
         this.getAuthList()
@@ -65,32 +57,35 @@ export default {
         type: 'post',
         path: url.UserVerify.GetAuthList,
         fn: (res) => {
+          const verifyFlows = res.result.verifyFlows
+          const verifyFlag = res.result.verifyFlag
           const verifyNames = res.result.verifyNames
-          if (res.result.verifyFlag) {
-            this.setStatus(verifyNames)
-          }
+          this.handleList(verifyFlows, verifyFlag, verifyNames)
         },
         errFn: () => {
         }
       })
     },
-    setStatus (verifyNames) {
-      const list = this.list
-      list.map((item) => {
-        verifyNames.some((name) => {
-          if (name === '姓名三要素') {
-            list[0].status = true
-            return true
-          } else if (item.title.indexOf(name) !== -1) {
-            item.status = true
-            return true
+    getOrder () {
+      const orderId = this.$route.query.orderId
+      if (orderId) {
+        request({
+          type: 'post',
+          path: url.Loan.GetOrderDetail,
+          data: { id: orderId },
+          fn: (res) => {
+            this.order = res.result
+            this.getAuthList()
+          },
+          errFn: () => {
           }
         })
-      })
+      }
     },
     gotoOther (item) {
-      if (item.xinyan) {
-        this.gotoXinyanQuanzhi(item.xinyan)
+      common.trackEvent('按钮点击事件', '认证点击', item.flagName)
+      if (item.flagApiName) {
+        this.gotoXinyanQuanzhi(item.flagApiName)
       } else if (item.pathName) {
         this.$router.push({
           name: item.pathName
@@ -123,6 +118,58 @@ export default {
         errFn: () => {
         }
       })
+    },
+
+    handleList (verifyFlows, verifyFlag, verifyNames) {
+      const needVerify = this.order.needVerify
+      const newList = [
+        { icon: 'bank', flag: -1, flagName: '基础信息', pathName: 'baseInfoVerify', status: false }
+      ]
+      if (verifyNames.indexOf('姓名三要素') !== -1) {
+        newList[0].status = true
+      }
+      verifyFlows.map(item => {
+        if (this.showVerify(item, verifyFlag, needVerify)) {
+          if (item.flagApiName) {
+            item.iconName = common.substr(item.flagName, 0)
+            item.status = this.showVerifyText(item, verifyFlag, needVerify)
+            newList.push(item)
+          } else {
+            this.list.some(obj => {
+              if (item.flag === obj.flag) {
+                obj.status = this.showVerifyText(item, verifyFlag, needVerify)
+                newList.push(Object.assign(obj, item))
+                return true
+              }
+            })
+          }
+        }
+      })
+      this.list = newList
+    },
+    showVerifyText (verifyFlow, verifyFlag, needVerify) {
+      // 当前订单要求认证
+      if (needVerify && this.flagCheck(needVerify, verifyFlow.flag)) return false
+      // 用户已认证
+      if (verifyFlag && this.flagCheck(verifyFlag, verifyFlow.flag)) return true
+      return false
+    },
+    showVerify (verifyFlow, verifyFlag, needVerify) {
+      // 当前订单要求认证，直接显示
+      if (needVerify && this.flagCheck(needVerify, verifyFlow.flag)) return true
+      // 用户已认证，直接显示
+      if (verifyFlag && this.flagCheck(verifyFlag, verifyFlow.flag)) return true
+      // 未启用，直接不显示
+      if (!verifyFlow.isActive) return false
+      // 已启用，按平台显示
+      const platform = apid.systemType()
+      if (platform === 'web') return verifyFlow.hasWeb
+      if (platform === 'android') return verifyFlow.hasAndroid
+      if (platform === 'ios') return verifyFlow.hasIos
+      return false
+    },
+    flagCheck (flag, site) {
+      return (flag & site) === site
     }
   }
 }
